@@ -1,0 +1,238 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{874E2035-E05B-463E-805D-3B9944A34AF9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Kesco.Lib.Web.DBSelect.V4</RootNamespace>
+    <AssemblyName>DBSelect.V4</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\DBSelect.V4.xml</DocumentationFile>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DBSAttributeFormatType.cs" />
+    <Compile Include="DBSBasis.cs" />
+    <Compile Include="DBSBusinessProject.cs" />
+    <Compile Include="DBSContactType.cs" />
+    <Compile Include="DBSCurrency.cs" />
+    <Compile Include="DBSDocument.cs" />
+    <Compile Include="DBSPersonContact.cs" />
+    <Compile Include="DBSPersonCustomer.cs" />
+    <Compile Include="DBSPerson.cs" />
+    <Compile Include="DBSPersonDepartment.cs" />
+    <Compile Include="DBSPersonIncorporationForm.cs" />
+    <Compile Include="DBSPersonLink.cs" />
+    <Compile Include="DBSPersonNickname.cs" />
+    <Compile Include="DBSPersonDossierThemes.cs" />
+    <Compile Include="DBSPosition.cs" />
+    <Compile Include="DBSResource.cs" />
+    <Compile Include="DBSSqlQuery.cs" />
+    <Compile Include="DBSStore.cs" />
+    <Compile Include="DBSStoreReportType.cs" />
+    <Compile Include="DBSSubdivision.cs" />
+    <Compile Include="DBSTerritory.cs" />
+    <Compile Include="DBSTransportNode.cs" />
+    <Compile Include="DBSLocation.cs" />
+    <Compile Include="DSO\DSOAttributeFormatType.cs" />
+    <Compile Include="DSO\DSOBusinessProject.cs" />
+    <Compile Include="DSO\DSOCommon.cs" />
+    <Compile Include="DSO\DSOContactType.cs" />
+    <Compile Include="DSO\DSOCurrency.cs" />
+    <Compile Include="DSO\DSODocument.cs" />
+    <Compile Include="DSO\DSOLocation.cs" />
+    <Compile Include="DSO\DSOPersonContact.cs" />
+    <Compile Include="DSO\DSOPersonCustomer.cs" />
+    <Compile Include="DSO\DSOEmployee.cs" />
+    <Compile Include="DSO\DSOPerson.cs" />
+    <Compile Include="DSO\DSOPersonDepartment.cs" />
+    <Compile Include="DSO\DSOPersonIncorporationForm.cs" />
+    <Compile Include="DSO\DSOPersonLink.cs" />
+    <Compile Include="DSO\DSOPersonNickName.cs" />
+    <Compile Include="DSO\DSOPersonTheme.cs" />
+    <Compile Include="DSO\DSOPosition.cs" />
+    <Compile Include="DSO\DSOResidence.cs" />
+    <Compile Include="DSO\DSOResource.cs" />
+    <Compile Include="DSO\DSORole.cs" />
+    <Compile Include="DSO\DSOSqlQuery.cs" />
+    <Compile Include="DSO\DSOStore.cs" />
+    <Compile Include="DSO\DSOStoreReportType.cs" />
+    <Compile Include="DSO\DSOStoreType.cs" />
+    <Compile Include="DSO\DSOSubdivision.cs" />
+    <Compile Include="DSO\DSOTerritory.cs" />
+    <Compile Include="DSO\DSOTransportNode.cs" />
+    <Compile Include="DSO\FOpt\AttributeFormatType\FOptName.cs" />
+    <Compile Include="DSO\FOpt\Common\FOptIDs.cs" />
+    <Compile Include="DSO\FOpt\Common\FOptName.cs" />
+    <Compile Include="DSO\FOpt\ContactType\FOptContactType.cs" />
+    <Compile Include="DSO\FOpt\Document\FOptAtWork.cs" />
+    <Compile Include="DSO\FOpt\Document\FOptChangedBy.cs" />
+    <Compile Include="DSO\FOpt\Document\FOptNextDocType.cs" />
+    <Compile Include="DSO\FOpt\Employee\FOptHasEmail.cs" />
+    <Compile Include="DSO\FOpt\PersonContact\FOptValidAt.cs" />
+    <Compile Include="DSO\FOpt\PersonCustomer\FOptPersonCustomerRole.cs" />
+    <Compile Include="DSO\FOpt\PersonRole\FOptName.cs" />
+    <Compile Include="DSO\FOpt\PersonRole\FOptPersonRole.cs" />
+    <Compile Include="DSO\FOpt\Location\FOptEmployee.cs" />
+    <Compile Include="DSO\FOpt\Location\FOptWorkPlace.cs" />
+    <Compile Include="DSO\FOpt\PersonCatalog\FOptPersonCatalog.cs" />
+    <Compile Include="DSO\FOpt\PersonDepartment\FOptIDs.cs" />
+    <Compile Include="DSO\FOpt\PersonDepartment\FOptName.cs" />
+    <Compile Include="DSO\FOpt\PersonTheme\FOptCatalog.cs" />
+    <Compile Include="DSO\FOpt\Role\FOptRole.cs" />
+    <Compile Include="DSO\FOpt\StoreReportType\FOptName.cs" />
+    <Compile Include="DSO\FOpt\StoreReportType\FOptPersonIDs.cs" />
+    <Compile Include="DSO\FOpt\StoreReportType\FOptResourceIDs.cs" />
+    <Compile Include="DSO\FOpt\Store\FOptValidAt.cs" />
+    <Compile Include="DSO\FOpt\Template\FOptCodeTypeDoc.cs" />
+    <Compile Include="DSO\FOpt\Document\FOptDate.cs" />
+    <Compile Include="DSO\FOpt\Document\FOptDescription.cs" />
+    <Compile Include="DSO\FOpt\Document\FOptDocNumber.cs" />
+    <Compile Include="DSO\FOpt\Document\FOptDocType.cs" />
+    <Compile Include="DSO\FOpt\Document\FOptIDs.cs" />
+    <Compile Include="DSO\FOpt\Document\FOptLinkedDoc.cs" />
+    <Compile Include="DSO\FOpt\Document\FOptName.cs" />
+    <Compile Include="DSO\FOpt\Document\FOptPersonIDs.cs" />
+    <Compile Include="DSO\FOpt\Template\FOptCodePerson.cs" />
+    <Compile Include="DSO\FOpt\Employee\FOptIDs.cs" />
+    <Compile Include="DSO\FOpt\Employee\FOptName.cs" />
+    <Compile Include="DSO\FOpt\Employee\FOptStatus.cs" />
+    <Compile Include="DSO\FOpt\Employee\FOptHasLogin.cs" />
+    <Compile Include="DSO\FOpt\Employee\FOptIDsCompany.cs" />
+    <Compile Include="DSO\FOpt\Employee\FOptSubdivisionIDs.cs" />
+    <Compile Include="DSO\FOpt\Employee\FOptPositionIDs.cs" />
+    <Compile Include="DSO\FOpt\Employee\FOptHasVirtual.cs" />
+    <Compile Include="DSO\FOpt\Employee\FOptEmployeeAvaible.cs" />
+    <Compile Include="DSO\FOpt\Employee\FOptUserStaffMembers.cs" />
+    <Compile Include="DSO\FOpt\FOptBase.cs" />
+    <Compile Include="DSO\FOpt\IFilterOption.cs" />
+    <Compile Include="DSO\FOpt\PersonCustomer\FOptName.cs" />
+    <Compile Include="DSO\FOpt\PersonLink\FOptName.cs" />
+    <Compile Include="DSO\FOpt\PersonTheme\FOptPersonTheme.cs" />
+    <Compile Include="DSO\FOpt\Position\FOptIDs.cs" />
+    <Compile Include="DSO\FOpt\Position\FOptSubdivisionIDs.cs" />
+    <Compile Include="DSO\FOpt\Resource\FOptCurrencyIDs.cs" />
+    <Compile Include="DSO\FOpt\Resource\FOptIDs.cs" />
+    <Compile Include="DSO\FOpt\Resource\FOptParentIDs.cs" />
+    <Compile Include="DSO\FOpt\Resource\FOptPersonIDs.cs" />
+    <Compile Include="DSO\FOpt\Position\FOptName.cs" />
+    <Compile Include="DSO\FOpt\Subdivision\FOptIDs.cs" />
+    <Compile Include="DSO\FOpt\Subdivision\FOptName.cs" />
+    <Compile Include="DSO\FOpt\Template\FOptDate.cs" />
+    <Compile Include="DSO\FOpt\Template\FOptName.cs" />
+    <Compile Include="DSO\FOpt\Template\FOptKontragent.cs" />
+    <Compile Include="DSO\FOpt\Territory\FOptName.cs" />
+    <Compile Include="DSO\FOpt\TreeQueryBuilder.cs" />
+    <Compile Include="DSO\FOpt\Residence\FOptIDs.cs" />
+    <Compile Include="DSO\FOpt\Residence\FOptName.cs" />
+    <Compile Include="DSO\FOpt\Residence\FOptParentIDs.cs" />
+    <Compile Include="DSO\FOpt\Resource\FOptName.cs" />
+    <Compile Include="DSO\FOpt\StoreType\FOptIDs.cs" />
+    <Compile Include="DSO\FOpt\StoreType\FOptName.cs" />
+    <Compile Include="DSO\DSOTMDogovor.cs" />
+    <Compile Include="DSO\DSOTMEmployee.cs" />
+    <Compile Include="DSO\DSOTMPhone.cs" />
+    <Compile Include="DSO\FOpt\StoreType\FOptRootResourceIDs.cs" />
+    <Compile Include="DSO\FOpt\TMDogovor\FOptName.cs" />
+    <Compile Include="DSO\DSOTemplate.cs" />
+    <Compile Include="DSO\FOpt\Location\FOptIDs.cs" />
+    <Compile Include="DSO\FOpt\Location\FOptName.cs" />
+    <Compile Include="DSO\FOpt\Location\FOptParentIDs.cs" />
+    <Compile Include="DSO\DSOPersonCatalog.cs" />
+    <Compile Include="DSO\DSOPersonRole.cs" />
+    <Compile Include="DSO\DSOVacationType.cs" />
+    <Compile Include="DSO\FOpt\VacationType\FOptIDs.cs" />
+    <Compile Include="DSO\FOpt\VacationType\FOptVacationType.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DBSelect.cs" />
+    <Compile Include="DBSEmployee.cs" />
+    <Compile Include="DBSStoreType.cs" />
+    <Compile Include="DBSResidence.cs" />
+    <Compile Include="DBSTMDogovor.cs" />
+    <Compile Include="DBSTMEmployee.cs" />
+    <Compile Include="DBSTMPhone.cs" />
+    <Compile Include="DBSTemplate.cs" />
+    <Compile Include="DBSRole.cs" />
+    <Compile Include="DBSPersonCatalog.cs" />
+    <Compile Include="DBSPersonTheme.cs" />
+    <Compile Include="DBSPersonRole.cs" />
+    <Compile Include="DBSVacationType.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Kesco.Lib.BaseExtention\Kesco.Lib.BaseExtention.csproj">
+      <Project>{D26C8D93-C51B-4F61-ADA8-8527A18E4C41}</Project>
+      <Name>Kesco.Lib.BaseExtention</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Kesco.Lib.Convert\Kesco.Lib.ConvertExtention.csproj">
+      <Project>{9C6AB086-FDB5-4FBC-B358-092C47F6B4F4}</Project>
+      <Name>Kesco.Lib.ConvertExtention</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Kesco.Lib.DALC\Kesco.Lib.DALC.csproj">
+      <Project>{5F647577-BC44-41DE-AFBE-BC47C91548F1}</Project>
+      <Name>Kesco.Lib.DALC</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Kesco.Lib.Entities\Kesco.Lib.Entities.csproj">
+      <Project>{DEAA04C2-AFB2-4AD0-B161-A5BF6C26A9DB}</Project>
+      <Name>Kesco.Lib.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Kesco.Lib.Entities\Kesco.Lib.Entities.csproj">
+      <Project>{DEAA04C2-AFB2-4AD0-B161-A5BF6C26A9DB}</Project>
+      <Name>Kesco.Lib.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Kesco.Lib.Log\Kesco.Lib.Log.csproj">
+      <Project>{FC924B22-160A-4F7F-98EB-63E420DE694E}</Project>
+      <Name>Kesco.Lib.Log</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Kesco.Lib.Web.Controls.V4\Kesco.Lib.Web.Controls.V4.csproj">
+      <Project>{C24FDAB8-D076-4F0C-8932-DB8160E4C4EF}</Project>
+      <Name>Kesco.Lib.Web.Controls.V4</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Kesco.Lib.Web.Settings\Kesco.Lib.Web.Settings.csproj">
+      <Project>{26BB8CDB-8901-44BF-85BC-864F97941C60}</Project>
+      <Name>Kesco.Lib.Web.Settings</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DSO\FOpt\TMEmployee\" />
+    <Folder Include="DSO\FOpt\TMPhone\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
