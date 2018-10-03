@@ -1,6 +1,8 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Kesco.Lib.DALC;
 using Kesco.Lib.Entities;
 using Kesco.Lib.Web.Settings;
@@ -33,6 +35,16 @@ namespace Kesco.Lib.Web.DBSelect.V4
 		{
 			return Filter as DSOCurrency;
 		}
+
+        public override string SelectedItemsString
+        {
+            get
+            {
+                var temp = SelectedItems.Aggregate("", (current, item) => current + ("'" + item.Id + "',"));
+                if (!String.IsNullOrEmpty(temp)) temp = temp.Remove(temp.Length - 1, 1);
+                return temp;
+            }
+        }
 
 		public override IEnumerable FillSelect(string search)
 		{

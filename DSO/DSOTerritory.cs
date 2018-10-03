@@ -11,7 +11,14 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         /// <summary>
         ///     Опция фильтра по имени территории
         /// </summary>
-        [FilterOption("ТипАтрибута", false, "Search")] public FOptName Name;
+        [FilterOption("ТипАтрибута", false, "Search")] 
+        public FOptName Name;
+
+        /// <summary>
+        ///     Опция фильтра: КодТТерритории
+        /// </summary>
+        [FilterOption("TerritoryCode",false,"AreaType")]
+        public FOptTerritoryCode TerritoryCode;
 
         /// <summary>
         ///     Конструктор класса
@@ -24,6 +31,7 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
             AbbreviationField = "Аббревиатура";
             TelephoneCodeField = "ТелКодСтраны";
             Name = new FOptName();
+            TerritoryCode = new FOptTerritoryCode();
         }
 
         /// <summary>

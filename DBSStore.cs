@@ -5,6 +5,8 @@ using Kesco.Lib.DALC;
 using Kesco.Lib.Web.DBSelect.V4.DSO;
 using Kesco.Lib.Web.Settings;
 using Kesco.Lib.Entities;
+using Kesco.Lib.Entities.Resources;
+using Kesco.Lib.Entities.Stores;
 using Kesco.Lib.Web.Controls.V4;
 
 namespace Kesco.Lib.Web.DBSelect.V4
@@ -33,6 +35,14 @@ namespace Kesco.Lib.Web.DBSelect.V4
             URIsCreateEntity = new List<URICreateEntity>();
             URIsCreateEntity.Add(new URICreateEntity("/styles/Store.gif", Config.store_form,
                 Resx.GetString("STORE_CreateStore")));
+        }
+
+        /// <summary>
+        ///     Фильтр
+        /// </summary>
+        public new DSOStore Filter
+        {
+            get { return (DSOStore)base.Filter; }
         }
 
         /// <summary>
@@ -68,35 +78,48 @@ namespace Kesco.Lib.Web.DBSelect.V4
                 _listOfItems.Add(new Kesco.Lib.Entities.Item { Id = row[Filter.KeyField].ToString(), Value = row[Filter.NameField] });
             }
         }
-
+        
         public override object GetObjectById(string id, string name = "")
         {
-            if (null == _listOfItems) FillItemsList();
+            //if (null == _listOfItems) FillItemsList();
 
-            Kesco.Lib.Entities.Item store_item;
-            if (!string.IsNullOrWhiteSpace(name))
+            //Kesco.Lib.Entities.Item store_item;
+            //if (!string.IsNullOrWhiteSpace(name))
+            //{
+            //    store_item = _listOfItems.Find(x => 0 == string.Compare(x.Id, id, true) && 0 == string.Compare(x.Value.ToString(), name, true));
+            //}
+            //else
+            //{
+            //    store_item = _listOfItems.Find(x => 0 == string.Compare(x.Id, id, true));
+            //}
+
+            //if (object.Equals(store_item, default(Kesco.Lib.Entities.Item)))//значение Item по умолчанию все поля null
+            //{
+            //    var sqlParams = new Dictionary<string, object> { { "@КодСклада", id } };
+            //    DataTable dtItems = DBManager.GetData(SQLQueries.SELECT_ID_Склад, Config.DS_person, CommandType.Text, sqlParams);
+            //    if (null != dtItems && dtItems.Rows.Count > 0)
+            //    {
+            //        DataRow row = dtItems.Rows[0];
+            //        return new Kesco.Lib.Entities.Item { Id = row[Filter.KeyField].ToString(), Value = row[Filter.NameField] };
+            //    }
+
+            //    return null;
+            //}
+
+            //return store_item;
+
+            if (!string.IsNullOrEmpty(name))
+                return new Kesco.Lib.Entities.Item  { Id = id, Value = name };
+
+            var sqlParams = new Dictionary<string, object> { { "@КодСклада", id } };
+            DataTable dtItems = DBManager.GetData(SQLQueries.SELECT_ID_Склад, Config.DS_person, CommandType.Text, sqlParams);
+            if (null != dtItems && dtItems.Rows.Count > 0)
             {
-                store_item = _listOfItems.Find(x => 0 == string.Compare(x.Id, id, true) && 0 == string.Compare(x.Value.ToString(), name, true));
-            }
-            else
-            {
-                store_item = _listOfItems.Find(x => 0 == string.Compare(x.Id, id, true));
+                DataRow row = dtItems.Rows[0];
+                return new Kesco.Lib.Entities.Item { Id = row[Filter.KeyField].ToString(), Value = row[Filter.NameField] };
             }
 
-            if (object.Equals(store_item, default(Kesco.Lib.Entities.Item)))//значение Item по умолчанию все поля null
-            {
-                var sqlParams = new Dictionary<string, object> { { "@КодСклада", id } };
-                DataTable dtItems = DBManager.GetData(SQLQueries.SELECT_ID_Склад, Config.DS_person, CommandType.Text, sqlParams);
-                if (null != dtItems && dtItems.Rows.Count > 0)
-                {
-                    DataRow row = dtItems.Rows[0];
-                    return new Kesco.Lib.Entities.Item { Id = row[Filter.KeyField].ToString(), Value = row[Filter.NameField] };
-                }
-
-                return null;
-            }
-
-            return store_item;
+            return null;
         }
     }
 }

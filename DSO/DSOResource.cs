@@ -18,7 +18,7 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         /// <summary>
         ///     Опция фильтра: все подчиненные ресурсы включая родителя
         /// </summary>
-        [FilterOption("AllChildrenWithParentIDs", false)] public FOptParentsIDs AllChildrenWithParentIDs;
+        [FilterOption("AllChildrenWithParentIDs", false, "ResourceRoot", true)] public FOptParentsIDs AllChildrenWithParentIDs;
 
         /// <summary>
         ///     Опция фильтра: все непосредственные подчиненные ресурсы

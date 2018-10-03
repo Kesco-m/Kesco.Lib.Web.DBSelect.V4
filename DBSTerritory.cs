@@ -53,7 +53,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         }
 
         /// <summary>
-        ///     Получение списка складов
+        ///     Получение списка территорий
         /// </summary>
         /// <returns>Список</returns>
         public List<Territory> GetTerritories()
@@ -69,12 +69,13 @@ namespace Kesco.Lib.Web.DBSelect.V4
                 Abbreviation = dr.Field<string>(Filter.AbbreviationField),
                 TelephoneCode = dr.Field<string>(Filter.TelephoneCodeField)
             }).ToList();
+            territory.OrderBy(order => order.Name);
 
             return territory;
         }
 
         /// <summary>
-        ///     Получение типа формата атрибута по ID
+        ///     Получение территории по ID
         /// </summary>
         /// <param name="id">ID</param>
         /// <param name="name">Name </param>

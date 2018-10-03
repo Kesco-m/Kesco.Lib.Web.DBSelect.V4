@@ -1,5 +1,5 @@
 ﻿
-using Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.Common;
+using Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.Currency;
 using Kesco.Lib.Entities;
 
 namespace Kesco.Lib.Web.DBSelect.V4.DSO
@@ -9,21 +9,21 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
 		/// <summary>
 		/// Опция фильтра по имени
 		/// </summary>
-		[FilterOption("Название")]
+        [FilterOption("РесурсРус")]
 		public FOptName Name;
 
 		/// <summary>
 		/// Опция фильтра по ID
 		/// </summary>
-		[FilterOption("КодСклада")]
+        [FilterOption("КодВалюты")]
 		public FOptIDs StoreId;
 
 		public DSOCurrency()
 		{
 			KeyField = "КодВалюты";
-			NameField = "Название";
+            NameField = "Название";
 			StoreId = new FOptIDs("КодВалюты");
-			Name = new FOptName("Название");
+            Name = new FOptName("РесурсРус");
 		}
 
 		/// <summary>

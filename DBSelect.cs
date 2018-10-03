@@ -332,7 +332,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         public void OpenEntityForm()
         {
             if (URLShowEntity.Length == 0) return;
-            JS.Write("v4_windowOpen('{0}?id={1}')", URLShowEntity, HttpUtility.JavaScriptStringEncode(Value));
+            JS.Write("v4_windowOpen('{0}?id={1}');", URLShowEntity, HttpUtility.JavaScriptStringEncode(Value));
                 
         }
 
@@ -341,7 +341,9 @@ namespace Kesco.Lib.Web.DBSelect.V4
         /// </summary>
         public void EvalURLClick(string url)
         {
-            var parameters = GetURLParams();
+            var isKescoRun = url.Contains("kescorun");
+            var parameters = GetURLParams(isKescoRun);
+            
             ReturnDialogResult.ShowAdvancedDialogSearch((Page) Page, "v4s_setSelectedValue", HtmlID, url, parameters,
                 IsMultiReturn, CLID, AdvSearchWindowWidth, AdvSearchWindowHeight);
         }
@@ -383,7 +385,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
 
                     if (value != null) svalue = value.ToString();
                     if (svalue.Length == 0 && !alwaysEnable) continue;
-                    svalue = HttpUtility.UrlEncode(svalue);
+                   // svalue = HttpUtility.UrlEncode(svalue);
                     if (!urlParams.Keys.Contains(key)) urlParams.Add(key, svalue);
                 }
             }
@@ -432,7 +434,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
                     if (value != null) svalue = value.ToString();
                     if (svalue.Length == 0 && !alwaysEnable) continue;
 
-                    svalue = HttpUtility.UrlEncode(svalue).Replace("+", "%20");
+                    //svalue = HttpUtility.UrlEncode(svalue).Replace("+", "%20");
                     if (!urlParams.Keys.Contains(key)) urlParams.Add(key, svalue);
                 }
             }
@@ -442,7 +444,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         ///     Формирует строку из параметров фильтрации
         /// </summary>
         /// <returns>Возвращает строку с параметрами и их значенями</returns>
-        private string GetURLParams()
+        private string GetURLParams(bool isKescoRun)
         {
             var sb = new StringBuilder();
             var urlParams = new Dictionary<string, string>();
@@ -454,7 +456,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
             foreach (var key in urlParams.Keys)
             {
                 if (sb.Length > 0) sb.Append("&");
-                sb.AppendFormat("{0}={1}", key, urlParams[key]);
+                sb.AppendFormat("{0}={1}", key, isKescoRun ? HttpUtility.UrlEncodeUnicode(urlParams[key]) : HttpUtility.UrlEncode(urlParams[key]).Replace("+","%20"));
             }
 
             return sb.ToString();
