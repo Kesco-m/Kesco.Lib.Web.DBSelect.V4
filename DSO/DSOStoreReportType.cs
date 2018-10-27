@@ -2,6 +2,9 @@
 
 namespace Kesco.Lib.Web.DBSelect.V4.DSO
 {
+    /// <summary>
+    /// Источник данных для контрола выбора типа отчета по складам
+    /// </summary>
     public class DSOStoreReportType : DSOCommon
     {
         /// <summary>
@@ -36,6 +39,9 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
             NameField = "ТипОтчётаПоСкладам";
         }
 
+        /// <summary>
+        ///     Запрос выборки данных
+        /// </summary>
         public override string SQLBatch
         {
             get
@@ -44,6 +50,9 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
             }
         }
 
+        /// <summary>
+        /// Поле сортировки
+        /// </summary>
         public override string SQLOrderBy
         {
             get

@@ -6,7 +6,10 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.Common
     /// </summary>
     public class FOptIDs : FOptBase, IFilterOption
     {
-		public FOptIDs(string column)
+        /// <summary>
+        /// Конструктор класса
+        /// </summary>
+        public FOptIDs(string column)
 		{
 			_column = column;
 			CompanyHowSearch = "0";
@@ -24,7 +27,9 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.Common
 		//Поле для свойства Column
 		string _column = "КодСклада";
 
-		//Назавание колонки таблицы с идентификатором лица
+        /// <summary>
+        /// Назавание колонки таблицы с идентификатором лица
+        /// </summary>
 		public string Column { get { return _column; } set { _column = value; } }
 
         /// <summary>

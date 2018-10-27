@@ -4,7 +4,10 @@ using Kesco.Lib.Entities;
 
 namespace Kesco.Lib.Web.DBSelect.V4.DSO
 {
-	public class DSOCurrency : DSOCommon
+    /// <summary>
+    /// Источник данных для контрола выбора валюты
+    /// </summary>
+    public class DSOCurrency : DSOCommon
 	{
 		/// <summary>
 		/// Опция фильтра по имени
@@ -18,7 +21,10 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         [FilterOption("КодВалюты")]
 		public FOptIDs StoreId;
 
-		public DSOCurrency()
+		/// <summary>
+		/// Контстуктор класса
+		/// </summary>
+        public DSOCurrency()
 		{
 			KeyField = "КодВалюты";
             NameField = "Название";

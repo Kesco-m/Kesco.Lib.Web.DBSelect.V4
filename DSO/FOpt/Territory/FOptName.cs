@@ -2,6 +2,9 @@
 
 namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.Territory
 {
+    /// <summary>
+    ///     Класс опции поиска по имени
+    /// </summary>
     public class FOptName : FOptBase, IFilterOption
     {
         /// <summary>

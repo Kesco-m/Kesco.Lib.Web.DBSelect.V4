@@ -1,5 +1,8 @@
 ﻿namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.ContactType
 {
+    /// <summary>
+    ///     Класс опции поиска по типу
+    /// </summary>
     public class FOptContactType : FOptBase, IFilterOption
     {
         /// <summary>

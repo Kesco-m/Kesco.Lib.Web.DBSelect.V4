@@ -34,6 +34,9 @@ namespace Kesco.Lib.Web.DBSelect.V4
             get { return (DSOPosition) base.Filter; }
         }
 
+        /// <summary>
+        ///     Строка с перечислением через "," ID выбранных элементов
+        /// </summary>
         public override string SelectedItemsString
         {
             get

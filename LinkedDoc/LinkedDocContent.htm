@@ -1,0 +1,52 @@
+﻿<div id="[CID]" style="overflow: auto"></div>
+<div id="divDocumentChoice" style="display: none;">
+    [C_RADIO]
+    <div class="spacer">&nbsp;</div>
+    [C_DBSELECT]
+</div>
+<div class="spacer"></div>
+
+<script type="text/javascript">
+    dialogShow.form = null;
+    function dialogShow(title, linkedDocCmdListnerIndex) {
+        var idContainer = "divDocumentChoice";
+        if (null == dialogShow.form) {
+            var width = 410;
+            var height = 150;
+            var onOpen = null;
+            var onClose = null;
+            var buttons = [
+                {
+                    id: "btn_Apply_" + linkedDocCmdListnerIndex,
+                    text: lb_clientLocalization.ok_button,
+                    icons: {
+                        primary: v4_buttonIcons.Ok
+                    },
+                    click: function () { cmd('cmd', 'Listener', 'ctrlId', linkedDocCmdListnerIndex, 'cmdName', 'OK'); }
+                },
+                {
+                    id: "btn_Cancel_" + linkedDocCmdListnerIndex,
+                    text: lb_clientLocalization.cancel_button,
+                    icons: {
+                        primary: v4_buttonIcons.Cancel
+                    },
+                    width: 75,
+                    click: v4_closeDialogForm
+                }
+            ];
+
+            var dialogPostion = { my: "left top+12", at: "left", of: $("#divDocumentChoice") };
+            dialogShow.form = v4_dialog(idContainer, $("#" + idContainer), title, width, height, onOpen, onClose, buttons);
+        }
+        $("#divDocumentChoice").dialog("option", "title", title);
+        dialogShow.form.dialog("open");
+    }
+
+    function v4_closeDialogForm() {
+
+        if (null != dialogShow.form)
+            dialogShow.form.dialog("close");
+
+    }
+
+</script>

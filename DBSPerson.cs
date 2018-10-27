@@ -6,7 +6,10 @@ using System.Linq;
 using Kesco.Lib.BaseExtention.Enums.Controls;
 using Kesco.Lib.DALC;
 using Kesco.Lib.Entities.Persons;
+using Kesco.Lib.Entities.Persons.PersonOld;
+using Kesco.Lib.Entities.Stores;
 using Kesco.Lib.Web.Controls.V4;
+using Kesco.Lib.Web.Controls.V4.Common;
 using Kesco.Lib.Web.DBSelect.V4.DSO;
 using Kesco.Lib.Web.Settings;
 
@@ -116,8 +119,12 @@ namespace Kesco.Lib.Web.DBSelect.V4
         public override object GetObjectById(string id, string name = "")
         {
             if (!string.IsNullOrEmpty(name))
-                return new Person {Id = id, Name = name};
-            return new Person(id);
+                return new PersonOld {Id = id, Name = name};
+
+            var p = V4Page.ParentPage ?? V4Page;
+            var obj = p.GetObjectById(typeof(PersonOld), id) as PersonOld;
+
+            return obj;
         }
     }
 }

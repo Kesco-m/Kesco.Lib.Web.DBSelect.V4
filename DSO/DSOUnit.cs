@@ -18,11 +18,8 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         /// </summary>
         public DSOUnit()
         {
-            var tableName = "ЕдиницыИзмерения";
-
             KeyField = "КодЕдиницыИзмерения";
             NameField = "Описание";
-
             Name = new FOptName();
         }
 

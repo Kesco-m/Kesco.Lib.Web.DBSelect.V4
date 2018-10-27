@@ -16,6 +16,9 @@ namespace Kesco.Lib.Web.DBSelect.V4
         //Список элементов
         private List<Item> _listOfItems = null;
 
+        /// <summary>
+        /// Конструктор класса
+        /// </summary>
         public DBSStoreReportType()
         {
             Filter = new DSOStoreReportType();
@@ -65,6 +68,12 @@ namespace Kesco.Lib.Web.DBSelect.V4
             }
         }
 
+        /// <summary>
+        /// Поиск объекта по идентификатору
+        /// </summary>
+        /// <param name="id">Идентификатор объекта</param>
+        /// <param name="name">название объекта</param>
+        /// <returns>Результат поиска, null - не найден</returns>
         public override object GetObjectById(string id, string name = "")
         {
             if (null == _listOfItems) FillItemsList();

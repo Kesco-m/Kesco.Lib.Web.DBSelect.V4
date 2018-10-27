@@ -34,6 +34,9 @@ namespace Kesco.Lib.Web.DBSelect.V4
             get { return (DSOUnit) base.Filter; }
         }
 
+        /// <summary>
+        ///     Строка с перечислением через "," ID выбранных элементов
+        /// </summary>
         public override string SelectedItemsString
         {
             get
@@ -82,7 +85,10 @@ namespace Kesco.Lib.Web.DBSelect.V4
         {
             if (!string.IsNullOrEmpty(name))
                 return new Entities.Resources.Unit { Id = id, Name = name };
-            return new Entities.Resources.Unit(id);
+
+            var obj = V4Page.GetObjectById(typeof(Entities.Resources.Unit), id) as Entities.Resources.Unit;
+
+            return obj;
         }
     }
 }

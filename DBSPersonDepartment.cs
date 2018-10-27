@@ -16,6 +16,9 @@ namespace Kesco.Lib.Web.DBSelect.V4
         //Список элементов
         List<Item> _listOfItems = null;
 
+        /// <summary>
+        ///     Конструктор класса
+        /// </summary>
         public DBSPersonDepartment()
         {
             Filter = new DSOPersonDepartment();
@@ -34,6 +37,11 @@ namespace Kesco.Lib.Web.DBSelect.V4
             return Filter as DSOPersonDepartment;
         }
 
+        /// <summary>
+        /// Заполнение списка
+        /// </summary>
+        /// <param name="search">Строка поиска</param>
+        /// <returns>Интерфейс доступа к списку</returns>
         public override IEnumerable FillSelect(string search)
         {
             base.FillSelect(search);
@@ -62,6 +70,12 @@ namespace Kesco.Lib.Web.DBSelect.V4
             }
         }
 
+        /// <summary>
+        /// Поиск объекта по идентификатору
+        /// </summary>
+        /// <param name="id">Идентификатор объекта</param>
+        /// <param name="name">название объекта</param>
+        /// <returns>Результат поиска, null - не найден</returns>
         public override object GetObjectById(string id, string name = "")
         {
             /*

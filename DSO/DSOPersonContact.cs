@@ -8,7 +8,28 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
 	/// </summary>
 	public class DSOPersonContact : DSOCommon
 	{
-		public enum Source { Контакты = 1, КарточкиЮрЛиц = 2, КарточкиФизЛиц = 4, Пусто = 0};
+	    /// <summary>
+        /// Источник
+	    /// </summary>
+	    public enum Source
+	    {
+	        /// <summary>
+            /// Контакты
+	        /// </summary>
+	        Контакты = 1, 
+            /// <summary>
+            /// КарточкиЮрЛиц
+            /// </summary>
+            КарточкиЮрЛиц = 2, 
+            /// <summary>
+            /// КарточкиФизЛиц
+            /// </summary>
+            КарточкиФизЛиц = 4, 
+            /// <summary>
+            /// Пусто
+            /// </summary>
+            Пусто = 0
+	    };
 
 		/// <summary>
 		/// Опция фильтра по имени

@@ -16,8 +16,8 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         ///     false- добавить строку условия, которая описана в классе опции
         /// </param>
         /// <param name="optionNameURL">Название опции фильтрации в строке запроса</param>
-        public FilterOption(String optionName, bool isInnerParam = false, String optionNameURL = "",
-            bool alwaysEnable = false)
+        /// <param name="alwaysEnable">Ипользовать, даже если не присвоено значение</param>
+        public FilterOption(String optionName, bool isInnerParam = false, String optionNameURL = "", bool alwaysEnable = false)
         {
             OptionName = optionName;
             IsInnerParam = isInnerParam;

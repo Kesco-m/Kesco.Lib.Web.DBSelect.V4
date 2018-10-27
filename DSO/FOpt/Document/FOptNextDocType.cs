@@ -5,9 +5,15 @@ using System.Text;
 
 namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.Document
 {
-	public class FOptNextDocType : FOptBase, IFilterOption
+    /// <summary>
+    /// Класс опции поиска по типу
+    /// </summary>
+    public class FOptNextDocType : FOptBase, IFilterOption
 	{
-		public int FieldId { get; set; }
+		/// <summary>
+		/// Идентификатор поля
+		/// </summary>
+        public int FieldId { get; set; }
 
 		/// <summary>
 		/// Построение запроса

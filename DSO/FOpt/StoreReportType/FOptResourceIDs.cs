@@ -1,7 +1,14 @@
 ﻿namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.StoreReportType
 {
+    /// <summary>
+    ///     Класс опции поиска
+    /// </summary>
     public class FOptResourceIDs : FOptBase, IFilterOption
     {
+        /// <summary>
+        ///     Построение запроса
+        /// </summary>
+        /// <returns>Построенный запрос</returns>
         public string SQLGetClause()
         {
             if (string.IsNullOrEmpty(Value)) return string.Empty;

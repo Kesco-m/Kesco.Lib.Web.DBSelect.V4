@@ -32,9 +32,15 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         [FilterOption("Год", true)]
         public int? Year { get; set; }
 
+        /// <summary>
+        /// Месяц
+        /// </summary>
         [FilterOption("Месяц", true)]
         public int? Month { get; set; }
 
+        /// <summary>
+        ///     Запрос выборки данных
+        /// </summary>        
         public override string SQLBatch
         {
             get { return SQLQueries.SELECT_ДоговораПоКоторымБылаТарификация; }

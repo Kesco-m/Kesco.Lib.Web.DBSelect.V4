@@ -176,6 +176,10 @@ namespace Kesco.Lib.Web.DBSelect.V4
             //return new PersonTheme(id);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="url"></param>
         protected void OpenPopup(string url)
         {
             var callbackUrl = HttpContext.Current.Request.Url.Scheme + "://" +
@@ -217,6 +221,10 @@ namespace Kesco.Lib.Web.DBSelect.V4
             RenderFields();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="collection"></param>
         public override void ProcessCommand(NameValueCollection collection)
         {
             switch (collection["cmd"])
@@ -258,6 +266,10 @@ namespace Kesco.Lib.Web.DBSelect.V4
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="w"></param>
         protected override void RenderControlBody(TextWriter w)
         {
             w.Write(
@@ -267,6 +279,10 @@ namespace Kesco.Lib.Web.DBSelect.V4
             base.RenderControlBody(w);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
         public override void OnChanged(ProperyChangedEventArgs e)
         {
             IsMultiSelect = false;

@@ -5,10 +5,16 @@
 	/// </summary>
 	public class FOptName : FOptBase, IFilterOption
 	{
-		public FOptName()
-		{
-		}
+        /// <summary>
+        /// Конструктор
+        /// </summary>
+        public FOptName()
+        {
+        }
 
+        /// <summary>
+        ///     Фильтр по имени атрибута
+        /// </summary>
 		public FOptName(string column)
 		{
 			_column = column;
@@ -17,9 +23,15 @@
 		//Поле для свойства Column
 		string _column;
 
-		//Назавание колонки таблицы с названием сущности
+        /// <summary>
+        /// Назавание колонки таблицы с названием сущности
+        /// </summary>
 		public string Column { get { return _column; } set { _column = value; } }
 
+        /// <summary>
+        ///     Построение условия WHERE для ограничения по типу
+        /// </summary>
+        /// <returns>Строка с условием WHERE для ограничения по типу</returns>
 		public string SQLGetClause()
 		{
 			if (string.IsNullOrEmpty(Column)) return string.Empty;

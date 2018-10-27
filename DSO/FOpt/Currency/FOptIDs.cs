@@ -6,6 +6,10 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.Currency
     /// </summary>
     public class FOptIDs : FOptBase, IFilterOption
     {
+        /// <summary>
+        /// Конструктор класса
+        /// </summary>
+        /// <param name="column">Наименовние колонки</param>
 		public FOptIDs(string column)
 		{
 			_column = column;
@@ -21,10 +25,14 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.Currency
         /// </summary>
         public string CompanyHowSearch { get; set; }
 
-		//Поле для свойства Column
+		/// <summary>
+        /// Поле для свойства Column
+		/// </summary>
         string _column = "КодВалюты";
 
-		//Назавание колонки таблицы с идентификатором лица
+        /// <summary>
+        /// Назавание колонки таблицы с идентификатором лица
+        /// </summary>
 		public string Column { get { return _column; } set { _column = value; } }
 
         /// <summary>

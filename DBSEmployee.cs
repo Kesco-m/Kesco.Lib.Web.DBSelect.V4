@@ -71,7 +71,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
             }
             var dt = DBManager.GetData(SQLGetText(), Config.DS_user, CommandType.Text, SQLGetInnerParams());
 
-            var result = dt.AsEnumerable().Select(dr => new Employee
+            var result = dt.AsEnumerable().Select(dr => new Employee(false)
             {
                 Id = dr.Field<int>("КодСотрудника").ToString(CultureInfo.InvariantCulture),
                 FullName = dr.Field<string>("Сотрудник"),

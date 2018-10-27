@@ -223,7 +223,7 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.Document
         /// <summary>
         ///     Проверка: является ли слово номером документа
         /// </summary>
-        /// <param name="word">Введенное слово</param>
+        /// <param name="str">Введенное слово</param>
         /// <returns>Истина - если является, ложь - иначе</returns>
         private static bool IsNumber(string str)
         {

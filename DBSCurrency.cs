@@ -19,6 +19,9 @@ namespace Kesco.Lib.Web.DBSelect.V4
 		//Список элементов
 		List<Kesco.Lib.Entities.Item> _listOfItems = null;
 
+        /// <summary>
+        ///     Конструктор класса
+        /// </summary>
 		public DBSCurrency()
 		{
 			base.Filter = new DSOCurrency();
@@ -36,6 +39,9 @@ namespace Kesco.Lib.Web.DBSelect.V4
 			return Filter as DSOCurrency;
 		}
 
+        /// <summary>
+        ///     Строка с перечислением через "," ID выбранных элементов
+        /// </summary>
         public override string SelectedItemsString
         {
             get
@@ -46,7 +52,12 @@ namespace Kesco.Lib.Web.DBSelect.V4
             }
         }
 
-		public override IEnumerable FillSelect(string search)
+        /// <summary>
+        /// Заполнение списка валют
+        /// </summary>
+        /// <param name="search">Строка поиска</param>
+        /// <returns>Интерфейс доступа к списку</returns>
+        public override IEnumerable FillSelect(string search)
 		{
 			base.FillSelect(search);
 
@@ -70,7 +81,13 @@ namespace Kesco.Lib.Web.DBSelect.V4
 			}
 		}
 
-		public override object GetObjectById(string id, string name = "")
+        /// <summary>
+        /// Поиск объекта по идентификатору
+        /// </summary>
+        /// <param name="id">Идентификатор объекта</param>
+        /// <param name="name">название объекта</param>
+        /// <returns>Результат поиска, null - не найден</returns>
+        public override object GetObjectById(string id, string name = "")
 		{
 			if (null == _listOfItems) FillItemsList();
 

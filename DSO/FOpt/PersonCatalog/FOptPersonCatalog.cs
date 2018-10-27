@@ -1,5 +1,8 @@
 ﻿namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.PersonCatalog
 {
+    /// <summary>
+    ///     Класс опции поиска по каталогу
+    /// </summary>
     public class FOptPersonCatalog : FOptBase, IFilterOption
     {
         /// <summary>

@@ -41,10 +41,29 @@ namespace Kesco.Lib.Web.DBSelect.V4
         /// </summary>
         public List<JSONLink> InnerLinks { get; set; }
 
+        /// <summary>
+        /// Тип связи
+        /// </summary>
         public string LinkTypeID { get; set; }
+        
+        /// <summary>
+        /// Ролитель
+        /// </summary>
         public string ParentID { get; set; }
+
+        /// <summary>
+        /// Потомок
+        /// </summary>
         public string ChildID { get; set; }
+
+        /// <summary>
+        /// Автоматическая установка значения, если оно является единственным
+        /// </summary>
         public bool AutoSetFirstValue { get; set; }
+
+        /// <summary>
+        /// Связи лиц
+        /// </summary>
         public List<Link> PersonLinks { get; set; }
 
         /// <summary>

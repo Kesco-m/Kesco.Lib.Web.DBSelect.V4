@@ -79,7 +79,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         {
             if (!string.IsNullOrEmpty(name))
                 return new Document {Id = id, Name = name};
-            return new Document(id);
+            return new Document(id, false);
         }
 
         /// <summary>
@@ -90,19 +90,87 @@ namespace Kesco.Lib.Web.DBSelect.V4
         public override void ProcessCommand(NameValueCollection collection)
         {
             if (collection == null) return;
+
+            if (V4Page.IsKescoRun)
+            {
+                switch (collection["cmd"])
+                {
+                    case "search":
+                        JS.Write(DocViewInterop.SearchDocument(HttpContext.Current, HtmlID, Filter.Type.DocTypeParamsStr,
+                            Filter.PersonIDs.DocViewParamsStr, Filter.Name.Value));
+                        break;
+
+                    case "OpenDocument":
+                        JS.Write(DocViewInterop.OpenDocument(collection["id"], false));
+                        break;
+                    default:
+                        base.ProcessCommand(collection);
+                        break;
+                }
+                return;
+            }
+
+            //TODO: УДАЛИТЬ ПОСЛЕ ВНЕДРЕНИЯ KESCORUN
             switch (collection["cmd"])
             {
                 case "search":
-                    JS.Write(DocViewInterop.SearchDocument(HttpContext.Current, HtmlID, Filter.Type.DocTypeParamsStr, Filter.PersonIDs.DocViewParamsStr, Filter.Name.Value));
+                    SearchDoc(string.Format("types={0}&persons={1}&search={2}",
+                        Filter.Type.DocTypeParamsStr,
+                        Filter.PersonIDs.DocViewParamsStr,
+                        Regex.Replace(Filter.Name.Value, @"[^\\?]{0,}[?]", string.Empty)));
                     break;
 
                 case "OpenDocument":
-                    JS.Write(DocViewInterop.OpenDocument(collection["id"], false));
+                    OpenDoc(collection["id"], false);
                     break;
                 default:
                     base.ProcessCommand(collection);
                     break;
             }
+
+        }
+
+        //TODO: УДАЛИТЬ ПОСЛЕ ВНЕДРЕНИЯ KESCORUN
+
+        /// <summary>
+        ///     Открытие документа в Архиве
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="openImage"></param>
+        private void OpenDoc(string id, bool openImage = true)
+        {
+            JS.Write("srv4js('OPENDOC','id={0}&newwindow=1{1}',", id, openImage ? "&imageid=-2" : "&imageid=0");
+            JS.Write("function(rez,obj){if(rez.error){");
+            JS.Write("Alert.render(rez.errorMsg, '" + Resx.GetString("alertWarning") + "');");
+            JS.Write("}},null);");
+        }
+
+        /// <summary>
+        ///     Поиск документов Архиве по строке параметров
+        /// </summary>
+        /// <param name="searchParams">Строка параметров</param>
+        private void SearchDoc(string searchParams)
+        {
+            JS.Write("srv4js('SEARCH','{0}',", searchParams);
+            JS.Write(@"function(rez,obj)
+                        {
+	                        if(!rez.error)
+                            {
+		                        switch(rez.value)
+		                        {
+			                        case '-1': Alert.render('Ошибка взаимодействия с архивом документов!', 'Ошибка'); break;
+			                        case '0': break;
+			                        default:
+                                        v4_setValue('" + ID + @"', rez.value, ''); 				                        
+				                        break;
+		                        }
+                            }
+	                        else
+                            {
+		                        Alert.render('Ошибка взаимодействия с архивом документов:<br>'+rez.errorMsg, 'Ошибка');
+                            }
+                        }");
+            JS.Write(", null);");
         }
 
     }

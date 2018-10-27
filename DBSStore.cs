@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Data;
 using Kesco.Lib.DALC;
-using Kesco.Lib.Web.DBSelect.V4.DSO;
-using Kesco.Lib.Web.Settings;
-using Kesco.Lib.Entities;
-using Kesco.Lib.Entities.Resources;
 using Kesco.Lib.Entities.Stores;
 using Kesco.Lib.Web.Controls.V4;
+using Kesco.Lib.Web.Controls.V4.Common;
+using Kesco.Lib.Web.DBSelect.V4.DSO;
+using Kesco.Lib.Web.Settings;
+using Item = Kesco.Lib.Entities.Item;
 
 namespace Kesco.Lib.Web.DBSelect.V4
 {
@@ -17,7 +17,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
     public class DBSStore : DBSelect
     {
         //Список элементов
-        List<Kesco.Lib.Entities.Item> _listOfItems = null;
+        private List<Item> _listOfItems;
 
         /// <summary>
         ///     Конструктор контрола
@@ -42,17 +42,22 @@ namespace Kesco.Lib.Web.DBSelect.V4
         /// </summary>
         public new DSOStore Filter
         {
-            get { return (DSOStore)base.Filter; }
+            get { return (DSOStore) base.Filter; }
         }
 
         /// <summary>
-        /// Фильтр Подзапрос
+        ///     Фильтр Подзапрос
         /// </summary>
         public DSOStore GetFilter()
         {
-            return Filter as DSOStore;
+            return Filter;
         }
 
+        /// <summary>
+        ///     Заполнение списка
+        /// </summary>
+        /// <param name="search">Строка поиска</param>
+        /// <returns>Список</returns>
         public override IEnumerable FillSelect(string search)
         {
             base.FillSelect(search);
@@ -63,63 +68,38 @@ namespace Kesco.Lib.Web.DBSelect.V4
         }
 
         /// <summary>
-        /// Медот заполоняет список элементов из БД
+        ///     Медот заполоняет список элементов из БД
         /// </summary>
         private void FillItemsList()
         {
-            _listOfItems = new List<Kesco.Lib.Entities.Item>();
+            _listOfItems = new List<Item>();
 
-            (Filter as DSOStore).Exceptions.Set(SelectedItemsString);
+            Filter.Exceptions.Set(SelectedItemsString);
 
-            DataTable dtItems = DBManager.GetData(SQLGetText(false), Config.DS_person, CommandType.Text, SQLGetInnerParams());
+            var dtItems = DBManager.GetData(SQLGetText(false), Config.DS_person, CommandType.Text, SQLGetInnerParams());
 
             foreach (DataRow row in dtItems.Rows)
             {
-                _listOfItems.Add(new Kesco.Lib.Entities.Item { Id = row[Filter.KeyField].ToString(), Value = row[Filter.NameField] });
+                _listOfItems.Add(new Item {Id = row[Filter.KeyField].ToString(), Value = row[Filter.NameField]});
             }
         }
-        
+
+        /// <summary>
+        ///     Получение Единица измерения дополнительная по ID
+        /// </summary>
+        /// <param name="id">ID</param>
+        /// <param name="name">Наименование сущности</param>
+        /// <returns>Единица измерения</returns>
         public override object GetObjectById(string id, string name = "")
         {
-            //if (null == _listOfItems) FillItemsList();
-
-            //Kesco.Lib.Entities.Item store_item;
-            //if (!string.IsNullOrWhiteSpace(name))
-            //{
-            //    store_item = _listOfItems.Find(x => 0 == string.Compare(x.Id, id, true) && 0 == string.Compare(x.Value.ToString(), name, true));
-            //}
-            //else
-            //{
-            //    store_item = _listOfItems.Find(x => 0 == string.Compare(x.Id, id, true));
-            //}
-
-            //if (object.Equals(store_item, default(Kesco.Lib.Entities.Item)))//значение Item по умолчанию все поля null
-            //{
-            //    var sqlParams = new Dictionary<string, object> { { "@КодСклада", id } };
-            //    DataTable dtItems = DBManager.GetData(SQLQueries.SELECT_ID_Склад, Config.DS_person, CommandType.Text, sqlParams);
-            //    if (null != dtItems && dtItems.Rows.Count > 0)
-            //    {
-            //        DataRow row = dtItems.Rows[0];
-            //        return new Kesco.Lib.Entities.Item { Id = row[Filter.KeyField].ToString(), Value = row[Filter.NameField] };
-            //    }
-
-            //    return null;
-            //}
-
-            //return store_item;
-
             if (!string.IsNullOrEmpty(name))
-                return new Kesco.Lib.Entities.Item  { Id = id, Value = name };
-
-            var sqlParams = new Dictionary<string, object> { { "@КодСклада", id } };
-            DataTable dtItems = DBManager.GetData(SQLQueries.SELECT_ID_Склад, Config.DS_person, CommandType.Text, sqlParams);
-            if (null != dtItems && dtItems.Rows.Count > 0)
-            {
-                DataRow row = dtItems.Rows[0];
-                return new Kesco.Lib.Entities.Item { Id = row[Filter.KeyField].ToString(), Value = row[Filter.NameField] };
-            }
-
-            return null;
+                return new Item {Id = id, Value = name};
+            
+            var p = V4Page.ParentPage ?? V4Page;
+            var  obj = p.GetObjectById(typeof (Store), id) as Store;
+          
+            return new Item {Id = obj.Id, Value = obj.Name};
+            
         }
     }
 }

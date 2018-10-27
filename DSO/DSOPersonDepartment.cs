@@ -2,6 +2,9 @@
 
 namespace Kesco.Lib.Web.DBSelect.V4.DSO
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class DSOPersonDepartment : DSOCommon
     {
         /// <summary>
@@ -17,7 +20,7 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         public FOpt.PersonDepartment.FOptIDs PcId;
 
         /// <summary>
-        /// 
+        /// Конструктор класса
         /// </summary>
         public DSOPersonDepartment()
         {
@@ -27,6 +30,9 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
             Name = new FOpt.PersonDepartment.FOptName();
         }
 
+        /// <summary>
+        ///     Запрос выборки данных
+        /// </summary>        
         public override string SQLBatch
         {
             get
@@ -35,6 +41,9 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
             }
         }
 
+        /// <summary>
+        /// Поле сортировки
+        /// </summary>
         public override string SQLOrderBy
         {
             get

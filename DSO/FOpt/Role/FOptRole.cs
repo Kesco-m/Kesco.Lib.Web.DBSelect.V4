@@ -1,5 +1,8 @@
 ﻿namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.Role
 {
+    /// <summary>
+    ///     Класс опции поиска по роли
+    /// </summary>
     public class FOptRole : FOptBase, IFilterOption
     {
         /// <summary>

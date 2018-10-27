@@ -9,11 +9,17 @@ using Kesco.Lib.Entities;
 
 namespace Kesco.Lib.Web.DBSelect.V4
 {
+    /// <summary>
+    ///     Класс сущности 
+    /// </summary>
     public class DBSSqlQuery : DBSelect
     {
         //Список элементов
         List<Item> _listOfItems = null;
 
+        /// <summary>
+        /// ТипУсловия 
+        /// </summary>
         public string QueryType { get; set; }
 
         /// <summary>
@@ -38,6 +44,11 @@ namespace Kesco.Lib.Web.DBSelect.V4
             return Filter as DSOSqlQuery;
         }
 
+        /// <summary>
+        ///     Заполнение списка 
+        /// </summary>
+        /// <param name="search">Строка поиска</param>
+        /// <returns>Список</returns>
         public override IEnumerable FillSelect(string search)
         {
             base.FillSelect(search);
@@ -69,6 +80,12 @@ namespace Kesco.Lib.Web.DBSelect.V4
             }
         }
 
+        /// <summary>
+        ///     Получение Единица измерения дополнительная по ID
+        /// </summary>
+        /// <param name="id">ID</param>
+        /// <param name="name">Наименование сущности</param>
+        /// <returns>Единица измерения</returns>
         public override object GetObjectById(string id, string name = "")
         {
             /*

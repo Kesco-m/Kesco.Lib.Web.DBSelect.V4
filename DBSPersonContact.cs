@@ -40,6 +40,11 @@ namespace Kesco.Lib.Web.DBSelect.V4
 			return Filter as DSOPersonContact;
 		}
 
+        /// <summary>
+        /// Метод заполоняет список элементов из БД
+        /// </summary>
+        /// <param name="search"></param>
+        /// <returns></returns>
 		public override IEnumerable FillSelect(string search)
 		{
 			base.FillSelect(search);
@@ -50,25 +55,31 @@ namespace Kesco.Lib.Web.DBSelect.V4
 		}
 
 		/// <summary>
-		/// Медот заполоняет список элементов из БД
+		/// Возвращает список элементов из БД
 		/// </summary>
 		private void FillItemsList()
 		{
-			_listOfItems = new List<Kesco.Lib.Entities.Item>();
+			_listOfItems = new List<Item>();
 
 			DataTable dtItems = DBManager.GetData(SQLGetText(true), Config.DS_person, CommandType.Text, SQLGetInnerParams());
 
 			foreach (DataRow row in dtItems.Rows)
 			{
-				_listOfItems.Add(new Kesco.Lib.Entities.Item { Id = row[Filter.KeyField].ToString(), Value = row[Filter.NameField] });
+				_listOfItems.Add(new Item { Id = row[Filter.KeyField].ToString(), Value = row[Filter.NameField] });
 			}
 		}
 
+        /// <summary>
+        /// Поиск объекта по идентификатору
+        /// </summary>
+        /// <param name="id">Идентификатор объекта</param>
+        /// <param name="name">название объекта</param>
+        /// <returns>Результат поиска, null - не найден</returns>
 		public override object GetObjectById(string id, string name = "")
 		{
 			if (null == _listOfItems) FillItemsList();
 
-			Kesco.Lib.Entities.Item store_item;
+			Item store_item;
 			if (!string.IsNullOrWhiteSpace(name))
 			{
 				store_item = _listOfItems.Find(x => 0 == string.Compare(x.Id, id, true) && 0 == string.Compare(x.Value.ToString(), name, true));
@@ -78,14 +89,14 @@ namespace Kesco.Lib.Web.DBSelect.V4
 				store_item = _listOfItems.Find(x => 0 == string.Compare(x.Id, id, true));
 			}
 
-			if (object.Equals(store_item, default(Kesco.Lib.Entities.Item)))//значение Item по умолчанию все поля null
+			if (object.Equals(store_item, default(Item)))//значение Item по умолчанию все поля null
 			{
 				var sqlParams = new Dictionary<string, object> { { "@КодКонтакта", id } };
 				DataTable dtItems = DBManager.GetData(SQLQueries.SELECT_ID_КонтактыЛица, Config.DS_person, CommandType.Text, sqlParams);
 				if (null != dtItems && dtItems.Rows.Count > 0)
 				{
 					DataRow row = dtItems.Rows[0];
-					return new Kesco.Lib.Entities.Item { Id = row[Filter.KeyField].ToString(), Value = row[Filter.NameField] };
+					return new Item { Id = row[Filter.KeyField].ToString(), Value = row[Filter.NameField] };
 				}
 
 				return null;
