@@ -20,6 +20,9 @@ using Page = Kesco.Lib.Web.Controls.V4.Common.DocumentPage.DocPage;
 
 namespace Kesco.Lib.Web.DBSelect.V4.LinkedDoc
 {
+    /// <summary>
+    /// Вытекающие документы
+    /// </summary>
     public class LinkedDoc : V4Control, IClientCommandProcessor
     {
         #region Constants
@@ -33,8 +36,14 @@ namespace Kesco.Lib.Web.DBSelect.V4.LinkedDoc
         private Radio _currentRadioCtrl;
         private DBSDocument _currentDBSelectCtrl;
 
+        /// <summary>
+        /// Вытекающие документы
+        /// </summary>
         protected int LinkedDocCmdListnerIndex;
 
+        /// <summary>
+        ///     Акцессор V4Page
+        /// </summary>
         public Page V4Page
         {
             get { return Page as DocPage; }
@@ -47,6 +56,10 @@ namespace Kesco.Lib.Web.DBSelect.V4.LinkedDoc
         private string _linkType;
         private string _linkedDocs;
 
+        /// <summary>
+        /// Инициализация
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnInit(EventArgs e)
         {
             if (!V4Page.Listeners.Contains(this)) V4Page.Listeners.Add(this);
@@ -106,6 +119,11 @@ namespace Kesco.Lib.Web.DBSelect.V4.LinkedDoc
 
         }
 
+        /// <summary>
+        /// Обработка изменения позиции выбора действия
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void _currentRadioCtrl_OnChanged(object sender, ProperyChangedEventArgs e)
         {
             _currentDBSelectCtrl.IsDisabled = e.NewValue == "0";
@@ -159,6 +177,10 @@ namespace Kesco.Lib.Web.DBSelect.V4.LinkedDoc
             }
         }
 
+        /// <summary>
+        /// Отрисовка контрола
+        /// </summary>
+        /// <param name="output"></param>
         public override void RenderControl(HtmlTextWriter output)
         {
             
@@ -214,6 +236,10 @@ namespace Kesco.Lib.Web.DBSelect.V4.LinkedDoc
             V4Page.RestoreCursor();
         }
 
+        /// <summary>
+        /// Получение списка документов
+        /// </summary>
+        /// <param name="w"></param>
         public void RenderLinkedDocsInfo(TextWriter w)
         {
             if (V4Page.Doc.IsNew) return;
@@ -228,6 +254,11 @@ namespace Kesco.Lib.Web.DBSelect.V4.LinkedDoc
             GetLinkedDocsInfo(w, dv);
         }
 
+        /// <summary>
+        /// Обработка списка документов
+        /// </summary>
+        /// <param name="w"></param>
+        /// <param name="dv"></param>
         private void GetLinkedDocsInfo(TextWriter w, DataView dv)
         {
             var dt = Document.LoadSequelDocs(V4Page.Doc.Id);
@@ -247,6 +278,18 @@ namespace Kesco.Lib.Web.DBSelect.V4.LinkedDoc
             }
         }
 
+        /// <summary>
+        /// Отрисовка списка документов
+        /// </summary>
+        /// <param name="w"></param>
+        /// <param name="dt"></param>
+        /// <param name="_title"></param>
+        /// <param name="_oneTitle"></param>
+        /// <param name="_type"></param>
+        /// <param name="_linkType"></param>
+        /// <param name="fieldId"></param>
+        /// <param name="field"></param>
+        /// <param name="fieldEn"></param>
         private void RenderLinkedDocsInfoDetails(TextWriter w, DataTable dt, string _title, string _oneTitle,
             string _type, string _linkType, string fieldId, string field, string fieldEn)
         {
@@ -264,7 +307,8 @@ namespace Kesco.Lib.Web.DBSelect.V4.LinkedDoc
             var curScale = 2;
             decimal sum = 0;
 
-            var dtp = new DocType(_type);
+            var dtp = V4Page.GetObjectById(typeof(DocType), _type) as DocType; 
+
             if (!dtp.Unavailable)
             {
                 w.Write("<table border=0 style='BORDER-COLLAPSE:collapse;'>");
@@ -316,7 +360,8 @@ namespace Kesco.Lib.Web.DBSelect.V4.LinkedDoc
             w.Write("<table border=0 style='BORDER-COLLAPSE:collapse;padding-bottom:15px;'>");
             for (var i = 0; i < dv.Count; i++)
             {
-                d = new Document(dv[i]["КодДокумента"].ToString());
+                d = V4Page.GetObjectById(typeof(Document), dv[i]["КодДокумента"].ToString()) as Document; 
+
                 if (d.Unavailable) continue;
                 var res = d.DocumentData.ResourceId1;
                 if (res.HasValue && res > 0)

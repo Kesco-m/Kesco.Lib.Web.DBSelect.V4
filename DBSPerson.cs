@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
@@ -18,6 +19,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
     /// <summary>
     ///     Класс Select для элемента управления Лицо
     /// </summary>
+       
     public class DBSPerson : DBSelect
     {
         /// <summary>
@@ -25,7 +27,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         /// </summary>
         public DBSPerson()
         {
-            base.Filter = new DSOPerson();
+            base.Filter = new DSOPerson{PersonSelectTop = 9};
             AutonomySelect = false;
             InnerPersonsIDs = new List<string>();
             KeyField = "Id";
@@ -87,7 +89,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
             var persons = dt.AsEnumerable().Select(dr => new Person
             {
                 Id = dr.Field<int>(Filter.KeyField).ToString(CultureInfo.InvariantCulture),
-                Name = dr.Field<string>(Filter.NameField)
+                Name = dr.Field<string>(Filter.NameField).Length == 0 ? "#" + dr.Field<int>(Filter.KeyField).ToString(CultureInfo.InvariantCulture) : dr.Field<string>(Filter.NameField)
             }).ToList();
 
             if (null!=WeakList && WeakList.Count > 0)

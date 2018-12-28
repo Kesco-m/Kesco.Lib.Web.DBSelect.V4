@@ -34,6 +34,12 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         public FOptHasVirtual HasVirtual;
 
         /// <summary>
+        ///     Опция сортировки сотрудников по коллегам
+        /// </summary>
+        [FilterOption("SortColleagues", optionNameURL: "SortColleagues")]
+        public FOptSortColleagues SortColleagues;
+
+        /// <summary>
         ///     Опция поиска по кодам сотрудника
         /// </summary>
         [FilterOption("ids", optionNameURL: "ids")] public FOptIDs Ids;
@@ -57,6 +63,8 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         ///     Опция расширенного поиска по кодам сотрудника
         /// </summary>
         [FilterOption("selectedid", optionNameURL: "selectedid")] public FOpt.Common.FOptName SelectedId;
+
+
 
         /// <summary>
         ///     Опция поиска по состоянию сотрудника
@@ -93,6 +101,7 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
             HasLogin = new FOptHasLogin();
             HasEmail = new FOptHasEmail();
             HasVirtual = new FOptHasVirtual();
+            SortColleagues = new FOptSortColleagues();
             IdsCompany = new FOptIDsCompany();
             SubdivisionIDs = new FOptSubdivisionIDs();
             PositionIDs = new FOptPositionIDs();
@@ -195,12 +204,21 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         {
             get
             {
-                var result = "SELECT {0} T0.КодСотрудника, T0.Сотрудник, T0.Employee FROM Сотрудники T0";
-                if (!string.IsNullOrEmpty(SubdivisionIDs.Value) || SubdivisionIDs.SubdivisionHowSearch == "3" ||
-                    !string.IsNullOrEmpty(PositionIDs.Value) || PositionIDs.PositionHowSearch == "3")
-                    result +=
-                        " LEFT JOIN [Инвентаризация].[dbo].[vwДолжности] T1 ON T0.КодСотрудника = T1.КодСотрудника ";
-                return result;
+                StringBuilder result = new StringBuilder();
+
+                result.Append("SELECT {0} T0.КодСотрудника, T0.Сотрудник, T0.Employee");
+                if (SortColleagues.ValueSortColleagues)
+                    result.Append(", CASE WHEN T2.КодСотрудника IS NULL THEN 0 ELSE 1 END Коллега");
+                 result.Append("  FROM Сотрудники T0");
+                 if (!string.IsNullOrEmpty(SubdivisionIDs.Value) || SubdivisionIDs.SubdivisionHowSearch == "3" ||
+                     !string.IsNullOrEmpty(PositionIDs.Value) || PositionIDs.PositionHowSearch == "3")
+                     result.Append(" LEFT JOIN [Инвентаризация].[dbo].[vwДолжности] T1 ON T0.КодСотрудника = T1.КодСотрудника ");
+
+                 if (SortColleagues.ValueSortColleagues)
+                     result.Append(" LEFT JOIN [Инвентаризация].[dbo].[vwКоллегиПодчинённые] T2 ON T0.КодСотрудника = T2.КодСотрудника ");
+                
+
+                return result.ToString();
             }
         }
 
@@ -209,7 +227,7 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         /// </summary>
         public override string SQLOrderBy
         {
-            get { return "T0.Сотрудник"; }
+            get { return SortColleagues.ValueSortColleagues ? "Коллега DESC, T0.Сотрудник" : "T0.Сотрудник"; }
         }
     }
 }

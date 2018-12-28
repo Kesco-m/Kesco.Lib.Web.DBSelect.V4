@@ -23,7 +23,6 @@ namespace Kesco.Lib.Web.DBSelect.V4
 
             KeyField = "Id";
             ValueField = "Name";
-            DisplayFields = "Name";
         }
 
         /// <summary>

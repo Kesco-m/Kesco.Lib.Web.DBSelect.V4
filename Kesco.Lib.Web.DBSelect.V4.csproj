@@ -102,8 +102,13 @@
     <Compile Include="DSO\FOpt\Document\FOptChangedBy.cs" />
     <Compile Include="DSO\FOpt\Document\FOptNextDocType.cs" />
     <Compile Include="DSO\FOpt\Employee\FOptHasEmail.cs" />
+    <Compile Include="DSO\FOpt\Employee\FOptSortColleagues.cs" />
     <Compile Include="DSO\FOpt\PersonContact\FOptValidAt.cs" />
     <Compile Include="DSO\FOpt\PersonCustomer\FOptPersonCustomerRole.cs" />
+    <Compile Include="DSO\FOpt\PersonSigner\FOptParentID.cs" />
+    <Compile Include="DSO\FOpt\PersonSigner\FOptChildID.cs" />
+    <Compile Include="DSO\FOpt\PersonSigner\FOptLinkTypeID.cs" />
+    <Compile Include="DSO\FOpt\PersonSigner\FOptParametr.cs" />
     <Compile Include="DSO\FOpt\PersonRole\FOptName.cs" />
     <Compile Include="DSO\FOpt\PersonRole\FOptPersonRole.cs" />
     <Compile Include="DSO\FOpt\Location\FOptEmployee.cs" />
@@ -184,6 +189,7 @@
     <Compile Include="DSO\DSOUnit.cs" />
     <Compile Include="DSO\DSOUnitAdv.cs" />
     <Compile Include="DSO\DSOStavkaNDS.cs" />
+    <Compile Include="DSO\DSOPersonSigner.cs" />
     <Compile Include="LinkedDoc\LinkedDoc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DBSelect.cs" />
@@ -202,6 +208,7 @@
     <Compile Include="DBSUnit.cs" />
     <Compile Include="DBSUnitAdv.cs" />
     <Compile Include="DBSStavkaNDS.cs" />
+    <Compile Include="DBSPersonSigner.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Kesco.Lib.BaseExtention\Kesco.Lib.BaseExtention.csproj">

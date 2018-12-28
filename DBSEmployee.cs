@@ -25,7 +25,6 @@ namespace Kesco.Lib.Web.DBSelect.V4
 
             KeyField = "Id";
             ValueField = "FullName";
-            DisplayFields = "FullName";
 
             URLShowEntity = Config.user_form;
             URLAdvancedSearch = Config.user_search;

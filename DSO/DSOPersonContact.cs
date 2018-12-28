@@ -52,7 +52,7 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
 		/// <summary>
 		/// Опция фильтра по ID лица
 		/// </summary>
-		[FilterOption("КодЛица")]
+        [FilterOption("КодЛица", true, "idclient")]
 		public FOptIDs PersonId;
 
 		/// <summary>

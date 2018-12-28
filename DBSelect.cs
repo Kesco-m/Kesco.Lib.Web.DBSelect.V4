@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -16,6 +17,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
     /// <summary>
     ///     Базовый класс для источника данных контрола Select
     /// </summary>
+    
     public abstract class DBSelect : Select
     {
         
@@ -520,6 +522,44 @@ namespace Kesco.Lib.Web.DBSelect.V4
                     break;
             }
             return value;
+        }
+
+        protected virtual List<string> GetAdvIcons()
+        {
+            return null;
+        }
+
+        protected override void RenderControlBody(TextWriter w)
+        {
+
+            base.RenderControlBody(w);
+            if (!(this is DBSDocument)) return;
+            SetAdvIcons();
+        }
+
+        public override void Flush()
+        {
+            base.Flush();
+
+            if (!(this is DBSDocument)) return;
+
+            if (PropertyChanged.Contains("ValueText") || PropertyChanged.Contains("Value") || RefreshRequired)
+                SetAdvIcons();
+        }
+
+
+        private void SetAdvIcons()
+        {
+
+            var advIcons = GetAdvIcons();
+            if (advIcons != null && advIcons.Count > 0)
+            {
+                V4Page.JS.Write("setTimeout(function(){{$('#v3il_{0}').html('{1}'); var wthI = $('#v3il_{0}').width(); var wthT = $('#{0}_0').width(); $('#{0}_0').width(wthT-wthI);}},10);", HtmlID, HttpUtility.JavaScriptStringEncode(advIcons[0]));
+            }
+            else
+            {
+                V4Page.JS.Write("$('#v3il_{0}').html('{1}'); $('#{0}_0').width({2});", HtmlID, "", Width.Value);
+            }
         }
     }
 }

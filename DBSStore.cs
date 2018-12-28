@@ -1,8 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using Kesco.Lib.DALC;
 using Kesco.Lib.Entities.Stores;
+using Kesco.Lib.Entities.Transport;
 using Kesco.Lib.Web.Controls.V4;
 using Kesco.Lib.Web.Controls.V4.Common;
 using Kesco.Lib.Web.DBSelect.V4.DSO;
@@ -17,7 +20,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
     public class DBSStore : DBSelect
     {
         //Список элементов
-        private List<Item> _listOfItems;
+        private List<Store> _listOfItems;
 
         /// <summary>
         ///     Конструктор контрола
@@ -27,7 +30,10 @@ namespace Kesco.Lib.Web.DBSelect.V4
             base.Filter = new DSOStore();
             KeyField = "Id";
             ValueField = "Name";
-
+            DisplayFields = "Name,StoreTypeName,ResourceName,KeeperName,ManagerName";
+            AnvancedHeaderPopupResult =
+                string.Format("<tr class='gridHeaderSelect v4s_noselect'><td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td></tr>",
+                    Resx.GetString("STORE_Name"), Resx.GetString("TTN_lblType"), Resx.GetString("STORE_Resource"), Resx.GetString("STORE_Keeper"), Resx.GetString("TTN_lblSteward"));
             IsNotUseSelectTop = false;
 
             URLAdvancedSearch = Config.store_search;
@@ -61,18 +67,43 @@ namespace Kesco.Lib.Web.DBSelect.V4
         public override IEnumerable FillSelect(string search)
         {
             base.FillSelect(search);
+            var displayFields = "Name";
+            var anvancedHeaderPopupResult = string.Format("<tr class='gridHeaderSelect v4s_noselect'><td>{0}</td>", Resx.GetString("STORE_Name"));
+            if (Filter.StoreTypeId.Value == "")
+            {
+                displayFields += ",StoreTypeName";
+                anvancedHeaderPopupResult += string.Format("<td>{0}</td>",Resx.GetString("TTN_lblType"));
+            }
+            if (Filter.StoreResourceId.Value == "")
+            {
+                displayFields += ",ResourceName";
+                anvancedHeaderPopupResult += string.Format("<td>{0}</td>",Resx.GetString("STORE_Resource"));
+            }
 
-            FillItemsList();
+            displayFields += ",KeeperName";
+            anvancedHeaderPopupResult += string.Format("<td>{0}</td>",Resx.GetString("STORE_Keeper"));
 
-            return _listOfItems;
+            if (Filter.ManagerId.Value == "")
+            {
+                displayFields += ",ManagerName";
+                anvancedHeaderPopupResult += string.Format("<td>{0}</td>",Resx.GetString("TTN_lblSteward"));
+            }
+
+            DisplayFields = displayFields;
+            AnvancedHeaderPopupResult = anvancedHeaderPopupResult;
+
+            return GetStores(search, MaxItemsInQuery);
         }
 
         /// <summary>
-        ///     Медот заполоняет список элементов из БД
+        /// Метод заполоняет список элементов из БД
         /// </summary>
-        private void FillItemsList()
+        /// <param name="search"></param>
+        /// <param name="maxItemsInQuery"></param>
+        /// <returns></returns>
+        public List<Store> GetStores(string search, int maxItemsInQuery)
         {
-            _listOfItems = new List<Item>();
+            _listOfItems = new List<Store>();
 
             Filter.Exceptions.Set(SelectedItemsString);
 
@@ -80,8 +111,16 @@ namespace Kesco.Lib.Web.DBSelect.V4
 
             foreach (DataRow row in dtItems.Rows)
             {
-                _listOfItems.Add(new Item {Id = row[Filter.KeyField].ToString(), Value = row[Filter.NameField]});
+                _listOfItems.Add(new Store { Id = row[Filter.KeyField].ToString()
+                    ,Name = row["СкладFull"].ToString()
+                    ,StoreTypeName = row["Псевдоним"].ToString()
+                    ,ResourceName = row["Ресурс"].ToString()
+                    ,KeeperName = row["Хранитель"].ToString()
+                    ,ManagerName = row["Распорядитель"].ToString()
+                });
             }
+
+            return _listOfItems;
         }
 
         /// <summary>
@@ -98,7 +137,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
             var p = V4Page.ParentPage ?? V4Page;
             var  obj = p.GetObjectById(typeof (Store), id) as Store;
           
-            return new Item {Id = obj.Id, Value = obj.Name};
+            return new Item {Id = obj.Id, Value = obj.FullName};
             
         }
     }

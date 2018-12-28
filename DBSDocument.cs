@@ -1,10 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Diagnostics.Contracts;
+using System.IO;
 using System.Text.RegularExpressions;
 using System.Web;
+using System.Web.UI;
 using Kesco.Lib.BaseExtention;
+using Kesco.Lib.Entities.Corporate;
 using Kesco.Lib.Entities.Documents;
+using Kesco.Lib.Web.Controls.V4;
 using Kesco.Lib.Web.DBSelect.V4.DSO;
 
 namespace Kesco.Lib.Web.DBSelect.V4
@@ -18,16 +23,25 @@ namespace Kesco.Lib.Web.DBSelect.V4
         ///     Инициализация объекта
         /// </summary>
         public DBSDocument()
-        {
+        {   
             base.Filter = new DSODocument();
             KeyField = "Id";
-            ValueField = "FullDocName";
+            ValueField = "FullDocumentName";
+            MethodsGetEntityValue = new List<SelectMethodGetEntityValue>
+            {
+                new SelectMethodGetEntityValue
+                {
+                    ValueField = "FullDocumentName",
+                    MethodName = "GetFullDocumentName",
+                    MethodParams = new object[] {new Employee(false) {IsLazyLoadingByCurrentUser = true}}
+                }
+            };
 
-            Index = 1;
             FuncShowEntity = "v4_docView_Show(\"{0}\",\"{1}\");";
             URLAdvancedSearch = "0";
             IsAlwaysAdvancedSearch = true;
             IsNotUseSelectTop = false;
+            
         }
 
         /// <summary>
@@ -49,6 +63,11 @@ namespace Kesco.Lib.Web.DBSelect.V4
         }
 
         /// <summary>
+        /// Иконка документа
+        /// </summary>
+        public bool IsAdvIcons { get; set; }
+
+        /// <summary>
         ///     Заполнение списка
         /// </summary>
         /// <param name="search">Строка поиска</param>
@@ -67,6 +86,14 @@ namespace Kesco.Lib.Web.DBSelect.V4
         {
             var query = SQLGetText();
             return Document.GetDocumentsList(query);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public List<string> AdvIcons
+        {
+            get { return GetAdvIcons(); }            
         }
 
         /// <summary>
@@ -171,6 +198,27 @@ namespace Kesco.Lib.Web.DBSelect.V4
                             }
                         }");
             JS.Write(", null);");
+        }
+
+        /// <summary>
+        /// Получение иконок для документа 
+        /// </summary>
+        /// <returns></returns>
+        protected override List<string> GetAdvIcons()
+        {
+            if (IsAdvIcons && !string.IsNullOrEmpty(Value))
+            {
+                var advIconsCollection = new NameValueCollection();
+                var listIcons = new List<string>();
+                Document.FillAdvIcons(Value, advIconsCollection);
+                foreach (var key in advIconsCollection.AllKeys)
+                    listIcons.Add(string.Format("<img src=\"/styles/{0}\" title=\"{1}\" border=\"0\"/>", key,
+                        advIconsCollection.Get(key)));
+
+                return listIcons;
+            }
+
+            return null;
         }
 
     }

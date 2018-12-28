@@ -55,7 +55,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         }
 
         /// <summary>
-        /// Медот заполоняет список элементов из БД
+        /// Метод заполоняет список элементов из БД
         /// </summary>
         private void FillItemsList()
         {

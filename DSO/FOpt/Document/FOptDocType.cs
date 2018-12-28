@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using Kesco.Lib.BaseExtention.Enums.Docs;
+using Kesco.Lib.DALC;
 using Kesco.Lib.Entities.Documents;
 using Kesco.Lib.Log;
 using Kesco.Lib.Web.Settings;
@@ -165,17 +166,14 @@ FROM ТипыДокументов Ch LEFT JOIN ТипыДокументов Pr O
 
                         if (type.QueryType != DocTypeQueryType.Equals)
                         {
-                            var da = new SqlDataAdapter(sql.ToString(), Config.DS_document);
                             var dt = new DataTable();
-
                             try
                             {
-                                da.Fill(dt);
+                                dt = DBManager.GetData(sql.ToString(), Config.DS_document);
                             }
                             catch (Exception ex)
                             {
-                                Logger.WriteEx(new DetailedException("Ошибка при получении типов документов в DSODoc",
-                                    ex, da.SelectCommand));
+                                Logger.WriteEx(new DetailedException("Ошибка при получении типов документов в DSODoc", ex));
                                 throw ex;
                             }
 

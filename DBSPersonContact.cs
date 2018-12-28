@@ -7,7 +7,9 @@ using System.Data;
 using Kesco.Lib.DALC;
 using Kesco.Lib.Web.Settings;
 using Kesco.Lib.Entities;
+using Kesco.Lib.Web.Controls.V4;
 using Kesco.Lib.Web.DBSelect.V4.DSO;
+using Item = Kesco.Lib.Entities.Item;
 
 namespace Kesco.Lib.Web.DBSelect.V4
 {
@@ -29,6 +31,14 @@ namespace Kesco.Lib.Web.DBSelect.V4
 			ValueField = "Name";
 
 			IsNotUseSelectTop = false;
+
+            //URLAdvancedSearch = Config.person_search;
+            //URLShowEntity = Config.person_contact_form_v4;
+            //URLShowEntity = string.Concat(Config.person_contact_form_v4, "?id=", 0);
+
+            //id=0&idclient={3}&personcontacttext={2}&personcontactcategor=1&personcontacttype={4}&docview=yes');\">",ID,Env.PersonsRoot,txt,dso.Person.GetItemValue(0),dso.Type.GetItemValue(0));
+            URIsCreateEntity = new List<URICreateEntity>();
+            URIsCreateEntity.Add(new URICreateEntity("/styles/User.gif", Config.person_contact_form_v4, Resx.GetString("TTN_lblCreateContact")));
 		}
 
 

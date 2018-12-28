@@ -26,7 +26,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
                 string.Format("<tr class='v4s_noselect'><td><b>{0}</b></td><td><b>{2}</b></td><td><b>{1}</b></td></tr>",
                     Resx.GetString("sTypeOfTransport"), Resx.GetString("sName"), Resx.GetString("sCode"));
 
-            Index = 2;
+            IndexField = 2;
             OnRenderNtf += BasisNtf;
         }
 

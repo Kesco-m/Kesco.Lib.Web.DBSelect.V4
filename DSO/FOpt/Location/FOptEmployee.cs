@@ -10,7 +10,7 @@
         /// <summary>
         ///     Значение
         /// </summary>
-        public string Value
+        public override string Value
         {
             get { return _value; }
             set { _value = value; }

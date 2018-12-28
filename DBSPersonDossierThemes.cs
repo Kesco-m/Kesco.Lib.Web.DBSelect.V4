@@ -189,7 +189,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
             if (url.IndexOf('?') == -1) url += "?";
             else url += "&";
 
-            url += string.Format("return={0}&mvc=1&clid={1}&control={2}&callbackKey={3}&callbackUrl={4}",
+            url += string.Format("return={0}&mvc=4&clid={1}&control={2}&callbackKey={3}&callbackUrl={4}",
                 IsMultiReturn ? 2 : 1,
                 CLID,
                 HttpUtility.UrlEncode(HtmlID),

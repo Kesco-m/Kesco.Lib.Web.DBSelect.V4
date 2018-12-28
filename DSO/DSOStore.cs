@@ -30,25 +30,25 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
 		/// <summary>
 		/// Опция фильтра по коду типа склада
 		/// </summary>
-		[FilterOption("КодТипаСклада")]
+		[FilterOption("КодТипаСклада", true, "StoreType")]
 		public FOptIDs StoreTypeId;
 
 		/// <summary>
 		/// Опция фильтра по коду ресурса склада
 		/// </summary>
-		[FilterOption("КодРесурса")]
+        [FilterOption("КодРесурса", true, "StoreResource")]
 		public FOptIDs StoreResourceId;
 
 		/// <summary>
 		/// Опция фильтра по коду распорядителя
 		/// </summary>
-		[FilterOption("КодРаспорядителя")]
+        [FilterOption("КодРаспорядителя", true, "StoreManager")]
 		public FOptIDs ManagerId;
 
 		/// <summary>
 		/// Опция фильтра по дате действия
 		/// </summary>
-		[FilterOption("Действует")]
+        [FilterOption("Действует")]
 		public FOpt.Store.FOptValidAt ValidAt;
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         /// </summary>
         public override string SQLBatch
         {
-            get { return SQLQueries.SELECT_Склад; }
+            get { return SQLQueries.SELECT_Склад_Ext; }
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         {
             get
             {
-                return "Склад";
+                return "T0.Sort";
             }
         }
     }

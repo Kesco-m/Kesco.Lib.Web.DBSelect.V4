@@ -128,7 +128,7 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         /// </summary>
         public override string SQLOrderBy
         {
-            get { return "T0.ДатаДокумента DESC"; }
+            get { return "T0.КодДокумента DESC"; }
         }
     }
 }
