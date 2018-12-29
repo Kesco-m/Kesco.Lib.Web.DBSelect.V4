@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using Kesco.Lib.DALC;
+using Kesco.Lib.Entities;
 using Kesco.Lib.Entities.Transport;
 using Kesco.Lib.Web.Controls.V4;
 using Kesco.Lib.Web.DBSelect.V4.DSO;
@@ -70,19 +71,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         /// <returns>Список транспортных узлов</returns>
         public List<TransportNode> GetTransportNodes(string search, string type, int maxItemsInQuery)
         {
-            var sql = String.Format(@"
-SELECT TOP {0} T0.КодТранспортногоУзла, T0.Название+ISNULL('['+ЖД.ЖелезнаяДорога +']','') Название, ВТ.ВидТранспорта Транспорт, T0.КодЖелезнойДороги,T0.КодВидаТранспорта		
-FROM [Справочники].[dbo].ТранспортныеУзлы T0
-LEFT OUTER JOIN [Справочники].[dbo].ЖелезныеДороги ЖД ON T0.КодЖелезнойДороги=ЖД.КодЖелезнойДороги
-INNER JOIN [Справочники].[dbo].ВидыТранспорта ВТ ON  T0.КодВидаТранспорта=ВТ.КодВидаТранспорта	
-WHERE (1=1) {1} {2} ORDER BY T0.Название,T0.КодВидаТранспорта", maxItemsInQuery,
-                !String.IsNullOrEmpty(type) ? @" and T0.КодВидаТранспорта = " + type : "",
-                !String.IsNullOrEmpty(search)
-                    ? @" and (' ' + (CASE WHEN T0.КодВидаТранспорта = 1 THEN RIGHT((T0.КодТранспортногоУзла+1000000),6) ELSE CONVERT(varchar,T0.КодТранспортногоУзла) END) + ' ' +
-T0.НазваниеRL LIKE N'% ' + Инвентаризация.dbo.fn_ReplaceRusLat(N'" + search + "') + '%')"
-                    : "");
-
-            var dt = DBManager.GetData(sql, Config.DS_document);
+            var dt = DBManager.GetData(SQLQueries.SELECT_ТранспортныеУзлыВыбор(search, type, maxItemsInQuery), Config.DS_document);
             var result = dt.AsEnumerable().Select(dr => new TransportNode
             {
                 Id = dr.Field<int>("КодТранспортногоУзла").ToString(),
@@ -103,17 +92,11 @@ T0.НазваниеRL LIKE N'% ' + Инвентаризация.dbo.fn_ReplaceRu
         /// <returns>транспортный узел</returns>
         public override object GetObjectById(string id, string name = "")
         {
-            var sql = String.Format(@"
-SELECT TOP 1 T0.КодТранспортногоУзла, T0.Название, T0.Название+ISNULL(' ['+ЖД.ЖелезнаяДорога +']','') НазваниеЖД, 
-            ВТ.ВидТранспорта Транспорт, T0.КодЖелезнойДороги,T0.КодВидаТранспорта		
-FROM [Справочники].[dbo].ТранспортныеУзлы T0
-LEFT OUTER JOIN [Справочники].[dbo].ЖелезныеДороги ЖД ON T0.КодЖелезнойДороги=ЖД.КодЖелезнойДороги
-INNER JOIN [Справочники].[dbo].ВидыТранспорта ВТ ON  T0.КодВидаТранспорта=ВТ.КодВидаТранспорта	
-WHERE T0.КодТранспортногоУзла={0}", id);
-
+            var sql = String.Format(SQLQueries.SELECT_ID_ТранспортныйУзел, id);
             var dt = DBManager.GetData(sql, Config.DS_document);
             var result = dt.AsEnumerable().Select(dr => new TransportNode
             {
+                Unavailable = false,
                 Id = dr.Field<int>("КодТранспортногоУзла").ToString(),
                 Name = (dr.Field<int>("КодВидаТранспорта") == 1) ? 
                         "ст. " + dr.Field<string>("Название") + " (" + dr.Field<int>("КодТранспортногоУзла").ToString() + ")" 

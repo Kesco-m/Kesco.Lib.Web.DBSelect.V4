@@ -99,7 +99,8 @@ namespace Kesco.Lib.Web.DBSelect.V4
                 foreach (var w in WeakList)
                 {
                     var wPerson = persons.FirstOrDefault(p => p.Id == w);
-                    toInsert.Add(wPerson ?? new Person(w));
+                    if (toInsert.Exists(p => wPerson != null && p.Id == wPerson.Id))
+                        toInsert.Add(new Person(w));
                 }
                 MaxItemsInPopup = toInsert.Count;
                 persons.InsertRange(0, toInsert);
