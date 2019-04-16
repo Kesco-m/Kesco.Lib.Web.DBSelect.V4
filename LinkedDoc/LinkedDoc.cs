@@ -34,7 +34,7 @@ namespace Kesco.Lib.Web.DBSelect.V4.LinkedDoc
         #endregion
 
         private Radio _currentRadioCtrl;
-        private DBSDocument _currentDBSelectCtrl;
+        private DBSDocument _currentDbSelectCtrl;
 
         /// <summary>
         /// Вытекающие документы
@@ -44,7 +44,7 @@ namespace Kesco.Lib.Web.DBSelect.V4.LinkedDoc
         /// <summary>
         ///     Акцессор V4Page
         /// </summary>
-        public Page V4Page
+        public new Page V4Page
         {
             get { return Page as DocPage; }
             set { Page = value; }
@@ -77,7 +77,7 @@ namespace Kesco.Lib.Web.DBSelect.V4.LinkedDoc
             _currentRadioCtrl.Value = "0";
             V4Page.V4Controls.Add(_currentRadioCtrl);
 
-            _currentDBSelectCtrl = new DBSDocument
+            _currentDbSelectCtrl = new DBSDocument
             {
                 V4Page = V4Page,
                 ID = "dbsDocument_" + ID,
@@ -85,11 +85,11 @@ namespace Kesco.Lib.Web.DBSelect.V4.LinkedDoc
                 Width = new System.Web.UI.WebControls.Unit("350px")
             };
 
-            _currentDBSelectCtrl.OnRenderNtf += LinkedDocumentOnOnRenderNtf;
-            _currentDBSelectCtrl.ValueChanged += LinkedDocumentOnValueChanged;
-            _currentDBSelectCtrl.BeforeSearch += DBSelect_BeforeSearch;
-            _currentDBSelectCtrl.IsDisabled = true;
-            V4Page.V4Controls.Add(_currentDBSelectCtrl);
+            _currentDbSelectCtrl.OnRenderNtf += LinkedDocumentOnOnRenderNtf;
+            _currentDbSelectCtrl.ValueChanged += LinkedDocumentOnValueChanged;
+            _currentDbSelectCtrl.BeforeSearch += DBSelect_BeforeSearch;
+            _currentDbSelectCtrl.IsDisabled = true;
+            V4Page.V4Controls.Add(_currentDbSelectCtrl);
         }
 
         /// <summary>
@@ -100,21 +100,21 @@ namespace Kesco.Lib.Web.DBSelect.V4.LinkedDoc
         {
             if (!string.IsNullOrEmpty(_type))
             {
-                _currentDBSelectCtrl.Filter.Type.Add(_type, DocTypeQueryType.Equals);
+                _currentDbSelectCtrl.Filter.Type.Add(_type, DocTypeQueryType.Equals);
             }
             if (!string.IsNullOrEmpty(V4Page.Doc.Date.ToString("yyyyMMdd")))
             {
-                _currentDBSelectCtrl.Filter.Date.DateSearchType = DateSearchType.MoreThan;
-                _currentDBSelectCtrl.Filter.Date.Add(V4Page.Doc.Date.ToString("yyyyMMdd"));
+                _currentDbSelectCtrl.Filter.Date.DateSearchType = DateSearchType.MoreThan;
+                _currentDbSelectCtrl.Filter.Date.Add(V4Page.Doc.Date.ToString("yyyyMMdd"));
             }
             if (!string.IsNullOrEmpty(_linkedDocs))
             {
                 var col = ConvertExtention.Convert.Str2Collection(_linkedDocs);
                 foreach (string id in col)
-                    _currentDBSelectCtrl.Filter.IDs.Add(id);
+                    _currentDbSelectCtrl.Filter.IDs.Add(id);
 
                 if (col.Count > 0)
-                    _currentDBSelectCtrl.Filter.IDs.Inverse = true;
+                    _currentDbSelectCtrl.Filter.IDs.Inverse = true;
             }
 
         }
@@ -126,9 +126,9 @@ namespace Kesco.Lib.Web.DBSelect.V4.LinkedDoc
         /// <param name="e"></param>
         protected void _currentRadioCtrl_OnChanged(object sender, ProperyChangedEventArgs e)
         {
-            _currentDBSelectCtrl.IsDisabled = e.NewValue == "0";
-            if (_currentDBSelectCtrl.IsDisabled)
-                _currentDBSelectCtrl.Value = _docValue = null;
+            _currentDbSelectCtrl.IsDisabled = e.NewValue == "0";
+            if (_currentDbSelectCtrl.IsDisabled)
+                _currentDbSelectCtrl.Value = _docValue = null;
         }
 
         /// <summary>
@@ -150,8 +150,8 @@ namespace Kesco.Lib.Web.DBSelect.V4.LinkedDoc
 
                     _currentRadioCtrl.Value = "0";
                     _currentRadioCtrl.Flush();
-                    _currentDBSelectCtrl.Value = null;
-                    _currentDBSelectCtrl.IsDisabled = true;
+                    _currentDbSelectCtrl.Value = null;
+                    _currentDbSelectCtrl.IsDisabled = true;
 
                     JS.Write("dialogShow('{0}', '{1}');", Resx.GetString("title"), LinkedDocCmdListnerIndex);
                     break;
@@ -166,7 +166,7 @@ namespace Kesco.Lib.Web.DBSelect.V4.LinkedDoc
                     else
                         // связываем существующий документ
                         url = dtp.URL + (dtp.URL.IndexOf("?", StringComparison.Ordinal) > 0 ? "&" : "?") +
-                            "DocId=" + V4Page.Doc.Id + "&Id=" + _currentDBSelectCtrl.Value + "&fieldId=" + _field;
+                            "DocId=" + V4Page.Doc.Id + "&Id=" + _currentDbSelectCtrl.Value + "&fieldId=" + _field;
 
                     if (url != "")
                     {
@@ -199,12 +199,12 @@ namespace Kesco.Lib.Web.DBSelect.V4.LinkedDoc
                 sourceContent = sourceContent.Replace(_constCtrlRadio, currentRadioTextWriter.ToString());
             }
 
-            if (_currentDBSelectCtrl != null)
+            if (_currentDbSelectCtrl != null)
             {
                 using (TextWriter currentDBSelectTextWriter = new StringWriter())
                 {
                     var currentWriter = new HtmlTextWriter(currentDBSelectTextWriter);
-                    _currentDBSelectCtrl.RenderControl(currentWriter);
+                    _currentDbSelectCtrl.RenderControl(currentWriter);
                     sourceContent = sourceContent.Replace(_constCtrlDBSelect, currentDBSelectTextWriter.ToString());
                 }
             }

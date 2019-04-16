@@ -524,11 +524,19 @@ namespace Kesco.Lib.Web.DBSelect.V4
             return value;
         }
 
+        /// <summary>
+        /// Получение списка иконок
+        /// </summary>
+        /// <returns></returns>
         protected virtual List<string> GetAdvIcons()
         {
             return null;
         }
 
+        /// <summary>
+        /// Отрисовка контрола
+        /// </summary>
+        /// <param name="w"></param>
         protected override void RenderControlBody(TextWriter w)
         {
 
@@ -537,6 +545,9 @@ namespace Kesco.Lib.Web.DBSelect.V4
             SetAdvIcons();
         }
 
+        /// <summary>
+        /// Отправка клиенту скрипта с изменениями контрола
+        /// </summary>
         public override void Flush()
         {
             base.Flush();
@@ -547,7 +558,9 @@ namespace Kesco.Lib.Web.DBSelect.V4
                 SetAdvIcons();
         }
 
-
+        /// <summary>
+        /// Отрисовка иконок
+        /// </summary>
         private void SetAdvIcons()
         {
 

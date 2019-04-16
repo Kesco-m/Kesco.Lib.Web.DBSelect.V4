@@ -19,7 +19,7 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
 		/// Опция фильтра по ID
 		/// </summary>
         [FilterOption("КодВалюты")]
-		public FOptIDs StoreId;
+		public FOptIDs CurrencyId;
 
 		/// <summary>
 		/// Контстуктор класса
@@ -28,7 +28,7 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
 		{
 			KeyField = "КодВалюты";
             NameField = "Название";
-			StoreId = new FOptIDs("КодВалюты");
+			CurrencyId = new FOptIDs("КодВалюты");
             Name = new FOptName("РесурсРус");
 		}
 

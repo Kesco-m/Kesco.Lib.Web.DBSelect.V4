@@ -31,14 +31,16 @@ namespace Kesco.Lib.Web.DBSelect.V4
 			IsNotUseSelectTop = true;
 		}
 
-		/// <summary>
-		/// Фильтр Подзапрос
-		/// </summary>
-		public DSOCurrency GetFilter()
-		{
-			return Filter as DSOCurrency;
-		}
+        /// <summary>
+        ///     Фильтр
+        /// </summary>
+        public new DSOCurrency Filter
+        {
+            get { return (DSOCurrency)base.Filter; }
+        }
 
+
+		
         /// <summary>
         ///     Строка с перечислением через "," ID выбранных элементов
         /// </summary>

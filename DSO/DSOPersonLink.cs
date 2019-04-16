@@ -45,6 +45,12 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         public string LinkTypeID { get; set; }
 
         /// <summary>
+        ///     Опция фильтра по параметр связи лиц
+        /// </summary>
+        [FilterOption("Параметр", false, "Параметр")]
+        public string Parameter { get; set; }
+
+        /// <summary>
         ///     Запрос выборки данных
         /// </summary>
         public override string SQLBatch

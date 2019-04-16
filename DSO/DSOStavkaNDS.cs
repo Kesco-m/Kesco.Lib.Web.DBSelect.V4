@@ -12,7 +12,13 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         ///     Опция фильтра по территории
         /// </summary>
         [FilterOption("КодТерритории", true)]
-        public int TerritoryCode { get; set; } 
+        public int TerritoryCode { get; set; }
+
+        /// <summary>
+        ///     Опция фильтра по последнему году действия Ставки НЛС
+        /// </summary>
+        [FilterOption("Действует")]
+        public FOptValid ValidAt;
 
         /// <summary>
         ///     Конструктор класса
@@ -21,8 +27,7 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         {
             KeyField = "КодСтавкиНДС";
             NameField = "СтавкаНДС";
-
-            //TerritoryCode = new FOptTerritoryCode();
+            ValidAt = new FOptValid();
         }
 
         /// <summary>

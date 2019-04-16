@@ -52,6 +52,11 @@ namespace Kesco.Lib.Web.DBSelect.V4
         public string ParentID { get; set; }
 
         /// <summary>
+        /// Параметр
+        /// </summary>
+        public int Parameter { get; set; }
+
+        /// <summary>
         /// Потомок
         /// </summary>
         public string ChildID { get; set; }

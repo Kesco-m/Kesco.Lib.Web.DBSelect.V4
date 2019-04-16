@@ -52,7 +52,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         /// <returns>Список</returns>
         public List<StavkaNDS> GetStavkaNDS()
         {
-            var dt = DBManager.GetData(SQLGetText(), Config.DS_resource, CommandType.Text, SQLGetInnerParams());
+            var dt = DBManager.GetData(SQLGetText(true), Config.DS_resource, CommandType.Text, SQLGetInnerParams());
 
             var stavkaList = dt.AsEnumerable().Select(dr => new StavkaNDS()
             {

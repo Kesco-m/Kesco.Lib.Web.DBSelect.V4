@@ -48,7 +48,7 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
 		/// <summary>
 		/// Опция фильтра по дате действия
 		/// </summary>
-        [FilterOption("Действует")]
+        [FilterOption("Действует", true, "StoreActual")]
 		public FOpt.Store.FOptValidAt ValidAt;
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
 			ManagerId = new FOptIDs("КодРаспорядителя");
 			StoreResourceId = new FOptIDs("КодРесурса");
 
-			ValidAt = new FOpt.Store.FOptValidAt();
+            ValidAt = new FOpt.Store.FOptValidAt();
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         {
             get
             {
-                return "T0.Sort";
+                return "T0.Хранитель, T0.Sort";
             }
         }
     }
