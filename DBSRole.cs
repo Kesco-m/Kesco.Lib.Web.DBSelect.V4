@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
@@ -30,10 +29,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         /// <summary>
         ///     Фильтр
         /// </summary>
-        public new DSORole Filter
-        {
-            get { return (DSORole) base.Filter; }
-        }
+        public new DSORole Filter => (DSORole) base.Filter;
 
         /// <summary>
         ///     Заполнение списка
@@ -71,7 +67,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         /// <returns>Компания</returns>
         public override object GetObjectById(string id, string name = "")
         {
-            if (!String.IsNullOrEmpty(id))
+            if (!string.IsNullOrEmpty(id))
                 return new Role(id);
 
             return new Role();

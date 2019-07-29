@@ -21,12 +21,14 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         /// <summary>
         ///     Опция фильтра по наименованию расположения
         /// </summary>
-        [FilterOption("Name", false, "Search")] public FOptName Name;
+        [FilterOption("Name", false, "Search")]
+        public FOptName Name;
 
         /// <summary>
         ///     Опция фильтра: все подчиненные места хранения включая родителя
         /// </summary>
-        [FilterOption("WorkPlace", false, "WorkPlace")] public FOptWorkPlace WorkPlace;
+        [FilterOption("WorkPlace", false, "WorkPlace")]
+        public FOptWorkPlace WorkPlace;
 
         /// <summary>
         ///     Конструктор класса
@@ -45,17 +47,11 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         /// <summary>
         ///     Запрос выборки данных
         /// </summary>
-        public override string SQLBatch
-        {
-            get { return SQLQueries.SELECT_Расположения; }
-        }
+        public override string SQLBatch => SQLQueries.SELECT_Расположения;
 
         /// <summary>
         ///     Задание сортировки выборки
         /// </summary>
-        public override string SQLOrderBy
-        {
-            get { return string.Format("T0.L"); }
-        }
+        public override string SQLOrderBy => "T0.L";
     }
 }

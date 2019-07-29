@@ -28,15 +28,11 @@ namespace Kesco.Lib.Web.DBSelect.V4
             URLAdvancedSearch = "";
         }
 
-        
 
         /// <summary>
         ///     Фильтр
         /// </summary>
-        public new DSOPersonCustomer Filter
-        {
-            get { return (DSOPersonCustomer) base.Filter; }
-        }
+        public new DSOPersonCustomer Filter => (DSOPersonCustomer) base.Filter;
 
         /// <summary>
         ///     Заполнение списка

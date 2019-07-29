@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Data;
@@ -51,10 +50,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         /// <summary>
         ///     Дополнительный фильтр по условиям поиска
         /// </summary>
-        public new DSOPersonTheme Filter
-        {
-            get { return (DSOPersonTheme) base.Filter; }
-        }
+        public new DSOPersonTheme Filter => (DSOPersonTheme) base.Filter;
 
         /// <summary>
         ///     Заполнение списка
@@ -73,8 +69,9 @@ namespace Kesco.Lib.Web.DBSelect.V4
         /// <returns>Список</returns>
         public List<PersonTheme> GetPersonsTypes()
         {
-            var personThemesIDs = String.Join(",", PersonTypesList.Select(t => t.ThemeID.Id.ToString()).Distinct());
-            URLAdvancedSearch = String.Format(@"{0}{1}{2}", Config.person_types_search, "?selectedid=", personThemesIDs);
+            var personThemesIDs = string.Join(",", PersonTypesList.Select(t => t.ThemeID.Id.ToString()).Distinct());
+            URLAdvancedSearch =
+                string.Format(@"{0}{1}{2}", Config.person_types_search, "?selectedid=", personThemesIDs);
 
             var dt = DBManager.GetData(SQLGetText(true), Config.DS_person);
 
@@ -89,7 +86,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
 
         private void RenderFields()
         {
-            if (String.IsNullOrEmpty(RenderFieldsContainer))
+            if (string.IsNullOrEmpty(RenderFieldsContainer))
                 return;
 
 
@@ -98,21 +95,19 @@ namespace Kesco.Lib.Web.DBSelect.V4
 
             if (PersonTypesList.Any(t => t.TypeID != null))
                 innerHtml =
-                    String.Format(
+                    string.Format(
                         @"<div class=contentBlock><div class=rusSpace><div class=themeLeftLineBlock>{0}</div><div class=lineBlock><div class=buttonBlock></div></div></div><div class=themeRightLineBlock><div class=typesList>{1}</div></div></div>",
                         "Типы:", "Каталог(и):");
 
             foreach (var type in PersonTypesList.Where(t => t.TypeID != null).Select(t => t.ThemeID.Id).Distinct())
-            {
                 innerHtml +=
-                    String.Format(
+                    string.Format(
                         @"<div class=contentBlock><div class=rusSpace><div class=themeLeftLineBlock><img src=/Styles/delete.gif id=themeDeleteBtn{2} onclick=deletePersonTheme({2});></img><a onclick=editPersonTheme({2});>{0}</a></div><div class=lineBlock><div class=buttonBlock></div></div></div><div class=themeRightLineBlock><div class=typesList>{1}</div></div></div>",
                         PersonTypesList.Where(t => t.ThemeID.Id == type)
                             .Select(t => t.ThemeID.NameTheme)
                             .FirstOrDefault(),
-                        String.Join(",", PersonTypesList.Where(t => t.ThemeID.Id == type).Select(t => t.Catalog)),
+                        string.Join(",", PersonTypesList.Where(t => t.ThemeID.Id == type).Select(t => t.Catalog)),
                         PersonTypesList.Where(t => t.ThemeID.Id == type).Select(t => t.ThemeID.Id).FirstOrDefault());
-            }
             JS.Write(@"$('#{1}').html('{0}');", innerHtml, RenderFieldsContainer);
             JS.Write(
                 "$('.typesList').width(300);  $('#personThemeContaincerDiv > .contentBlock').css({'padding-bottom':'5px'});");
@@ -126,7 +121,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         /// <returns>Тема лица</returns>
         public override object GetObjectById(string id, string name = "")
         {
-            if (!String.IsNullOrEmpty(id))
+            if (!string.IsNullOrEmpty(id))
             {
                 var url = "";
                 if (id.IndexOf('[') != -1 || id.IndexOf('[') != -1)
@@ -134,14 +129,14 @@ namespace Kesco.Lib.Web.DBSelect.V4
                     var jsonSerializer = new JavaScriptSerializer();
                     var items = jsonSerializer.Deserialize<List<JSONModel>>(id);
 
-                    id = String.Join(",", items.Select(t => t.value));
-                    url = String.Format(@"{0}?themeId={1}&typesids={2}&type=multiply", Config.v4person_themes, id,
-                        String.Join(",", PersonTypesList.Select(t => t.TypeID).Distinct()));
+                    id = string.Join(",", items.Select(t => t.value));
+                    url = string.Format(@"{0}?themeId={1}&typesids={2}&type=multiply", Config.v4person_themes, id,
+                        string.Join(",", PersonTypesList.Select(t => t.TypeID).Distinct()));
                 }
                 else
                 {
-                    url = String.Format(@"{0}?themeId={1}&typesids={2}&type=single", Config.v4person_themes, id,
-                        String.Join(",", PersonTypesList.Select(t => t.TypeID).Distinct()));
+                    url = string.Format(@"{0}?themeId={1}&typesids={2}&type=single", Config.v4person_themes, id,
+                        string.Join(",", PersonTypesList.Select(t => t.TypeID).Distinct()));
                 }
 
                 var personTypesDataTable = DBManager.GetData(SQLQueries.SELECT_ТипыЛиц_Темы, Config.DS_person,
@@ -152,21 +147,23 @@ namespace Kesco.Lib.Web.DBSelect.V4
                     var tempListPersonTypes =
                         (from DataRow type in personTypesDataTable.Rows select new PersonType(type)).ToList();
                     if (tempListPersonTypes.Select(t => t.ThemeID.Id).Distinct().Count() != tempListPersonTypes.Count())
+                    {
                         OpenPopup(url);
+                    }
                     else
                     {
                         PersonTypesList = tempListPersonTypes;
                         RenderFields();
                     }
+
                     return null;
                 }
 
                 if (personTypesDataTable != null && personTypesDataTable.Rows != null &&
                     !PersonTypesList.Any(t => t.ThemeID.Id == personTypesDataTable.Rows[0]["КодТемыЛица"].ToString()))
-                {
                     PersonTypesList.Add(new PersonType(personTypesDataTable.Rows[0]));
-                }
             }
+
             RenderFields();
 
 
@@ -177,7 +174,6 @@ namespace Kesco.Lib.Web.DBSelect.V4
         }
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="url"></param>
         protected void OpenPopup(string url)
@@ -195,7 +191,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
                 HttpUtility.UrlEncode(HtmlID),
                 HttpUtility.UrlEncode(((Page) Page).IDPage),
                 HttpUtility.UrlEncode(callbackUrl)
-                );
+            );
 
             JS.Write("v4_isStopBlur = false;");
             JS.Write("$.v4_windowManager.selectEntity('{0}', '{1}', '{2}', {3}, {4}, v4s_setSelectedValue, '{5}');",
@@ -213,16 +209,12 @@ namespace Kesco.Lib.Web.DBSelect.V4
 
             newList = PersonTypesList.Where(t => t.ThemeID.Id != themeID).ToList();
 
-            foreach (var type in personTypes.Split(','))
-            {
-                newList.Add(new PersonType(type));
-            }
+            foreach (var type in personTypes.Split(',')) newList.Add(new PersonType(type));
             PersonTypesList = newList;
             RenderFields();
         }
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="collection"></param>
         public override void ProcessCommand(NameValueCollection collection)
@@ -239,19 +231,18 @@ namespace Kesco.Lib.Web.DBSelect.V4
                     SetPersonTypes(collection["ptypes"], collection["ptheme"], collection["type"]);
                     break;
                 case "deletePersonTheme":
-                    if (!String.IsNullOrEmpty(collection["themeid"]))
+                    if (!string.IsNullOrEmpty(collection["themeid"]))
                     {
                         PersonTypesList.RemoveAll(t => t.ThemeID.Id == collection["themeid"]);
                         RenderFields();
                     }
+
                     break;
                 case "editPersonTheme":
-                    if (!String.IsNullOrEmpty(collection["themeid"]))
-                    {
-                        GetObjectById(collection["themeid"]);
-                    }
+                    if (!string.IsNullOrEmpty(collection["themeid"])) GetObjectById(collection["themeid"]);
                     break;
             }
+
             base.ProcessCommand(collection);
 
             if (IsRequired && PersonTypesList.Count == 0)
@@ -267,7 +258,6 @@ namespace Kesco.Lib.Web.DBSelect.V4
         }
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="w"></param>
         protected override void RenderControlBody(TextWriter w)
@@ -280,7 +270,6 @@ namespace Kesco.Lib.Web.DBSelect.V4
         }
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="e"></param>
         public override void OnChanged(ProperyChangedEventArgs e)

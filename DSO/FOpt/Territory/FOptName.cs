@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Kesco.Lib.BaseExtention;
 
 namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.Territory
 {
@@ -13,28 +13,12 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.Territory
         /// <returns>Строка с условием WHERE для ограничения по типу</returns>
         public string SQLGetClause()
         {
-            int res;
             string[] fields = {"Территория", "Caption"};
 
-            var isInt = Int32.TryParse(Value, out res);
-
-            if (isInt)
-            {
-                return SQLGetStringForTelephoneCodeSelect(res);
-            }
-
+            if (!string.IsNullOrEmpty(Value) && Value.IsDigit())
+                return $"(ТелКодСтраны = {Value})";
 
             return !string.IsNullOrEmpty(Value) ? GetWhereStrBySearchWords(fields, WordsGroup) : "";
-        }
-
-        /// <summary>
-        ///     Формирует строку для SQL запроса, для выбора Территории по телефонному коду территории
-        /// </summary>
-        /// <param name="telephoneCode">Телефонный код территории</param>
-        /// <returns>Строка с условием WHERE для ограничения по типу</returns>
-        private string SQLGetStringForTelephoneCodeSelect(int telephoneCode)
-        {
-            return string.Concat("(ТелКодСтраны=", telephoneCode, ")");
         }
     }
 }

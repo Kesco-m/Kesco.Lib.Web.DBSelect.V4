@@ -9,22 +9,14 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
     public class DSOSqlQuery : DSOCommon
     {
         /// <summary>
-        /// Опция фильтра по имени
+        ///     Опция фильтра по имени
         /// </summary>
-        [FilterOption("Условие")]
-        public FOptName Name;
+        [FilterOption("Условие")] public FOptName Name;
 
         /// <summary>
-        /// Опция фильтра по ID
+        ///     Опция фильтра по ID
         /// </summary>
-        [FilterOption("КодУсловия")]
-        public FOptIDs QueryId;
-
-        /// <summary>
-        /// Опция фильтра по КодПриложения
-        /// </summary>
-        [FilterOption("ТипУсловия", true)]
-        public string QueryType {get; set;}
+        [FilterOption("КодУсловия")] public FOptIDs QueryId;
 
         /// <summary>
         ///     Конструктор класса
@@ -38,19 +30,19 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         }
 
         /// <summary>
+        ///     Опция фильтра по КодПриложения
+        /// </summary>
+        [FilterOption("ТипУсловия", true)]
+        public string QueryType { get; set; }
+
+        /// <summary>
         ///     Запрос выборки данных
         /// </summary>
-        public override string SQLBatch
-        {
-            get { return SQLQueries.SELECT_ДополнительныеФильтрыПриложений; }
-        }
+        public override string SQLBatch => SQLQueries.SELECT_ДополнительныеФильтрыПриложений;
 
         /// <summary>
         ///     Задание сортировки выборки
         /// </summary>
-        public override string SQLOrderBy
-        {
-            get { return NameField; }
-        }
+        public override string SQLOrderBy => NameField;
     }
 }

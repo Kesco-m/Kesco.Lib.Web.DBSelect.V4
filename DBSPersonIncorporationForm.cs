@@ -38,10 +38,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         /// <summary>
         ///     Фильтр
         /// </summary>
-        public new DSOPersonIncorporationForm Filter
-        {
-            get { return (DSOPersonIncorporationForm) base.Filter; }
-        }
+        public new DSOPersonIncorporationForm Filter => (DSOPersonIncorporationForm) base.Filter;
 
         /// <summary>
         ///     Заполнение списка

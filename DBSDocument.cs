@@ -1,12 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Diagnostics.Contracts;
-using System.IO;
 using System.Text.RegularExpressions;
 using System.Web;
-using System.Web.UI;
 using Kesco.Lib.BaseExtention;
+using Kesco.Lib.BaseExtention.Enums.Controls;
 using Kesco.Lib.Entities.Corporate;
 using Kesco.Lib.Entities.Documents;
 using Kesco.Lib.Web.Controls.V4;
@@ -23,7 +21,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         ///     Инициализация объекта
         /// </summary>
         public DBSDocument()
-        {   
+        {
             base.Filter = new DSODocument();
             KeyField = "Id";
             ValueField = "FullDocumentName";
@@ -41,7 +39,6 @@ namespace Kesco.Lib.Web.DBSelect.V4
             URLAdvancedSearch = "0";
             IsAlwaysAdvancedSearch = true;
             IsNotUseSelectTop = false;
-            
         }
 
         /// <summary>
@@ -57,15 +54,16 @@ namespace Kesco.Lib.Web.DBSelect.V4
         /// <summary>
         ///     Дополнительный фильтр по условиям поиска
         /// </summary>
-        public new DSODocument Filter
-        {
-            get { return (DSODocument) base.Filter; }
-        }
+        public new DSODocument Filter => (DSODocument) base.Filter;
 
         /// <summary>
-        /// Иконка документа
+        ///     Иконка документа
         /// </summary>
         public bool IsAdvIcons { get; set; }
+
+        /// <summary>
+        /// </summary>
+        public List<string> AdvIcons => GetAdvIcons();
 
         /// <summary>
         ///     Заполнение списка
@@ -89,14 +87,6 @@ namespace Kesco.Lib.Web.DBSelect.V4
         }
 
         /// <summary>
-        /// 
-        /// </summary>
-        public List<string> AdvIcons
-        {
-            get { return GetAdvIcons(); }            
-        }
-
-        /// <summary>
         ///     Получение документа по ID
         /// </summary>
         /// <param name="id">ID</param>
@@ -105,7 +95,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         public override object GetObjectById(string id, string name = "")
         {
             if (!string.IsNullOrEmpty(name))
-                return new Document {Id = id, Name = name};
+                return new Document {Id = id, DocumentName = name};
             return new Document(id, false);
         }
 
@@ -123,7 +113,8 @@ namespace Kesco.Lib.Web.DBSelect.V4
                 switch (collection["cmd"])
                 {
                     case "search":
-                        JS.Write(DocViewInterop.SearchDocument(HttpContext.Current, HtmlID, Filter.Type.DocTypeParamsStr,
+                        JS.Write(DocViewInterop.SearchDocument(HttpContext.Current, HtmlID,
+                            Filter.Type.DocTypeParamsStr,
                             Filter.PersonIDs.DocViewParamsStr, Filter.Name.Value));
                         break;
 
@@ -134,6 +125,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
                         base.ProcessCommand(collection);
                         break;
                 }
+
                 return;
             }
 
@@ -154,7 +146,6 @@ namespace Kesco.Lib.Web.DBSelect.V4
                     base.ProcessCommand(collection);
                     break;
             }
-
         }
 
         //TODO: УДАЛИТЬ ПОСЛЕ ВНЕДРЕНИЯ KESCORUN
@@ -168,7 +159,8 @@ namespace Kesco.Lib.Web.DBSelect.V4
         {
             JS.Write("srv4js('OPENDOC','id={0}&newwindow=1{1}',", id, openImage ? "&imageid=-2" : "&imageid=0");
             JS.Write("function(rez,obj){if(rez.error){");
-            JS.Write("Alert.render(rez.errorMsg, '" + Resx.GetString("alertWarning") + "');");
+            JS.Write("v4_showMessage(rez.errorMsg, '{0}',{1});", Resx.GetString("alertWarning"),
+                (int) MessageStatus.Warning);
             JS.Write("}},null);");
         }
 
@@ -180,28 +172,28 @@ namespace Kesco.Lib.Web.DBSelect.V4
         {
             JS.Write("srv4js('SEARCH','{0}',", searchParams);
             JS.Write(@"function(rez,obj)
-                        {
+                        {{
 	                        if(!rez.error)
-                            {
+                            {{
 		                        switch(rez.value)
-		                        {
-			                        case '-1': Alert.render('Ошибка взаимодействия с архивом документов!', 'Ошибка'); break;
+		                        {{
+			                        case '-1': v4_showMessage('Ошибка взаимодействия с архивом документов!', '{1}',{2}); break;
 			                        case '0': break;
 			                        default:
-                                        v4_setValue('" + ID + @"', rez.value, ''); 				                        
+                                        v4_setValue('{0}', rez.value, ''); 				                        
 				                        break;
-		                        }
-                            }
+		                        }}
+                            }}
 	                        else
-                            {
-		                        Alert.render('Ошибка взаимодействия с архивом документов:<br>'+rez.errorMsg, 'Ошибка');
-                            }
-                        }");
+                            {{
+		                        v4_showMessage('Ошибка взаимодействия с архивом документов:<br>'+rez.errorMsg, '{1}',{2});
+                            }}
+                        }}", ID, Resx.GetString("alertError"), (int) MessageStatus.Error);
             JS.Write(", null);");
         }
 
         /// <summary>
-        /// Получение иконок для документа 
+        ///     Получение иконок для документа
         /// </summary>
         /// <returns></returns>
         protected override List<string> GetAdvIcons()
@@ -220,6 +212,5 @@ namespace Kesco.Lib.Web.DBSelect.V4
 
             return null;
         }
-
     }
 }

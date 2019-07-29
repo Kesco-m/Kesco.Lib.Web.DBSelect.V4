@@ -1,8 +1,7 @@
-﻿
-namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.StoreReportType
+﻿namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.StoreReportType
 {
     /// <summary>
-    /// Класс опции поиска по имени
+    ///     Класс опции поиска по имени
     /// </summary>
     public class FOptName : FOptBase, IFilterOption
     {

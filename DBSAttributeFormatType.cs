@@ -39,10 +39,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         /// <summary>
         ///     Фильтр
         /// </summary>
-        public new DSOAttributeFormatType Filter
-        {
-            get { return (DSOAttributeFormatType) base.Filter; }
-        }
+        public new DSOAttributeFormatType Filter => (DSOAttributeFormatType) base.Filter;
 
         /// <summary>
         ///     Заполнение списка
@@ -78,7 +75,6 @@ namespace Kesco.Lib.Web.DBSelect.V4
                     AttributeFormatTypeNameLat = dr.Field<string>(Filter.AttributeFormatTypeNameLat)
                 }).Where(t => t.PersonTypeAvailability == PersonType || t.PersonTypeAvailability == 0).ToList();
             else
-            {
                 attributeFormatType = dt.AsEnumerable().Select(dr => new AttributeFormatType
                 {
                     Id = dr.Field<int>(Filter.KeyField).ToString(CultureInfo.InvariantCulture),
@@ -90,7 +86,6 @@ namespace Kesco.Lib.Web.DBSelect.V4
                     Order = dr.Field<int>(Filter.OrderField),
                     AttributeFormatTypeNameLat = dr.Field<string>(Filter.AttributeFormatTypeNameLat)
                 }).ToList();
-            }
             return attributeFormatType;
         }
 

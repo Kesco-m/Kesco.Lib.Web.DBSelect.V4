@@ -38,6 +38,7 @@
                     return
                         " EXISTS (SELECT P0.КодДолжности FROM vwДолжности AS P0 WHERE (T1.L >= P0.L AND T1.R <= P0.R) AND (P0.Подразделение IS NULL OR P0.Подразделение = ''))";
             }
+
             return !string.IsNullOrEmpty(Value)
                 ? string.Format(
                     " EXISTS (SELECT P0.КодДолжности FROM vwДолжности AS P0 WHERE (T1.L >= P0.L AND T1.R <= P0.R) AND P0.Подразделение {1} ({0}))",

@@ -11,14 +11,25 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         /// <summary>
         ///     Опция фильтра ID типа склада
         /// </summary>
-        [FilterOption("IDs", false)]
-        public FOptIDs IDs;
+        [FilterOption("IDs", false)] public FOptIDs IDs;
+
+
+        /// <summary>
+        ///     Опция фильтра по банковским счетам
+        /// </summary>
+        [FilterOption("TypeStoreIsAccount", false)]
+        public FOptTypeStoreIsAccount IsAccountType;
+
+        /// <summary>
+        ///     Опция фильтра по банковским счетам
+        /// </summary>
+        [FilterOption("TypeStoreIsWarehouse", false)]
+        public FOptTypeStoreIsWarehouse IsWarehouseType;
 
         /// <summary>
         ///     Опция фильтра по наименованию типа склада
         /// </summary>
-        [FilterOption("Name", false)]
-        public FOptName Name;
+        [FilterOption("Name", false)] public FOptName Name;
 
         /// <summary>
         ///     Опция фильтра по корневому ресурсу типа склада
@@ -37,30 +48,23 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
             IDs = new FOptIDs();
             Name = new FOptName();
             RootResourceIDs = new FOptRootResourceIDs();
+            IsAccountType = new FOptTypeStoreIsAccount();
+            IsWarehouseType = new FOptTypeStoreIsWarehouse();
         }
 
         /// <summary>
         ///     Запрос выборки данных
         /// </summary>
-        public override string SQLBatch
-        {
-            get { return SQLQueries.SELECT_ТипыСкладов; }
-        }
+        public override string SQLBatch => SQLQueries.SELECT_ТипыСкладов;
 
         /// <summary>
         ///     Запрос получения типа склада по ID
         /// </summary>
-        public override string SQLEntityById
-        {
-            get { return SQLQueries.SELECT_ID_ТипСклада; }
-        }
+        public override string SQLEntityById => SQLQueries.SELECT_ID_ТипСклада;
 
         /// <summary>
         ///     Задание сортировки выборки
         /// </summary>
-        public override string SQLOrderBy
-        {
-            get { return string.Format("T0.{0}", KeyField); }
-        }
+        public override string SQLOrderBy => string.Format("T0.{0}", KeyField);
     }
 }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using Kesco.Lib.BaseExtention.Enums.Docs;
@@ -33,10 +32,7 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.Document
         ///     sc - с синонимами и потомками
         ///     Пример: 4444sc - тип документа с ID 4444 с синонимами и потомками
         /// </summary>
-        public string DocTypeParamsStr
-        {
-            get { return GetDocTypeParamString(DocTypeParams); }
-        }
+        public string DocTypeParamsStr => GetDocTypeParamString(DocTypeParams);
 
         /// <summary>
         ///     Построение блока WHERE для опции
@@ -91,24 +87,24 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.Document
             var strFieldPat = "{0}{1}{2}";
 
             docTypeParams.ForEach(p =>
-            {
-                switch (p.QueryType)
                 {
-                    case DocTypeQueryType.Equals:
-                        sb.AppendFormat(strFieldPat, p.DocTypeID, string.Empty, ",");
-                        break;
-                    case DocTypeQueryType.WithChildren:
-                        sb.AppendFormat(strFieldPat, p.DocTypeID, "c", ",");
-                        break;
-                    case DocTypeQueryType.WithSynonyms:
-                        sb.AppendFormat(strFieldPat, p.DocTypeID, "s", ",");
-                        break;
-                    case DocTypeQueryType.WithChildrenSynonyms:
-                        sb.AppendFormat(strFieldPat, p.DocTypeID, "sc", ",");
-                        break;
+                    switch (p.QueryType)
+                    {
+                        case DocTypeQueryType.Equals:
+                            sb.AppendFormat(strFieldPat, p.DocTypeID, string.Empty, ",");
+                            break;
+                        case DocTypeQueryType.WithChildren:
+                            sb.AppendFormat(strFieldPat, p.DocTypeID, "c", ",");
+                            break;
+                        case DocTypeQueryType.WithSynonyms:
+                            sb.AppendFormat(strFieldPat, p.DocTypeID, "s", ",");
+                            break;
+                        case DocTypeQueryType.WithChildrenSynonyms:
+                            sb.AppendFormat(strFieldPat, p.DocTypeID, "sc", ",");
+                            break;
+                    }
                 }
-            }
-                );
+            );
             if (sb.Length > 0 && sb[sb.Length - 1].Equals(','))
                 sb.Remove(sb.Length - 1, 1);
 
@@ -173,7 +169,8 @@ FROM ТипыДокументов Ch LEFT JOIN ТипыДокументов Pr O
                             }
                             catch (Exception ex)
                             {
-                                Logger.WriteEx(new DetailedException("Ошибка при получении типов документов в DSODoc", ex));
+                                Logger.WriteEx(new DetailedException("Ошибка при получении типов документов в DSODoc",
+                                    ex));
                                 throw ex;
                             }
 
@@ -184,9 +181,10 @@ FROM ТипыДокументов Ch LEFT JOIN ТипыДокументов Pr O
                             }
                         }
                     }
-                    );
+                );
                 return Convert.Collection2Str(typeIDs);
             }
+
             return string.Empty;
         }
 

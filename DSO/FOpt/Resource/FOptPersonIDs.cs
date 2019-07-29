@@ -41,6 +41,7 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.Resource
                     whereStr = string.Empty;
                     break;
             }
+
             return whereStr;
         }
     }

@@ -30,10 +30,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         /// <summary>
         ///     Фильтр
         /// </summary>
-        public new DSOPersonTheme Filter
-        {
-            get { return (DSOPersonTheme) base.Filter; }
-        }
+        public new DSOPersonTheme Filter => (DSOPersonTheme) base.Filter;
 
         /// <summary>
         ///     Заполнение списка
@@ -78,7 +75,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         /// <returns>Компания</returns>
         public override object GetObjectById(string id, string name = "")
         {
-            if (!String.IsNullOrEmpty(id))
+            if (!string.IsNullOrEmpty(id))
                 return new PersonTheme(id);
 
             return new PersonTheme();

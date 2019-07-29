@@ -10,10 +10,7 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.Employee
         /// <summary>
         ///     Значение
         /// </summary>
-        public override string Value
-        {
-            get { return ValueEmployeeAvaible.ToString(CultureInfo.InvariantCulture); }
-        }
+        public override string Value => ValueEmployeeAvaible.ToString(CultureInfo.InvariantCulture);
 
         /// <summary>
         ///     Значение

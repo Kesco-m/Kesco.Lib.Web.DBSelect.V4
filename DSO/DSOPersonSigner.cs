@@ -9,6 +9,26 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
     public class DSOPersonSigner : DSOCommon
     {
         /// <summary>
+        ///     Опция фильтра по коду потомка
+        /// </summary>
+        [FilterOption("КодЛицаПотомка")] public FOptChildID ChildID;
+
+        /// <summary>
+        ///     Опция фильтра по коду тип связи лиц
+        /// </summary>
+        [FilterOption("КодТипаСвязиЛиц")] public FOptLinkTypeID LinkTypeID;
+
+        /// <summary>
+        ///     Опция фильтра по параметру
+        /// </summary>
+        [FilterOption("Параметр")] public FOptParametr Parametr;
+
+        /// <summary>
+        ///     Опция фильтра по коду родителя
+        /// </summary>
+        [FilterOption("КодЛицаРодителя")] public FOptParentID ParentID;
+
+        /// <summary>
         ///     Конструктор класса
         /// </summary>
         public DSOPersonSigner()
@@ -23,43 +43,13 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         }
 
         /// <summary>
-        ///     Опция фильтра по коду родителя
-        /// </summary>
-        [FilterOption("КодЛицаРодителя")]
-        public FOptParentID ParentID;
-
-        /// <summary>
-        ///     Опция фильтра по коду потомка
-        /// </summary>
-        [FilterOption("КодЛицаПотомка")]
-        public FOptChildID ChildID;
-
-        /// <summary>
-        ///     Опция фильтра по коду тип связи лиц
-        /// </summary>
-        [FilterOption("КодТипаСвязиЛиц")]
-        public FOptLinkTypeID LinkTypeID;
-
-        /// <summary>
-        ///     Опция фильтра по параметру
-        /// </summary>
-        [FilterOption("Параметр")]
-        public FOptParametr Parametr;
-
-        /// <summary>
         ///     Запрос выборки данных
         /// </summary>
-        public override string SQLBatch
-        {
-            get { return SQLQueries.SELECT_СвязиЛиц; }
-        }
+        public override string SQLBatch => SQLQueries.SELECT_СвязиЛиц;
 
         /// <summary>
         ///     Задание сортировки выборки
         /// </summary>
-        public override string SQLOrderBy
-        {
-            get { return "Описание"; }
-        }
+        public override string SQLOrderBy => "Описание";
     }
 }

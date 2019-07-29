@@ -32,10 +32,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         /// <summary>
         ///     Фильтр
         /// </summary>
-        public new DSOBusinessProject Filter
-        {
-            get { return (DSOBusinessProject) base.Filter; }
-        }
+        public new DSOBusinessProject Filter => (DSOBusinessProject) base.Filter;
 
         /// <summary>
         ///     Заполнение списка

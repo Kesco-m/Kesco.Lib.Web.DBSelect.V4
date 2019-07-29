@@ -11,7 +11,8 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         /// <summary>
         ///     Опция фильтра по имени типа формата атрибута
         /// </summary>
-        [FilterOption("ТипАтрибута", false, "Search")] public FOptName Name;
+        [FilterOption("ТипАтрибута", false, "Search")]
+        public FOptName Name;
 
         /// <summary>
         ///     Конструктор класса
@@ -54,17 +55,11 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         /// <summary>
         ///     Запрос выборки данных
         /// </summary>
-        public override string SQLBatch
-        {
-            get { return SQLQueries.SELECT_ТипыАтрибутов; }
-        }
+        public override string SQLBatch => SQLQueries.SELECT_ТипыАтрибутов;
 
         /// <summary>
         ///     Задание сортировки выборки
         /// </summary>
-        public override string SQLOrderBy
-        {
-            get { return string.Format("{0}", NameField); }
-        }
+        public override string SQLOrderBy => string.Format("{0}", NameField);
     }
 }

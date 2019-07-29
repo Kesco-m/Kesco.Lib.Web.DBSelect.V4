@@ -17,10 +17,8 @@ namespace Kesco.Lib.Web.DBSelect.V4
     /// <summary>
     ///     Базовый класс для источника данных контрола Select
     /// </summary>
-    
     public abstract class DBSelect : Select
     {
-        
         /// <summary>
         ///     Высота открываемого окна расширенного поиска
         /// </summary>
@@ -194,16 +192,11 @@ namespace Kesco.Lib.Web.DBSelect.V4
                     sb.Append(string.Format("{0} NOT IN ({1})", keyFieldName, SelectedItemsString));
                 }
             }
+
             for (var i = 0; i < colWhere.Count; i++)
             {
-                if (i == 0 && !existWhere && !isAddExcludedToQuery)
-                {
-                    sb.Append("\n WHERE ");
-                }
-                if (i > 0 || existWhere || isAddExcludedToQuery)
-                {
-                    sb.Append("\n AND ");
-                }
+                if (i == 0 && !existWhere && !isAddExcludedToQuery) sb.Append("\n WHERE ");
+                if (i > 0 || existWhere || isAddExcludedToQuery) sb.Append("\n AND ");
                 sb.Append("\n");
                 sb.Append(colWhere[i]);
             }
@@ -251,8 +244,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
                 if (!fOpt) continue;
 
                 foreach (var attr in attrs)
-                {
-                    if (attr.GetType() == typeof (FilterOption))
+                    if (attr.GetType() == typeof(FilterOption))
                     {
                         var innerParams = attr as FilterOption;
                         if (innerParams == null) continue;
@@ -260,7 +252,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
                         key = innerParams.OptionName;
                         break;
                     }
-                }
+
                 if (key.Length > 0)
                 {
                     value = GetPropertyValue(Filter, property);
@@ -283,8 +275,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
                 if (!fOpt) continue;
 
                 foreach (var attr in attrs)
-                {
-                    if (attr.GetType() == typeof (FilterOption))
+                    if (attr.GetType() == typeof(FilterOption))
                     {
                         var innerParams = attr as FilterOption;
                         if (innerParams == null) continue;
@@ -292,7 +283,6 @@ namespace Kesco.Lib.Web.DBSelect.V4
                         key = innerParams.OptionNameURL;
                         break;
                     }
-                }
 
                 if (key.Length > 0)
                 {
@@ -325,6 +315,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
                 var value = GetPropertyValue(Filter, prop).ToString();
                 if (value.Length > 0) sb.Append(value);
             }
+
             return sb.ToString();
         }
 
@@ -335,7 +326,6 @@ namespace Kesco.Lib.Web.DBSelect.V4
         {
             if (URLShowEntity.Length == 0) return;
             JS.Write("v4_windowOpen('{0}?id={1}');", URLShowEntity, HttpUtility.JavaScriptStringEncode(Value));
-                
         }
 
         /// <summary>
@@ -345,7 +335,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         {
             var isKescoRun = url.Contains("kescorun");
             var parameters = GetURLParams(isKescoRun);
-            
+
             ReturnDialogResult.ShowAdvancedDialogSearch((Page) Page, "v4s_setSelectedValue", HtmlID, url, parameters,
                 IsMultiReturn, CLID, AdvSearchWindowWidth, AdvSearchWindowHeight);
         }
@@ -370,8 +360,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
 
                 if (!fOpt) continue;
                 foreach (var attr in attrs)
-                {
-                    if (attr.GetType() == typeof (FilterOption))
+                    if (attr.GetType() == typeof(FilterOption))
                     {
                         var fopt = attr as FilterOption;
                         if (fopt == null) continue;
@@ -379,7 +368,6 @@ namespace Kesco.Lib.Web.DBSelect.V4
                         key = fopt.OptionNameURL;
                         break;
                     }
-                }
 
                 if (key.Length > 0)
                 {
@@ -387,7 +375,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
 
                     if (value != null) svalue = value.ToString();
                     if (svalue.Length == 0 && !alwaysEnable) continue;
-                   // svalue = HttpUtility.UrlEncode(svalue);
+                    // svalue = HttpUtility.UrlEncode(svalue);
                     if (!urlParams.Keys.Contains(key)) urlParams.Add(key, svalue);
                 }
             }
@@ -413,8 +401,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
                 if (!fOpt) continue;
 
                 foreach (var attr in attrs)
-                {
-                    if (attr.GetType() == typeof (FilterOption))
+                    if (attr.GetType() == typeof(FilterOption))
                     {
                         var fopt = attr as FilterOption;
                         if (fopt == null) continue;
@@ -422,7 +409,6 @@ namespace Kesco.Lib.Web.DBSelect.V4
                         key = fopt.OptionNameURL;
                         break;
                     }
-                }
 
                 if (key.Length > 0)
                 {
@@ -458,7 +444,10 @@ namespace Kesco.Lib.Web.DBSelect.V4
             foreach (var key in urlParams.Keys)
             {
                 if (sb.Length > 0) sb.Append("&");
-                sb.AppendFormat("{0}={1}", key, isKescoRun ? HttpUtility.UrlEncodeUnicode(urlParams[key]) : HttpUtility.UrlEncode(urlParams[key]).Replace("+","%20"));
+                sb.AppendFormat("{0}={1}", key,
+                    isKescoRun
+                        ? HttpUtility.UrlEncodeUnicode(urlParams[key])
+                        : HttpUtility.UrlEncode(urlParams[key]).Replace("+", "%20"));
             }
 
             return sb.ToString();
@@ -481,7 +470,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
             object value;
             var propertyType = property.PropertyType;
             var isNullable = property.PropertyType.IsGenericType &&
-                             property.PropertyType.GetGenericTypeDefinition() == typeof (Nullable<>);
+                             property.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>);
             if (!isNullable)
             {
                 value = property.GetValue(targetClass, null);
@@ -521,11 +510,12 @@ namespace Kesco.Lib.Web.DBSelect.V4
                     if (value != null) value = Convert.ToInt32(value);
                     break;
             }
+
             return value;
         }
 
         /// <summary>
-        /// Получение списка иконок
+        ///     Получение списка иконок
         /// </summary>
         /// <returns></returns>
         protected virtual List<string> GetAdvIcons()
@@ -534,19 +524,18 @@ namespace Kesco.Lib.Web.DBSelect.V4
         }
 
         /// <summary>
-        /// Отрисовка контрола
+        ///     Отрисовка контрола
         /// </summary>
         /// <param name="w"></param>
         protected override void RenderControlBody(TextWriter w)
         {
-
             base.RenderControlBody(w);
             if (!(this is DBSDocument)) return;
             SetAdvIcons();
         }
 
         /// <summary>
-        /// Отправка клиенту скрипта с изменениями контрола
+        ///     Отправка клиенту скрипта с изменениями контрола
         /// </summary>
         public override void Flush()
         {
@@ -559,20 +548,17 @@ namespace Kesco.Lib.Web.DBSelect.V4
         }
 
         /// <summary>
-        /// Отрисовка иконок
+        ///     Отрисовка иконок
         /// </summary>
         private void SetAdvIcons()
         {
-
             var advIcons = GetAdvIcons();
             if (advIcons != null && advIcons.Count > 0)
-            {
-                V4Page.JS.Write("setTimeout(function(){{$('#v3il_{0}').html('{1}'); var wthI = $('#v3il_{0}').width(); var wthT = $('#{0}_0').width(); $('#{0}_0').width(wthT-wthI);}},10);", HtmlID, HttpUtility.JavaScriptStringEncode(advIcons[0]));
-            }
+                V4Page.JS.Write(
+                    "setTimeout(function(){{$('#v3il_{0}').html('{1}'); var wthI = $('#v3il_{0}').width(); var wthT = $('#{0}_0').width(); $('#{0}_0').width(wthT-wthI);}},10);",
+                    HtmlID, HttpUtility.JavaScriptStringEncode(advIcons[0]));
             else
-            {
                 V4Page.JS.Write("$('#v3il_{0}').html('{1}'); $('#{0}_0').width({2});", HtmlID, "", Width.Value);
-            }
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.Employee
             get
             {
                 if (_value != СотоянияСотрудника.Неважно)
-                    return ((int)_value).ToString(CultureInfo.InvariantCulture);
+                    return ((int) _value).ToString(CultureInfo.InvariantCulture);
                 return "";
             }
         }
@@ -29,7 +29,7 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.Employee
         public object ValueStatus
         {
             get { return _value; }
-            set { _value = (СотоянияСотрудника)value; }
+            set { _value = (СотоянияСотрудника) value; }
         }
 
         /// <summary>

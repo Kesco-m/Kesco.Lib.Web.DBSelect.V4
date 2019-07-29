@@ -11,7 +11,9 @@
         /// <returns>Строка с условием WHERE для ограничения по типу</returns>
         public string SQLGetClause()
         {
-            return !string.IsNullOrEmpty(Value) ? GetWhereStrBySearchWords("ВидДвиженияДенежныхСредств", WordsGroup) : "";
+            return !string.IsNullOrEmpty(Value)
+                ? GetWhereStrBySearchWords("ВидДвиженияДенежныхСредств", WordsGroup)
+                : "";
         }
     }
 }

@@ -6,9 +6,9 @@
     public class FOptIDs : FOptBase, IFilterOption
     {
         /// <summary>
-        /// Свойство, указывающее включать или исключать объекты
+        ///     Свойство, указывающее включать или исключать объекты
         /// </summary>
-        public bool IsException {get; set;}
+        public bool IsException { get; set; }
 
         /// <summary>
         ///     Построение запроса
@@ -16,9 +16,11 @@
         /// <returns>Построенный запрос</returns>
         public string SQLGetClause()
         {
-            if(string.IsNullOrEmpty(Value)) return string.Empty;
+            if (string.IsNullOrEmpty(Value)) return string.Empty;
 
-            string whereStr = IsException ? string.Format(" (T0.КодТипаСклада NOT IN({0}))", Value) : string.Format(" (T0.КодТипаСклада IN({0}))", Value);
+            var whereStr = IsException
+                ? string.Format(" (T0.КодТипаСклада NOT IN({0}))", Value)
+                : string.Format(" (T0.КодТипаСклада IN({0}))", Value);
 
             return whereStr;
         }

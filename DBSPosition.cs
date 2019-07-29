@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -29,10 +28,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         /// <summary>
         ///     Фильтр Должность
         /// </summary>
-        public new DSOPosition Filter
-        {
-            get { return (DSOPosition) base.Filter; }
-        }
+        public new DSOPosition Filter => (DSOPosition) base.Filter;
 
         /// <summary>
         ///     Строка с перечислением через "," ID выбранных элементов
@@ -41,8 +37,8 @@ namespace Kesco.Lib.Web.DBSelect.V4
         {
             get
             {
-                var temp = SelectedItems.Aggregate("", (current, item) => current + ("'" + item.Id + "',"));
-                if (!String.IsNullOrEmpty(temp)) temp = temp.Remove(temp.Length - 1, 1);
+                var temp = SelectedItems.Aggregate("", (current, item) => current + "'" + item.Id + "',");
+                if (!string.IsNullOrEmpty(temp)) temp = temp.Remove(temp.Length - 1, 1);
                 return temp;
             }
         }

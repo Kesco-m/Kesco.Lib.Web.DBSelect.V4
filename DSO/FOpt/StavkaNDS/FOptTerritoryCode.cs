@@ -1,7 +1,7 @@
 ﻿namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.StavkaNDS
 {
     /// <summary>
-    /// Класс опции поиска по коду территории
+    ///     Класс опции поиска по коду территории
     /// </summary>
     public class FOptTerritoryCode : FOptBase, IFilterOption
     {

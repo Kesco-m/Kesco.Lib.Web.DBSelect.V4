@@ -17,7 +17,8 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         /// <summary>
         ///     Опция фильтра по наименованию лица
         /// </summary>
-        [FilterOption("Search", true, "Search")] public FOptName Name;
+        [FilterOption("Search", true, "Search")]
+        public FOptName Name;
 
         /// <summary>
         ///     Конструктор класса
@@ -185,25 +186,16 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         /// <summary>
         ///     Запрос выборки данных
         /// </summary>
-        public override string SQLBatch
-        {
-            get { return SQLQueries.SP_Лица_Поиск; }
-        }
+        public override string SQLBatch => SQLQueries.SP_Лица_Поиск;
 
         /// <summary>
         ///     Запрос получения лица по ID
         /// </summary>
-        public override string SQLEntityById
-        {
-            get { return SQLQueries.SELECT_ID_Лицо; }
-        }
+        public override string SQLEntityById => SQLQueries.SELECT_ID_Лицо;
 
         /// <summary>
         ///     Задание сортировки выборки
         /// </summary>
-        public override string SQLOrderBy
-        {
-            get { return string.Empty; }
-        }
+        public override string SQLOrderBy => string.Empty;
     }
 }

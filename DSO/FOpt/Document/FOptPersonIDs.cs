@@ -36,12 +36,10 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.Document
         public string SQLGetClause()
         {
             if (UseAndOperator)
-            {
                 return Count > 0
                     ? string.Format(@" ({0})", GetAndClause())
                     // такой запрос может параллелится это может привести к пожиранию ресурсов или дедлокам, если такое будет, то в самом конце _всего_ запроса нужно поставить OPTION(MAXDOP 1) 
                     : string.Empty;
-            }
 
 
             return !string.IsNullOrEmpty(Value)
@@ -60,15 +58,13 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.Document
             var b = new StringBuilder();
             for (var i = 0; i < values.Count; i++)
             {
-                if (i > 0)
-                {
-                    b.Append(" AND ");
-                }
+                if (i > 0) b.Append(" AND ");
                 b.Append("(EXISTS (SELECT * FROM Документы.dbo.vwЛицаДокументов TI WITH(nolock)" +
                          " WHERE TI.КодДокумента=T0.КодДокумента AND TI.КодЛица =");
                 b.Append(values[i]);
                 b.Append("))");
             }
+
             return b.ToString();
         }
     }

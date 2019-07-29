@@ -1,38 +1,35 @@
 ﻿using Kesco.Lib.Entities;
+using Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.StoreReportType;
 
 namespace Kesco.Lib.Web.DBSelect.V4.DSO
 {
     /// <summary>
-    /// Источник данных для контрола выбора типа отчета по складам
+    ///     Источник данных для контрола выбора типа отчета по складам
     /// </summary>
     public class DSOStoreReportType : DSOCommon
     {
         /// <summary>
-        /// Опция фильтра по коду ресурса
+        ///     Опция фильтра по имени
         /// </summary>
-        [FilterOption("КодРесурса")]
-        public FOpt.StoreReportType.FOptResourceIDs ResourceId;
+        [FilterOption("ТипОтчётаПоСкладам")] public FOptName Name;
 
         /// <summary>
-        /// Опция фильтра по коду лица
+        ///     Опция фильтра по коду лица
         /// </summary>
-        [FilterOption("КодЛица")]
-        public FOpt.StoreReportType.FOptPersonIDs PcId;
+        [FilterOption("КодЛица")] public FOptPersonIDs PcId;
 
         /// <summary>
-        /// Опция фильтра по имени
+        ///     Опция фильтра по коду ресурса
         /// </summary>
-        [FilterOption("ТипОтчётаПоСкладам")]
-        public FOpt.StoreReportType.FOptName Name;
+        [FilterOption("КодРесурса")] public FOptResourceIDs ResourceId;
 
         /// <summary>
-        /// 
         /// </summary>
         public DSOStoreReportType()
         {
-            PcId = new FOpt.StoreReportType.FOptPersonIDs();
-            ResourceId = new FOpt.StoreReportType.FOptResourceIDs();
-            Name = new FOpt.StoreReportType.FOptName();
+            PcId = new FOptPersonIDs();
+            ResourceId = new FOptResourceIDs();
+            Name = new FOptName();
 
             IsAddExcludeCondition = false;
             KeyField = "КодТипаОтчётаПоСкладам";
@@ -42,23 +39,11 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         /// <summary>
         ///     Запрос выборки данных
         /// </summary>
-        public override string SQLBatch
-        {
-            get
-            {
-                return SQLQueries.SELECT_ТипОтчётаПоСкладам;
-            }
-        }
+        public override string SQLBatch => SQLQueries.SELECT_ТипОтчётаПоСкладам;
 
         /// <summary>
-        /// Поле сортировки
+        ///     Поле сортировки
         /// </summary>
-        public override string SQLOrderBy
-        {
-            get
-            {
-                return NameField;
-            }
-        }
+        public override string SQLOrderBy => NameField;
     }
 }

@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using Kesco.Lib.DALC;
-using System.Globalization;
+using Kesco.Lib.Entities.Resources;
 using Kesco.Lib.Web.DBSelect.V4.DSO;
 using Kesco.Lib.Web.Settings;
 
@@ -21,7 +21,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         public DBSUnitAdv()
         {
             base.Filter = new DSOUnitAdv();
-            
+
             KeyField = "Id";
             ValueField = "Name";
         }
@@ -29,10 +29,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         /// <summary>
         ///     Фильтр Единица измерения дополнительная
         /// </summary>
-        public new DSOUnitAdv Filter
-        {
-            get { return (DSOUnitAdv)base.Filter; }
-        }
+        public new DSOUnitAdv Filter => (DSOUnitAdv) base.Filter;
 
         /// <summary>
         ///     Строка с перечислением через "," ID выбранных элементов
@@ -41,8 +38,8 @@ namespace Kesco.Lib.Web.DBSelect.V4
         {
             get
             {
-                var temp = SelectedItems.Aggregate("", (current, item) => current + ("'" + item.Id + "',"));
-                if (!String.IsNullOrEmpty(temp)) temp = temp.Remove(temp.Length - 1, 1);
+                var temp = SelectedItems.Aggregate("", (current, item) => current + "'" + item.Id + "',");
+                if (!string.IsNullOrEmpty(temp)) temp = temp.Remove(temp.Length - 1, 1);
                 return temp;
             }
         }
@@ -62,11 +59,11 @@ namespace Kesco.Lib.Web.DBSelect.V4
         ///     Получение списка Единица измерения дополнительная
         /// </summary>
         /// <returns>Список</returns>
-        public List<Entities.Resources.UnitAdv> GetUnits()
+        public List<UnitAdv> GetUnits()
         {
             var dt = DBManager.GetData(SQLGetText(), Config.DS_resource, CommandType.Text, SQLGetInnerParams());
 
-            var unit = dt.AsEnumerable().Select(dr => new Entities.Resources.UnitAdv
+            var unit = dt.AsEnumerable().Select(dr => new UnitAdv
             {
                 Id = dr.Field<int>(Filter.KeyField).ToString(CultureInfo.InvariantCulture),
                 Name = dr.Field<string>(Filter.NameField)
@@ -83,7 +80,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         /// <returns>Единица измерения</returns>
         public override object GetObjectById(string id, string name = "")
         {
-            return new Entities.Resources.UnitAdv { Id = id, Name = name };
+            return new UnitAdv {Id = id, Name = name};
         }
     }
 }

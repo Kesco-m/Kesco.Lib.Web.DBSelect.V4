@@ -31,7 +31,8 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         /// <summary>
         ///     Опция фильтра: по названию шаблон печатной формы
         /// </summary>
-        [FilterOption("Name", false, "Search")] public FOptName Name;
+        [FilterOption("Name", false, "Search")]
+        public FOptName Name;
 
         /// <summary>
         ///     Конструктор класса
@@ -51,25 +52,17 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         /// <summary>
         ///     Запрос выборки документов
         /// </summary>
-        public override string SQLBatch
-        {
-            get { return SQLQueries.SELECT_ШаблоныПечатныхФорм; }
-        }
+        public override string SQLBatch => SQLQueries.SELECT_ШаблоныПечатныхФорм;
 
         /// <summary>
         ///     Запрос получения документа по ID
         /// </summary>
-        public override string SQLEntityById
-        {
-            get { return SQLQueries.SELECT_ID_ШаблонПечатнойФормы; }
-        }
+        public override string SQLEntityById => SQLQueries.SELECT_ID_ШаблонПечатнойФормы;
 
         /// <summary>
         ///     Задание сортировки выборки
         /// </summary>
-        public override string SQLOrderBy
-        {
-            get { return "IsNull(КодЛица, 0) DESC, IsNull(КодКонтрагента, 0) DESC, КодШаблонаПечатнойФормы"; }
-        }
+        public override string SQLOrderBy =>
+            "IsNull(КодЛица, 0) DESC, IsNull(КодКонтрагента, 0) DESC, КодШаблонаПечатнойФормы";
     }
 }

@@ -1,20 +1,14 @@
 ﻿namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.Location
 {
     /// <summary>
-    /// Класс опции поиска по сотрудникам
+    ///     Класс опции поиска по сотрудникам
     /// </summary>
     public class FOptEmployee : FOptBase, IFilterOption
     {
-        private string _value = "";
-
         /// <summary>
         ///     Значение
         /// </summary>
-        public override string Value
-        {
-            get { return _value; }
-            set { _value = value; }
-        }
+        public override string Value { get; set; } = "";
 
         /// <summary>
         ///     Построение запроса

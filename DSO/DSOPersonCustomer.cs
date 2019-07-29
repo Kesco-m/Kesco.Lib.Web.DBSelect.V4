@@ -11,13 +11,13 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         /// <summary>
         ///     Опция фильтра по имени компании
         /// </summary>
-        [FilterOption("Кличка", false, "Search")] public FOptName Name;
+        [FilterOption("Кличка", false, "Search")]
+        public FOptName Name;
 
         /// <summary>
         ///     Опция фильтра по роли
         /// </summary>
-        [FilterOption("CustomerRole")]
-        public FOptPersonCustomerRole PersonCustomerRole;
+        [FilterOption("CustomerRole")] public FOptPersonCustomerRole PersonCustomerRole;
 
 
         /// <summary>
@@ -50,17 +50,11 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         /// <summary>
         ///     Запрос выборки данных
         /// </summary>
-        public override string SQLBatch
-        {
-            get { return SQLQueries.SELECT_ЛицаЗаказчики; }
-        }
+        public override string SQLBatch => SQLQueries.SELECT_ЛицаЗаказчики;
 
         /// <summary>
         ///     Задание сортировки выборки
         /// </summary>
-        public override string SQLOrderBy
-        {
-            get { return string.Format("T0.{0}", NameField); }
-        }
+        public override string SQLOrderBy => string.Format("T0.{0}", NameField);
     }
 }

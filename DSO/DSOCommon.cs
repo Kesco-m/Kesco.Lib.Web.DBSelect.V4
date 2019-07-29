@@ -17,7 +17,8 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         /// </param>
         /// <param name="optionNameURL">Название опции фильтрации в строке запроса</param>
         /// <param name="alwaysEnable">Ипользовать, даже если не присвоено значение</param>
-        public FilterOption(String optionName, bool isInnerParam = false, String optionNameURL = "", bool alwaysEnable = false)
+        public FilterOption(string optionName, bool isInnerParam = false, string optionNameURL = "",
+            bool alwaysEnable = false)
         {
             OptionName = optionName;
             IsInnerParam = isInnerParam;
@@ -79,34 +80,22 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         /// <summary>
         ///     Предварительный SQL Пакет
         /// </summary>
-        public virtual string SQLBatchPrepare
-        {
-            get { return ""; }
-        }
+        public virtual string SQLBatchPrepare => "";
 
         /// <summary>
         ///     SQL Пакет
         /// </summary>
-        public virtual string SQLBatch
-        {
-            get { return ""; }
-        }
+        public virtual string SQLBatch => "";
 
         /// <summary>
         ///     Сортировка
         /// </summary>
-        public virtual string SQLOrderBy
-        {
-            get { return ""; }
-        }
+        public virtual string SQLOrderBy => "";
 
         /// <summary>
         ///     Сущность по ID
         /// </summary>
-        public virtual string SQLEntityById
-        {
-            get { return ""; }
-        }
+        public virtual string SQLEntityById => "";
 
         /// <summary>
         ///     Функция, возвращающая латинскую транскрипцию
@@ -115,7 +104,7 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         /// <returns>латинская транскрипция</returns>
         public static string ReplaceRusLat(string s)
         {
-            return String.Format("Инвентаризация.dbo.fn_ReplaceRusLat(N'{0}')", s);
+            return string.Format("Инвентаризация.dbo.fn_ReplaceRusLat(N'{0}')", s);
         }
     }
 }

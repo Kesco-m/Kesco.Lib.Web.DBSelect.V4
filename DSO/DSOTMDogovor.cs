@@ -10,7 +10,8 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         /// <summary>
         ///     Опция поиска по тексту
         /// </summary>
-        [FilterOption("Name", false, "Search")] public FOptName Name;
+        [FilterOption("Name", false, "Search")]
+        public FOptName Name;
 
         /// <summary>
         ///     Конструктор класса
@@ -33,25 +34,19 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         public int? Year { get; set; }
 
         /// <summary>
-        /// Месяц
+        ///     Месяц
         /// </summary>
         [FilterOption("Месяц", true)]
         public int? Month { get; set; }
 
         /// <summary>
         ///     Запрос выборки данных
-        /// </summary>        
-        public override string SQLBatch
-        {
-            get { return SQLQueries.SELECT_ДоговораПоКоторымБылаТарификация; }
-        }
+        /// </summary>
+        public override string SQLBatch => SQLQueries.SELECT_ДоговораПоКоторымБылаТарификация;
 
         /// <summary>
         ///     Задание сортировки выборки
         /// </summary>
-        public override string SQLOrderBy
-        {
-            get { return "T0.Договор"; }
-        }
+        public override string SQLOrderBy => "T0.Договор";
     }
 }

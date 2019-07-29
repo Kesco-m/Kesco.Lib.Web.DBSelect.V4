@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
@@ -36,10 +35,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         /// <summary>
         ///     Фильтр
         /// </summary>
-        public new DSOContactType Filter
-        {
-            get { return (DSOContactType) base.Filter; }
-        }
+        public new DSOContactType Filter => (DSOContactType) base.Filter;
 
         /// <summary>
         ///     Заполнение списка
@@ -80,7 +76,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         public override object GetObjectById(string id, string name = "")
         {
             LangName = V4Page.CurrentUser.Language;
-            if (!String.IsNullOrEmpty(id))
+            if (!string.IsNullOrEmpty(id))
                 return new ContactType(id, LangName);
 
             return new ContactType();

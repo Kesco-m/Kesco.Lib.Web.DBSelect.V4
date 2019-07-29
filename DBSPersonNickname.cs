@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Kesco.Lib.Entities.Persons;
@@ -48,14 +47,12 @@ namespace Kesco.Lib.Web.DBSelect.V4
         {
             //base.FillSelect(search);
 
-            if (!String.IsNullOrEmpty(search))
+            if (!string.IsNullOrEmpty(search))
             {
                 var listResult = new List<PersonNickName>();
                 var fullListResult = GetPersonNickNames();
                 foreach (var searchWord in search.Split(' '))
-                {
                     listResult.AddRange(fullListResult.Where(o => o.Name.Contains(searchWord)));
-                }
                 return listResult.Distinct();
             }
 
@@ -81,54 +78,54 @@ namespace Kesco.Lib.Web.DBSelect.V4
         ///     Получение списка псевдонимов лица на латинице
         /// </summary>
         /// <returns>Список</returns>
-        private List<String> GetRegNickNames()
+        private List<string> GetRegNickNames()
         {
             var onlyFirstName =
                 NamesReg.Select(t => t)
-                    .Where(k => !String.IsNullOrEmpty(k.FirstName) && String.IsNullOrEmpty(k.SecondName));
+                    .Where(k => !string.IsNullOrEmpty(k.FirstName) && string.IsNullOrEmpty(k.SecondName));
             var onlySecondName =
                 NamesReg.Select(t => t)
-                    .Where(k => !String.IsNullOrEmpty(k.SecondName) && String.IsNullOrEmpty(k.FirstName));
+                    .Where(k => !string.IsNullOrEmpty(k.SecondName) && string.IsNullOrEmpty(k.FirstName));
             var fistAndSecondName =
                 NamesReg.Select(t => t)
-                    .Where(k => !String.IsNullOrEmpty(k.FirstName) && !String.IsNullOrEmpty(k.SecondName));
+                    .Where(k => !string.IsNullOrEmpty(k.FirstName) && !string.IsNullOrEmpty(k.SecondName));
             var personNickNames = new List<string>();
 
             //Фамилия Имя Отчество
             personNickNames.AddRange(
                 onlyFirstName.Select(
-                    name => name.FirstName + (!String.IsNullOrEmpty(name.MiddleName) ? " " + name.MiddleName : "")));
+                    name => name.FirstName + (!string.IsNullOrEmpty(name.MiddleName) ? " " + name.MiddleName : "")));
             personNickNames.AddRange(onlySecondName.Select(name => name.SecondName));
             personNickNames.AddRange(
                 fistAndSecondName.Select(
                     name =>
                         name.SecondName + " " + name.FirstName +
-                        (!String.IsNullOrEmpty(name.MiddleName) ? " " + name.MiddleName : "")));
+                        (!string.IsNullOrEmpty(name.MiddleName) ? " " + name.MiddleName : "")));
 
             //Имя Отчество Фамилия
             //personNickNames.AddRange(onlyFirstName.Select(name => name.FirstName + (!String.IsNullOrEmpty(name.MiddleName) ? " " + name.MiddleName : "")));
             personNickNames.AddRange(
                 fistAndSecondName.Select(
                     name =>
-                        name.FirstName + (!String.IsNullOrEmpty(name.MiddleName) ? " " + name.MiddleName + " " : "") +
+                        name.FirstName + (!string.IsNullOrEmpty(name.MiddleName) ? " " + name.MiddleName + " " : "") +
                         name.SecondName));
 
             //Фамилия И.О.
             personNickNames.AddRange(
-                onlyFirstName.Where(k => !String.IsNullOrEmpty(k.MiddleName))
+                onlyFirstName.Where(k => !string.IsNullOrEmpty(k.MiddleName))
                     .Select(name => name.FirstName[0] + ". " + name.MiddleName[0] + "."));
             personNickNames.AddRange(
                 fistAndSecondName.Select(
                     name =>
                         name.SecondName + " " + name.FirstName[0] + ". " +
-                        (!String.IsNullOrEmpty(name.MiddleName) ? " " + name.MiddleName[0] + "." : "")));
+                        (!string.IsNullOrEmpty(name.MiddleName) ? " " + name.MiddleName[0] + "." : "")));
 
             //И.О. Фамилия
             personNickNames.AddRange(
                 fistAndSecondName.Select(
                     name =>
                         name.FirstName[0] + ". " +
-                        (!String.IsNullOrEmpty(name.MiddleName) ? " " + name.MiddleName[0] + ". " : "") +
+                        (!string.IsNullOrEmpty(name.MiddleName) ? " " + name.MiddleName[0] + ". " : "") +
                         name.SecondName));
 
             return personNickNames;
@@ -138,34 +135,34 @@ namespace Kesco.Lib.Web.DBSelect.V4
         ///     Получение списка псевдонимов лица на латинице
         /// </summary>
         /// <returns>Список</returns>
-        private List<String> GetLatNickNames()
+        private List<string> GetLatNickNames()
         {
             var onlyFirstName =
                 NamesLat.Select(t => t)
-                    .Where(k => !String.IsNullOrEmpty(k.FirstName) && String.IsNullOrEmpty(k.SecondName));
+                    .Where(k => !string.IsNullOrEmpty(k.FirstName) && string.IsNullOrEmpty(k.SecondName));
             var onlySecondName =
                 NamesLat.Select(t => t)
-                    .Where(k => !String.IsNullOrEmpty(k.SecondName) && String.IsNullOrEmpty(k.FirstName));
+                    .Where(k => !string.IsNullOrEmpty(k.SecondName) && string.IsNullOrEmpty(k.FirstName));
             var fistAndSecondName =
                 NamesLat.Select(t => t)
-                    .Where(k => !String.IsNullOrEmpty(k.FirstName) && !String.IsNullOrEmpty(k.SecondName));
+                    .Where(k => !string.IsNullOrEmpty(k.FirstName) && !string.IsNullOrEmpty(k.SecondName));
 
             var personNickNames = new List<string>();
 
             //Фамилия Имя Отчетво
             personNickNames.AddRange(
                 onlyFirstName.Select(
-                    name => name.FirstName + (!String.IsNullOrEmpty(name.MiddleName) ? " " + name.MiddleName : "")));
+                    name => name.FirstName + (!string.IsNullOrEmpty(name.MiddleName) ? " " + name.MiddleName : "")));
             personNickNames.AddRange(onlySecondName.Select(name => name.SecondName));
             personNickNames.AddRange(
                 fistAndSecondName.Select(
                     name =>
                         name.SecondName + " " + name.FirstName +
-                        (!String.IsNullOrEmpty(name.MiddleName) ? " " + name.MiddleName : "")));
+                        (!string.IsNullOrEmpty(name.MiddleName) ? " " + name.MiddleName : "")));
 
             //Имя Отчество Фамилия
             personNickNames.AddRange(
-                fistAndSecondName.Where(o => !String.IsNullOrEmpty(o.MiddleName))
+                fistAndSecondName.Where(o => !string.IsNullOrEmpty(o.MiddleName))
                     .Select(name => name.FirstName + " " + name.MiddleName + " " + name.SecondName));
 
             //Фамилия И.О.
@@ -173,19 +170,19 @@ namespace Kesco.Lib.Web.DBSelect.V4
                 onlyFirstName.Select(
                     name =>
                         name.FirstName[0] + "." +
-                        (!String.IsNullOrEmpty(name.MiddleName) ? " " + name.MiddleName[0] + "." : "")));
+                        (!string.IsNullOrEmpty(name.MiddleName) ? " " + name.MiddleName[0] + "." : "")));
             personNickNames.AddRange(
                 fistAndSecondName.Select(
                     name =>
                         name.SecondName + " " + name.FirstName[0] + "." +
-                        (!String.IsNullOrEmpty(name.MiddleName) ? " " + name.MiddleName[0] + "." : "")));
+                        (!string.IsNullOrEmpty(name.MiddleName) ? " " + name.MiddleName[0] + "." : "")));
 
             //И.О. Фамилия
             //personNickNames.AddRange(fistAndSecondName.Select(name => name.FirstName[0] + ". " + (!String.IsNullOrEmpty(name.MiddleName) ? " " + name.MiddleName[0] + ". " : "") + name.SecondName));
 
             //Фаимилия Имя О.
             personNickNames.AddRange(
-                onlyFirstName.Where(k => !String.IsNullOrEmpty(k.MiddleName))
+                onlyFirstName.Where(k => !string.IsNullOrEmpty(k.MiddleName))
                     .Select(name => name.FirstName + " " + name.MiddleName[0] + "."));
             //personNickNames.AddRange(fistAndSecondName.Where(k => !String.IsNullOrEmpty(k.MiddleName)).Select(name => name.SecondName + " " + name.FirstName + " " + name.MiddleName[0] + "."));
 

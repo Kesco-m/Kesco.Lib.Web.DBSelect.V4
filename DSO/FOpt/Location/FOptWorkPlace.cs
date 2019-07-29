@@ -13,10 +13,7 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.Location
         /// <summary>
         ///     Значение
         /// </summary>
-        public override string Value
-        {
-            get { return _value.ToString(CultureInfo.InvariantCulture); }
-        }
+        public override string Value => _value.ToString(CultureInfo.InvariantCulture);
 
         /// <summary>
         ///     Значение через Enum ТипыРабочихМест

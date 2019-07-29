@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
@@ -29,10 +28,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         /// <summary>
         ///     Фильтр
         /// </summary>
-        public new DSOVacationType Filter
-        {
-            get { return (DSOVacationType)base.Filter; }
-        }
+        public new DSOVacationType Filter => (DSOVacationType) base.Filter;
 
         /// <summary>
         ///     Заполнение списка
@@ -51,7 +47,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         /// <returns>Список</returns>
         public List<VacationType> GetVacationTypes()
         {
-            var dt = DBManager.GetData(SQLGetText(false), Config.DS_user);
+            var dt = DBManager.GetData(SQLGetText(false), Config.DS_resource);
 
             var types = dt.AsEnumerable().Select(dr => new VacationType
             {
@@ -70,7 +66,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         /// <returns>Компания</returns>
         public override object GetObjectById(string id, string name = "")
         {
-            if (!String.IsNullOrEmpty(id))
+            if (!string.IsNullOrEmpty(id))
                 return new VacationType(id);
 
             return new VacationType();

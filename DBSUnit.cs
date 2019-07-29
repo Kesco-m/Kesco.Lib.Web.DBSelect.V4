@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using Kesco.Lib.DALC;
-using System.Globalization;
+using Kesco.Lib.Entities.Resources;
 using Kesco.Lib.Web.DBSelect.V4.DSO;
 using Kesco.Lib.Web.Settings;
 
@@ -29,10 +29,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         /// <summary>
         ///     Фильтр Единица измерения
         /// </summary>
-        public new DSOUnit Filter
-        {
-            get { return (DSOUnit) base.Filter; }
-        }
+        public new DSOUnit Filter => (DSOUnit) base.Filter;
 
         /// <summary>
         ///     Строка с перечислением через "," ID выбранных элементов
@@ -41,8 +38,8 @@ namespace Kesco.Lib.Web.DBSelect.V4
         {
             get
             {
-                var temp = SelectedItems.Aggregate("", (current, item) => current + ("'" + item.Id + "',"));
-                if (!String.IsNullOrEmpty(temp)) temp = temp.Remove(temp.Length - 1, 1);
+                var temp = SelectedItems.Aggregate("", (current, item) => current + "'" + item.Id + "',");
+                if (!string.IsNullOrEmpty(temp)) temp = temp.Remove(temp.Length - 1, 1);
                 return temp;
             }
         }
@@ -62,11 +59,11 @@ namespace Kesco.Lib.Web.DBSelect.V4
         ///     Получение списка Единица измерения
         /// </summary>
         /// <returns>Список</returns>
-        public List<Entities.Resources.Unit> GetUnits()
+        public List<Unit> GetUnits()
         {
             var dt = DBManager.GetData(SQLGetText(true), Config.DS_resource, CommandType.Text, SQLGetInnerParams());
 
-            var unit = dt.AsEnumerable().Select(dr => new Entities.Resources.Unit
+            var unit = dt.AsEnumerable().Select(dr => new Unit
             {
                 Id = dr.Field<int>(Filter.KeyField).ToString(CultureInfo.InvariantCulture),
                 Name = dr.Field<string>(Filter.NameField)
@@ -84,9 +81,9 @@ namespace Kesco.Lib.Web.DBSelect.V4
         public override object GetObjectById(string id, string name = "")
         {
             if (!string.IsNullOrEmpty(name))
-                return new Entities.Resources.Unit { Id = id, Name = name };
+                return new Unit {Id = id, Name = name};
 
-            var obj = V4Page.GetObjectById(typeof(Entities.Resources.Unit), id) as Entities.Resources.Unit;
+            var obj = V4Page.GetObjectById(typeof(Unit), id) as Unit;
 
             return obj;
         }

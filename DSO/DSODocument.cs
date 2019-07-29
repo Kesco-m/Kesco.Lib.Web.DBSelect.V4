@@ -44,6 +44,11 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         [FilterOption("Name")] public FOptName Name;
 
         /// <summary>
+        ///     Опция фильтра: по типу вытекающего документа
+        /// </summary>
+        [FilterOption("NextType")] public FOptNextDocType NextType;
+
+        /// <summary>
         ///     Опция фильтра: номер документа
         /// </summary>
         [FilterOption("Number")] public FOptDocNumber Number;
@@ -57,11 +62,6 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         ///     Опция фильтра: тип документа
         /// </summary>
         [FilterOption("Type")] public FOptDocType Type;
-
-		/// <summary>
-		///     Опция фильтра: по типу вытекающего документа
-		/// </summary>
-		[FilterOption("NextType")] public FOptNextDocType NextType;
 
         /// <summary>
         ///     Конструктор класса
@@ -81,7 +81,7 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
             LinkedDoc = new FOptLinkedDoc();
             AtWork = new FOptAtWork();
             ChangeBy = new FOptChangeBy();
-			NextType = new FOptNextDocType();
+            NextType = new FOptNextDocType();
         }
 
         /// <summary>
@@ -110,25 +110,16 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         /// <summary>
         ///     Запрос выборки документов
         /// </summary>
-        public override string SQLBatch
-        {
-            get { return SQLQueries.SELECT_Документы; }
-        }
+        public override string SQLBatch => SQLQueries.SELECT_Документы;
 
         /// <summary>
         ///     Запрос получения документа по ID
         /// </summary>
-        public override string SQLEntityById
-        {
-            get { return SQLQueries.SELECT_ID_Документ; }
-        }
+        public override string SQLEntityById => SQLQueries.SELECT_ID_Документ;
 
         /// <summary>
         ///     Задание сортировки выборки
         /// </summary>
-        public override string SQLOrderBy
-        {
-            get { return "T0.КодДокумента DESC"; }
-        }
+        public override string SQLOrderBy => "T0.КодДокумента DESC";
     }
 }

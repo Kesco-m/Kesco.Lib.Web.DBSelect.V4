@@ -9,6 +9,17 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
     public class DSOPersonRole : DSOCommon
     {
         /// <summary>
+        ///     Опция фильтра по имени компании
+        /// </summary>
+        [FilterOption("Кличка", false, "Search")]
+        public FOptName Name;
+
+        /// <summary>
+        ///     Опция фильтра по роли
+        /// </summary>
+        [FilterOption("Role")] public FOptPersonRole PersonRole;
+
+        /// <summary>
         ///     Конструктор класса
         /// </summary>
         public DSOPersonRole()
@@ -19,32 +30,14 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
             PersonRole = new FOptPersonRole();
         }
 
-
-        /// <summary>
-        ///     Опция фильтра по имени компании
-        /// </summary>
-        [FilterOption("Кличка", false, "Search")] public FOptName Name;
-
-        /// <summary>
-        ///     Опция фильтра по роли
-        /// </summary>
-        [FilterOption("Role")]
-        public FOptPersonRole PersonRole;
-
         /// <summary>
         ///     Запрос выборки данных
         /// </summary>
-        public override string SQLBatch
-        {
-            get { return SQLQueries.SELECT_Лица; }
-        }
+        public override string SQLBatch => SQLQueries.SELECT_ЛицаЗаказчикиDBS;
 
         /// <summary>
         ///     Задание сортировки выборки
         /// </summary>
-        public override string SQLOrderBy
-        {
-            get { return string.Format("T0.{0}", NameField); }
-        }
+        public override string SQLOrderBy => string.Format("T0.{0}", NameField);
     }
 }

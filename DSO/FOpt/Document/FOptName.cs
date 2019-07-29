@@ -64,13 +64,9 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.Document
                 if (IsType(word, ref typeIDs))
                 {
                     if (textParts.ContainsKey("TypeID"))
-                    {
                         textParts["TypeID"] = string.Concat(textParts["TypeID"], ",", typeIDs);
-                    }
                     else
-                    {
                         textParts.Add("TypeID", typeIDs);
-                    }
                     continue;
                 }
 
@@ -95,6 +91,7 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.Document
                             textParts.Add("Date", date);
                         continue;
                     }
+
                     if (IsNumber(word))
                     {
                         isNotExistsNumberWords = false;
@@ -108,7 +105,9 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.Document
 
             var numWords = textParts.ContainsKey("ID") && isNotExistsNumberWords
                 ? textParts["ID"]
-                : textParts.ContainsKey("Number") ? textParts["Number"] : "";
+                : textParts.ContainsKey("Number")
+                    ? textParts["Number"]
+                    : "";
 
             if (textParts.ContainsKey("Date"))
             {
@@ -119,19 +118,20 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.Document
                     var di = dates[i];
                     sql +=
                         string.Concat(
-                            (sql.Length == 0 ? string.Empty : " OR "),
+                            sql.Length == 0 ? string.Empty : " OR ",
                             "(T0.ДатаДокумента >= '", di, "'", "AND T0.ДатаДокумента < DATEADD(day, 1, '", di, "')",
-                            (!textParts.ContainsKey("Date")
+                            !textParts.ContainsKey("Date")
                                 ? string.Empty
                                 : " OR T0.НомерДокументаRL LIKE N'" + di.Replace(" ", "%") + "%'" +
                                   " OR T0.НомерДокументаRLReverse LIKE N'" +
                                   new string(di.Reverse().ToArray()).Replace(" ", "%") + "%'"
-                                )
                             , ")"
-                            );
+                        );
                 }
+
                 sql = sql.Length == 0 ? string.Empty : string.Format("({0})", sql);
             }
+
             if (textParts.ContainsKey("Number"))
             {
                 var ws = ReplaceRusLat(SqlEscape(GetWords(numWords, new Regex("[^ ]+", RegexOptions.IgnoreCase))));
@@ -140,24 +140,26 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.Document
                         new Regex("[0-9A-ZА-ЯŠŽÕÄÖÜÉÀÈÙÂÊÎÔÛÇËÏŸÆæŒœßŇñ_]+", RegexOptions.IgnoreCase)));
 
                 sql =
-                    string.Concat(sql, (sql.Length == 0 ? "" : " AND "),
+                    string.Concat(sql, sql.Length == 0 ? "" : " AND ",
                         string.Format("({0}{1})",
                             string.Format("T0.НазваниеДокумента LIKE N'{0}%'", tp.Replace(" ", "%")),
                             string.Format(" OR T0.НомерДокументаRL LIKE N'{0}%'", ws.Replace(" ", "%")) +
                             string.Format(" OR T0.НомерДокументаRLReverse LIKE N'{0}%'",
                                 new string(ws.Reverse().ToArray()).Replace(" ", "%"))
-                            ));
+                        ));
             }
 
             if (textParts.ContainsKey("TypeID"))
                 sql =
                     string.Concat(sql,
-                        (sql.Length == 0 ? string.Empty : " AND "),
+                        sql.Length == 0 ? string.Empty : " AND ",
                         string.Format("(T0.КодТипаДокумента IN ({0}))", textParts["TypeID"]));
 
             if (textParts.ContainsKey("ID"))
             {
-                var wId = string.Format("(T0.КодДокумента IN(SELECT value FROM Инвентаризация.dbo.fn_SplitInts('{0}')))", textParts["ID"].Replace(" ", ","));
+                var wId = string.Format(
+                    "(T0.КодДокумента IN(SELECT value FROM Инвентаризация.dbo.fn_SplitInts('{0}')))",
+                    textParts["ID"].Replace(" ", ","));
                 sql = sql.Length == 0 ? wId : string.Format("(({0}) OR {1})", sql, wId);
             }
 
@@ -196,6 +198,7 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.Document
             catch
             {
             }
+
             return false;
         }
 

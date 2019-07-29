@@ -28,21 +28,20 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.Document
                 {
                     case DateSearchType.Equals:
                         for (var i = 0; i < dates.Length; i++)
-                        {
                             whereStr = string.Concat(whereStr,
                                 string.Format(
                                     @"(T0.ДатаДокумента >= '{0}' AND T0.ДатаДокумента < DATEADD(day, 1, '{0}') ) {1}",
                                     dates[i], i < dates.Length - 1 ? " OR " : string.Empty));
-                        }
                         return string.Format("({0})", whereStr);
 
                     case DateSearchType.MoreThan:
                         return string.Format(@"(T0.ДатаДокумента >= '{0}')", dates[0]);
 
-					case DateSearchType.LessThan:
-						return string.Format(@"(T0.ДатаДокумента < '{0}')", dates[0]);
+                    case DateSearchType.LessThan:
+                        return string.Format(@"(T0.ДатаДокумента <= '{0}')", dates[0]);
                 }
             }
+
             return string.Empty;
         }
     }

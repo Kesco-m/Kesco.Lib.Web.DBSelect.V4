@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
@@ -16,7 +15,6 @@ namespace Kesco.Lib.Web.DBSelect.V4
     /// </summary>
     public class DBSPersonCatalog : DBSelect
     {
-        
         //public bool IsUseEmptyValue { get; set; }
 
         /// <summary>
@@ -33,10 +31,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         /// <summary>
         ///     Фильтр
         /// </summary>
-        public new DSOPersonCatalog Filter
-        {
-            get { return (DSOPersonCatalog) base.Filter; }
-        }
+        public new DSOPersonCatalog Filter => (DSOPersonCatalog) base.Filter;
 
         /// <summary>
         ///     Заполнение списка
@@ -56,7 +51,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         public List<PersonCatalog> GetCatalogs()
         {
             var dt = DBManager.GetData(SQLGetText(false), Config.DS_person);
-            
+
             var personCatalogs = dt.AsEnumerable().Select(dr => new PersonCatalog
             {
                 Id = dr.Field<int>(Filter.KeyField).ToString(CultureInfo.InvariantCulture),
@@ -75,7 +70,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         /// <returns>Компания</returns>
         public override object GetObjectById(string id, string name = "")
         {
-            if (!String.IsNullOrEmpty(id))
+            if (!string.IsNullOrEmpty(id))
                 return new PersonCatalog(id);
 
             return new PersonCatalog();

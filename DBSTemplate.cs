@@ -34,10 +34,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         /// <summary>
         ///     Дополнительный фильтр по условиям поиска
         /// </summary>
-        public new DSOTemplate Filter
-        {
-            get { return (DSOTemplate) base.Filter; }
-        }
+        public new DSOTemplate Filter => (DSOTemplate) base.Filter;
 
         /// <summary>
         ///     Коллекция нотификаций контрола

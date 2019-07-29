@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
@@ -8,9 +7,7 @@ using Kesco.Lib.BaseExtention.Enums.Controls;
 using Kesco.Lib.DALC;
 using Kesco.Lib.Entities.Persons;
 using Kesco.Lib.Entities.Persons.PersonOld;
-using Kesco.Lib.Entities.Stores;
 using Kesco.Lib.Web.Controls.V4;
-using Kesco.Lib.Web.Controls.V4.Common;
 using Kesco.Lib.Web.DBSelect.V4.DSO;
 using Kesco.Lib.Web.Settings;
 
@@ -19,7 +16,6 @@ namespace Kesco.Lib.Web.DBSelect.V4
     /// <summary>
     ///     Класс Select для элемента управления Лицо
     /// </summary>
-       
     public class DBSPerson : DBSelect
     {
         /// <summary>
@@ -27,7 +23,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         /// </summary>
         public DBSPerson()
         {
-            base.Filter = new DSOPerson{PersonSelectTop = 9};
+            base.Filter = new DSOPerson {PersonSelectTop = 9};
             AutonomySelect = false;
             InnerPersonsIDs = new List<string>();
             KeyField = "Id";
@@ -62,10 +58,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         /// <summary>
         ///     Дополнительный фильтр по условиям поиска
         /// </summary>
-        public new DSOPerson Filter
-        {
-            get { return (DSOPerson) base.Filter; }
-        }
+        public new DSOPerson Filter => (DSOPerson) base.Filter;
 
         /// <summary>
         ///     Заполнение списка
@@ -84,15 +77,18 @@ namespace Kesco.Lib.Web.DBSelect.V4
         /// <returns>Список</returns>
         public List<Person> GetPersons()
         {
-            var dt = DBManager.GetData(SQLGetText(), Config.DS_person, CommandType.StoredProcedure, SQLGetInnerParams());
+            var dt = DBManager.GetData(SQLGetText(), Config.DS_person, CommandType.StoredProcedure,
+                SQLGetInnerParams());
 
             var persons = dt.AsEnumerable().Select(dr => new Person
             {
                 Id = dr.Field<int>(Filter.KeyField).ToString(CultureInfo.InvariantCulture),
-                Name = dr.Field<string>(Filter.NameField).Length == 0 ? "#" + dr.Field<int>(Filter.KeyField).ToString(CultureInfo.InvariantCulture) : dr.Field<string>(Filter.NameField)
+                Name = dr.Field<string>(Filter.NameField).Length == 0
+                    ? "#" + dr.Field<int>(Filter.KeyField).ToString(CultureInfo.InvariantCulture)
+                    : dr.Field<string>(Filter.NameField)
             }).ToList();
 
-            if (null!=WeakList && WeakList.Count > 0)
+            if (null != WeakList && WeakList.Count > 0)
             {
                 var toInsert = new List<Person>(WeakList.Count);
                 // ReSharper disable once LoopCanBeConvertedToQuery
@@ -102,14 +98,12 @@ namespace Kesco.Lib.Web.DBSelect.V4
                     if (toInsert.Exists(p => wPerson != null && p.Id == wPerson.Id))
                         toInsert.Add(new Person(w));
                 }
+
                 MaxItemsInPopup = toInsert.Count;
                 persons.InsertRange(0, toInsert);
             }
 
-            if (AutonomySelect)
-            {
-                return persons.Where(t => InnerPersonsIDs.Contains(t.Id)).ToList();
-            }
+            if (AutonomySelect) return persons.Where(t => InnerPersonsIDs.Contains(t.Id)).ToList();
             return persons;
         }
 

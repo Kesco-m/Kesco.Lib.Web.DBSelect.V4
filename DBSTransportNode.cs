@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -27,7 +26,8 @@ namespace Kesco.Lib.Web.DBSelect.V4
             ValueField = "Id,Name,TypeTransport";
             DisplayFields = "Id,Name,TypeTransport";
             AnvancedHeaderPopupResult =
-                string.Format("<tr class='gridHeaderSelect v4s_noselect'><td><b>{0}</b></td><td><b>{1}</b></td><td><b>{2}</b></td></tr>",
+                string.Format(
+                    "<tr class='gridHeaderSelect v4s_noselect'><td><b>{0}</b></td><td><b>{1}</b></td><td><b>{2}</b></td></tr>",
                     Resx.GetString("sCode"), Resx.GetString("STORE_Name"), Resx.GetString("sTransport"));
 
             IndexField = 1;
@@ -37,10 +37,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         /// <summary>
         ///     Фильтр
         /// </summary>
-        public new DSOTransportNode Filter
-        {
-            get { return (DSOTransportNode) base.Filter; }
-        }
+        public new DSOTransportNode Filter => (DSOTransportNode) base.Filter;
 
         /// <summary>
         ///     Коллекция нотификаций контрола
@@ -71,7 +68,8 @@ namespace Kesco.Lib.Web.DBSelect.V4
         /// <returns>Список транспортных узлов</returns>
         public List<TransportNode> GetTransportNodes(string search, string type, int maxItemsInQuery)
         {
-            var dt = DBManager.GetData(SQLQueries.SELECT_ТранспортныеУзлыВыбор(search, type, maxItemsInQuery), Config.DS_document);
+            var dt = DBManager.GetData(SQLQueries.SELECT_ТранспортныеУзлыВыбор(search, type, maxItemsInQuery),
+                Config.DS_document);
             var result = dt.AsEnumerable().Select(dr => new TransportNode
             {
                 Id = dr.Field<int>("КодТранспортногоУзла").ToString(),
@@ -92,15 +90,16 @@ namespace Kesco.Lib.Web.DBSelect.V4
         /// <returns>транспортный узел</returns>
         public override object GetObjectById(string id, string name = "")
         {
-            var sql = String.Format(SQLQueries.SELECT_ID_ТранспортныйУзел, id);
+            var sql = string.Format(SQLQueries.SELECT_ID_ТранспортныйУзел, id);
             var dt = DBManager.GetData(sql, Config.DS_document);
             var result = dt.AsEnumerable().Select(dr => new TransportNode
             {
                 Unavailable = false,
                 Id = dr.Field<int>("КодТранспортногоУзла").ToString(),
-                Name = (dr.Field<int>("КодВидаТранспорта") == 1) ? 
-                        "ст. " + dr.Field<string>("Название") + " (" + dr.Field<int>("КодТранспортногоУзла").ToString() + ")" 
-                        : dr.Field<string>("Название"),
+                Name = dr.Field<int>("КодВидаТранспорта") == 1
+                    ? "ст. " + dr.Field<string>("Название") + " (" + dr.Field<int>("КодТранспортногоУзла").ToString() +
+                      ")"
+                    : dr.Field<string>("Название"),
                 TypeTransport = dr.Field<string>("Транспорт"),
                 CodeRailway = dr.Field<int?>("КодЖелезнойДороги"),
                 TransportTypeCode = dr.Field<int>("КодВидаТранспорта")

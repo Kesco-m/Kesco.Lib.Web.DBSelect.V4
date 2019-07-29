@@ -35,6 +35,7 @@
                 case "3":
                     return " (T1.Должность IS NULL OR T1.Должность = '')";
             }
+
             return !string.IsNullOrEmpty(Value) ? string.Format(" T1.Должность {1} ({0})", Value, clause) : "";
         }
     }

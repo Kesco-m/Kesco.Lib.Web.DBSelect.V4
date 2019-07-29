@@ -26,7 +26,7 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt
         /// <summary>
         ///     Тип запроса
         /// </summary>
-        private TreeQueryType QueryType { get; set; }
+        private TreeQueryType QueryType { get; }
 
         /// <summary>
         ///     Имя таблицы, к которой осуществляется запрос
@@ -66,6 +66,7 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt
                     sbQuery.AppendFormat(_childQueryStr, TableName, KeyField, idsEnumStr, ")");
                     break;
             }
+
             return sbQuery.ToString();
         }
 

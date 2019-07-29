@@ -53,17 +53,11 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         /// <summary>
         ///     Запрос выборки данных
         /// </summary>
-        public override string SQLBatch
-        {
-            get { return SQLQueries.SELECT_СвязиЛиц; }
-        }
+        public override string SQLBatch => SQLQueries.SELECT_СвязиЛиц;
 
         /// <summary>
         ///     Задание сортировки выборки
         /// </summary>
-        public override string SQLOrderBy
-        {
-            get { return string.Format("{0}", NameField); }
-        }
+        public override string SQLOrderBy => string.Format("{0}", NameField);
     }
 }

@@ -11,10 +11,7 @@
         /// <returns>Блок WHERE опции</returns>
         public string SQLGetClause()
         {
-            if (!string.IsNullOrEmpty(Value))
-            {
-                return string.Format(@"(От <= '{0}' AND До <= '{0}')", Value);
-            }
+            if (!string.IsNullOrEmpty(Value)) return string.Format(@"(От <= '{0}' AND До <= '{0}')", Value);
             return string.Empty;
         }
     }

@@ -1,7 +1,4 @@
-﻿using System.Globalization;
-using Kesco.Lib.BaseExtention.Enums.Corporate;
-
-namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.Employee
+﻿namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.Employee
 {
     /// <summary>
     ///     Класс опции поиска по сотрудникам, включая виртуальных
@@ -9,7 +6,7 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.Employee
     public class FOptSortColleagues : FOptBase, IFilterOption
     {
         /// <summary>
-        /// Коллеги
+        ///     Коллеги
         /// </summary>
         public FOptSortColleagues()
         {
@@ -17,7 +14,7 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.Employee
         }
 
         /// <summary>
-        /// Значение
+        ///     Значение
         /// </summary>
         public bool ValueSortColleagues { get; set; }
 

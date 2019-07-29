@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Text;
-using System.Text.RegularExpressions;
 using Kesco.Lib.BaseExtention.Enums.Docs;
 using Kesco.Lib.Entities.Documents;
 
@@ -20,41 +19,49 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.Document
         ///     Построение блока WHERE для опции
         /// </summary>
         /// <returns>Блок WHERE опции</returns>
-		public string SQLGetClause()
-		{
-			var sb = new StringBuilder(" (");
+        public string SQLGetClause()
+        {
+            var sb = new StringBuilder(" (");
 
-			LinkedDocParams.ForEach(doc =>
-				{
-					switch (doc.QueryType)
-					{
-						case LinkedDocsType.AllReasons:
-							if (sb.Length > 2) sb.Append(" OR ");
-							sb.AppendFormat("(EXISTS (SELECT * FROM Документы.dbo.fn_ВсеОснования({0}) T1 WHERE T1.КодДокумента = T0.КодДокумента))",doc.DocID);
-							break;
+            LinkedDocParams.ForEach(doc =>
+                {
+                    switch (doc.QueryType)
+                    {
+                        case LinkedDocsType.AllReasons:
+                            if (sb.Length > 2) sb.Append(" OR ");
+                            sb.AppendFormat(
+                                "(EXISTS (SELECT * FROM Документы.dbo.fn_ВсеОснования({0}) T1 WHERE T1.КодДокумента = T0.КодДокумента))",
+                                doc.DocID);
+                            break;
 
-						case LinkedDocsType.DirectReasons:
-							if (sb.Length > 2) sb.Append(" OR ");
-							sb.AppendFormat("(EXISTS (SELECT * FROM Документы.dbo.vwСвязиДокументов T1 (nolock) WHERE T1.КодДокументаВытекающего = {0} AND T1.КодДокументаОснования = T0.КодДокумента) )", doc.DocID);
-							break;
+                        case LinkedDocsType.DirectReasons:
+                            if (sb.Length > 2) sb.Append(" OR ");
+                            sb.AppendFormat(
+                                "(EXISTS (SELECT * FROM Документы.dbo.vwСвязиДокументов T1 (nolock) WHERE T1.КодДокументаВытекающего = {0} AND T1.КодДокументаОснования = T0.КодДокумента) )",
+                                doc.DocID);
+                            break;
 
-						case LinkedDocsType.AllСonsequences:
-							if (sb.Length > 2) sb.Append(" OR ");
-							sb.AppendFormat("(EXISTS (SELECT * FROM Документы.dbo.fn_ВсеВытекающие({0}) T1 WHERE T1.КодДокумента = T0.КодДокумента) )", doc.DocID);
-							break;
+                        case LinkedDocsType.AllСonsequences:
+                            if (sb.Length > 2) sb.Append(" OR ");
+                            sb.AppendFormat(
+                                "(EXISTS (SELECT * FROM Документы.dbo.fn_ВсеВытекающие({0}) T1 WHERE T1.КодДокумента = T0.КодДокумента) )",
+                                doc.DocID);
+                            break;
 
-						case LinkedDocsType.DirectСonsequences:
-							if (sb.Length > 2) sb.Append(" OR ");
-							sb.AppendFormat("(EXISTS (SELECT * FROM Документы.dbo.vwСвязиДокументов T1 (nolock) WHERE T1.КодДокументаОснования = {0} AND T1.КодДокументаВытекающего = T0.КодДокумента) )", doc.DocID);
-							break;
-					}
-				}
-			);
+                        case LinkedDocsType.DirectСonsequences:
+                            if (sb.Length > 2) sb.Append(" OR ");
+                            sb.AppendFormat(
+                                "(EXISTS (SELECT * FROM Документы.dbo.vwСвязиДокументов T1 (nolock) WHERE T1.КодДокументаОснования = {0} AND T1.КодДокументаВытекающего = T0.КодДокумента) )",
+                                doc.DocID);
+                            break;
+                    }
+                }
+            );
 
-			if (sb.Length > 2) return sb.Append(") ").ToString();
+            if (sb.Length > 2) return sb.Append(") ").ToString();
 
-			return string.Empty;
-		}
+            return string.Empty;
+        }
 
         /// <summary>
         ///     Очистить

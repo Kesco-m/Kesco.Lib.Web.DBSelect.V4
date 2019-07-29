@@ -35,6 +35,7 @@
                 case "3":
                     return " T0.КодЛицаЗаказчика IS NULL";
             }
+
             return !string.IsNullOrEmpty(Value) ? string.Format(" T0.КодЛицаЗаказчика {1} ({0})", Value, clause) : "";
         }
     }

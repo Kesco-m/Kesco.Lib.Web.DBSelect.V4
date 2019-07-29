@@ -34,10 +34,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         /// <summary>
         ///     Фильтр
         /// </summary>
-        public new DSOEmployee Filter
-        {
-            get { return (DSOEmployee) base.Filter; }
-        }
+        public new DSOEmployee Filter => (DSOEmployee) base.Filter;
 
         /// <summary>
         ///     Заполнение списка
@@ -68,6 +65,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
                 Filter.UserOur = "true";
                 Filter.UserStaffMembers.ValueStatus = "true";
             }
+
             var dt = DBManager.GetData(SQLGetText(), Config.DS_user, CommandType.Text, SQLGetInnerParams());
 
             var result = dt.AsEnumerable().Select(dr => new Employee(false)

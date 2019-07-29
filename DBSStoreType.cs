@@ -28,10 +28,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         /// <summary>
         ///     Дополнительный фильтр по условиям поиска
         /// </summary>
-        public new DSOStoreType Filter
-        {
-            get { return (DSOStoreType) base.Filter; }
-        }
+        public new DSOStoreType Filter => (DSOStoreType) base.Filter;
 
         /// <summary>
         ///     Заполнение списка

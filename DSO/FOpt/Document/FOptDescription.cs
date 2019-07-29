@@ -17,13 +17,12 @@
             {
                 var words = Value.Split(',');
                 for (var i = 0; i < words.Length; i++)
-                {
                     whereStr = string.Concat(whereStr,
                         string.Format(" T0.Описание LIKE '%{0}%' {1}", words[i].Trim(),
                             i < words.Length - 1 ? "OR" : string.Empty));
-                }
                 return string.Format("({0})", whereStr);
             }
+
             return string.Empty;
         }
     }

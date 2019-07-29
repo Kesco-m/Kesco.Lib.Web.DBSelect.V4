@@ -1,35 +1,29 @@
 ﻿using System.Collections;
-using System.Data;
 using System.Collections.Generic;
-using Kesco.Lib.Web.Settings;
+using System.Data;
 using Kesco.Lib.DALC;
-using Kesco.Lib.Web.DBSelect.V4.DSO;
 using Kesco.Lib.Entities;
-
+using Kesco.Lib.Web.DBSelect.V4.DSO;
+using Kesco.Lib.Web.Settings;
 
 namespace Kesco.Lib.Web.DBSelect.V4
 {
     /// <summary>
-    ///     Класс сущности 
+    ///     Класс сущности
     /// </summary>
     public class DBSSqlQuery : DBSelect
     {
         //Список элементов
-        List<Item> _listOfItems = null;
-
-        /// <summary>
-        /// ТипУсловия 
-        /// </summary>
-        public string QueryType { get; set; }
+        private List<Item> _listOfItems;
 
         /// <summary>
         ///     Конструктор
         /// </summary>
         public DBSSqlQuery()
         {
-            DSOSqlQuery FilterSqlQuery = new DSOSqlQuery();
+            var FilterSqlQuery = new DSOSqlQuery();
 
-            base.Filter = FilterSqlQuery;
+            Filter = FilterSqlQuery;
             KeyField = "Id"; //Filter.KeyField;
             ValueField = "Value"; //Filter.NameField;
 
@@ -37,7 +31,12 @@ namespace Kesco.Lib.Web.DBSelect.V4
         }
 
         /// <summary>
-        /// Фильтр Подзапрос
+        ///     ТипУсловия
+        /// </summary>
+        public string QueryType { get; set; }
+
+        /// <summary>
+        ///     Фильтр Подзапрос
         /// </summary>
         public DSOSqlQuery GetFilter()
         {
@@ -45,7 +44,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         }
 
         /// <summary>
-        ///     Заполнение списка 
+        ///     Заполнение списка
         /// </summary>
         /// <param name="search">Строка поиска</param>
         /// <returns>Список</returns>
@@ -62,7 +61,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         }
 
         /// <summary>
-        /// Метод заполоняет список элементов из БД
+        ///     Метод заполоняет список элементов из БД
         /// </summary>
         private void FillItemsList()
         {
@@ -71,13 +70,11 @@ namespace Kesco.Lib.Web.DBSelect.V4
             var dsoSqlQuery = Filter as DSOSqlQuery;
             if (dsoSqlQuery != null) dsoSqlQuery.QueryType = QueryType;
 
-            DataTable dtItems = DBManager.GetData(SQLGetText(true), Config.DS_user, CommandType.Text, SQLGetInnerParams());
+            var dtItems = DBManager.GetData(SQLGetText(true), Config.DS_user, CommandType.Text, SQLGetInnerParams());
             //return dtItems.AsEnumerable();
 
             foreach (DataRow row in dtItems.Rows)
-            {
-                _listOfItems.Add(new Item { Id = row[Filter.KeyField].ToString(), Value = row[Filter.NameField] });
-            }
+                _listOfItems.Add(new Item {Id = row[Filter.KeyField].ToString(), Value = row[Filter.NameField]});
         }
 
         /// <summary>
@@ -102,13 +99,14 @@ namespace Kesco.Lib.Web.DBSelect.V4
 
             if (!string.IsNullOrWhiteSpace(name))
             {
-                Item i_name = _listOfItems.Find(x => 0 == string.Compare(x.Id, id, true) && 0 == string.Compare(x.Value.ToString(), name, true));
-                if (object.Equals(i_name, default(Kesco.Lib.Entities.Item))) return null;//значение Item по умолчанию все поля null
+                var i_name = _listOfItems.Find(x =>
+                    0 == string.Compare(x.Id, id, true) && 0 == string.Compare(x.Value.ToString(), name, true));
+                if (Equals(i_name, default(Item))) return null; //значение Item по умолчанию все поля null
                 return i_name;
             }
 
-            Item i = _listOfItems.Find(x => 0 == string.Compare(x.Id, id, true));
-            if (object.Equals(i, default(Kesco.Lib.Entities.Item))) return null;//значение Item по умолчанию все поля null
+            var i = _listOfItems.Find(x => 0 == string.Compare(x.Id, id, true));
+            if (Equals(i, default(Item))) return null; //значение Item по умолчанию все поля null
             return i;
         }
     }

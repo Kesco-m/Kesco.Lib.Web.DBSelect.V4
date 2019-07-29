@@ -13,27 +13,32 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         /// <summary>
         ///     Опция фильтра: все подчиненные ресурсы
         /// </summary>
-        [FilterOption("AllChildrenWithoutParentIDs", false)] public FOptParentsIDs AllChildrenWithoutParentIDs;
+        [FilterOption("AllChildrenWithoutParentIDs", false)]
+        public FOptParentsIDs AllChildrenWithoutParentIDs;
 
         /// <summary>
         ///     Опция фильтра: все подчиненные ресурсы включая родителя
         /// </summary>
-        [FilterOption("AllChildrenWithParentIDs", false, "ResourceRoot", true)] public FOptParentsIDs AllChildrenWithParentIDs;
+        [FilterOption("AllChildrenWithParentIDs", false, "Parent", true)]
+        public FOptParentsIDs AllChildrenWithParentIDs;
 
         /// <summary>
         ///     Опция фильтра: все непосредственные подчиненные ресурсы
         /// </summary>
-        [FilterOption("ChildrenWithoutParentIDs", false)] public FOptParentsIDs ChildrenWithoutParentIDs;
+        [FilterOption("ChildrenWithoutParentIDs", false)]
+        public FOptParentsIDs ChildrenWithoutParentIDs;
 
         /// <summary>
         ///     Опция фильтра: все непосредственные подчиненные ресурсы включая родителя
         /// </summary>
-        [FilterOption("ChildrenWithParentIDs", false)] public FOptParentsIDs ChildrenWithParentIDs;
+        [FilterOption("ChildrenWithParentIDs", false)]
+        public FOptParentsIDs ChildrenWithParentIDs;
 
         /// <summary>
         ///     Опция фильтра по указанным кодам ресурсов, которые являются валютой
         /// </summary>
-        [FilterOption("CurrencyIDs", false, "CurrencyIDs")] public FOptCurrencyIDs CurrencyIDs;
+        [FilterOption("CurrencyIDs", false, "CurrencyIDs")]
+        public FOptCurrencyIDs CurrencyIDs;
 
         /// <summary>
         ///     Опция фильтра по ID ресурсов
@@ -43,12 +48,18 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         /// <summary>
         ///     Опция фильтра по имени ресурса
         /// </summary>
-        [FilterOption("Name", false, "Search")] public FOptName Name;
+        [FilterOption("Name", false, "Search")]
+        public FOptName Name;
 
         /// <summary>
         ///     Опция фильтра: id ресурсов имеющие привязку к лицам
         /// </summary>
         [FilterOption("PersonIDs", false)] public FOptPersonIDs PersonIDs;
+
+        /// <summary>
+        ///     Опция фильтра по имени ресурса
+        /// </summary>
+        [FilterOption("Text", false, "Text")] public FOptName Text;
 
         /// <summary>
         ///     Конструктор класса
@@ -62,10 +73,13 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
 
             IDs = new FOptIDs();
             Name = new FOptName();
+            Text = Name;
             CurrencyIDs = new FOptCurrencyIDs();
 
-            AllChildrenWithParentIDs = new FOptParentsIDs(TreeQueryType.AllChildrenWithParent, tableName, KeyField, NameField);
-            AllChildrenWithoutParentIDs = new FOptParentsIDs(TreeQueryType.AllChildrenWithoutParent, tableName, KeyField, NameField);
+            AllChildrenWithParentIDs =
+                new FOptParentsIDs(TreeQueryType.AllChildrenWithParent, tableName, KeyField, NameField);
+            AllChildrenWithoutParentIDs =
+                new FOptParentsIDs(TreeQueryType.AllChildrenWithoutParent, tableName, KeyField, NameField);
             ChildrenWithParentIDs = new FOptParentsIDs(TreeQueryType.ChildrenWithParent, tableName, KeyField);
             ChildrenWithoutParentIDs = new FOptParentsIDs(TreeQueryType.ChildrenWithoutParent, tableName, KeyField);
 
@@ -88,7 +102,7 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
 
                     for (var i = 0; i < Name.WordsGroup.Count; i++)
                     {
-                        sb.Append(string.Format(varDeclPattern, Name.WordsGroup[i], i));
+                        sb.Append(string.Format(varDeclPattern, Name.WordsGroup[i].ToString().Replace("'", "''"), i));
                         sb.Append("\n");
                     }
                 }
@@ -105,9 +119,9 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
                             PersonIDs.Value));
                     sb.Append("\n");
                     sb.Append(
-                        string.Format(
-                            @"INSERT #Resources SELECT T1.КодРесурса, Лица.PersonID FROM @Persons Лица INNER JOIN РесурсыЛица T1 (nolock) ON Лица.PersonID = T1.КодЛица; "));
+                        @"INSERT #Resources SELECT T1.КодРесурса, Лица.PersonID FROM @Persons Лица INNER JOIN РесурсыЛица T1 (nolock) ON Лица.PersonID = T1.КодЛица; ");
                 }
+
                 return sb.ToString();
             }
         }
@@ -115,25 +129,16 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         /// <summary>
         ///     Запрос выборки данных
         /// </summary>
-        public override string SQLBatch
-        {
-            get { return SQLQueries.SELECT_Ресурсы; }
-        }
+        public override string SQLBatch => SQLQueries.SELECT_Ресурсы;
 
         /// <summary>
         ///     Запрос получения ресурса по ID
         /// </summary>
-        public override string SQLEntityById
-        {
-            get { return SQLQueries.SELECT_ID_Ресурс; }
-        }
+        public override string SQLEntityById => SQLQueries.SELECT_ID_Ресурс;
 
         /// <summary>
         ///     Задание сортировки выборки
         /// </summary>
-        public override string SQLOrderBy
-        {
-            get { return string.Format("T0.{0}", NameField); }
-        }
+        public override string SQLOrderBy => string.Format("T0.{0}", NameField);
     }
 }

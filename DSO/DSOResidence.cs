@@ -12,22 +12,26 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         /// <summary>
         ///     Опция фильтра: все подчиненные места хранения
         /// </summary>
-        [FilterOption("AllChildrenWithoutParentIDs", false)] public FOptParentsIDs AllChildrenWithoutParentIDs;
+        [FilterOption("AllChildrenWithoutParentIDs", false)]
+        public FOptParentsIDs AllChildrenWithoutParentIDs;
 
         /// <summary>
         ///     Опция фильтра: все подчиненные места хранения включая родителя
         /// </summary>
-        [FilterOption("AllChildrenWithParentIDs", false)] public FOptParentsIDs AllChildrenWithParentIDs;
+        [FilterOption("AllChildrenWithParentIDs", false)]
+        public FOptParentsIDs AllChildrenWithParentIDs;
 
         /// <summary>
         ///     Опция фильтра: все непосредственные подчиненные места хранения
         /// </summary>
-        [FilterOption("ChildrenWithoutParentIDs", false)] public FOptParentsIDs ChildrenWithoutParentIDs;
+        [FilterOption("ChildrenWithoutParentIDs", false)]
+        public FOptParentsIDs ChildrenWithoutParentIDs;
 
         /// <summary>
         ///     Опция фильтра: все непосредственные подчиненные места хранения включая родителя
         /// </summary>
-        [FilterOption("ChildrenWithParentIDs", false)] public FOptParentsIDs ChildrenWithParentIDs;
+        [FilterOption("ChildrenWithParentIDs", false)]
+        public FOptParentsIDs ChildrenWithParentIDs;
 
         /// <summary>
         ///     Опция фильтра по ID мест хранения
@@ -37,7 +41,8 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         /// <summary>
         ///     Опция фильтра по наименованию места хранения
         /// </summary>
-        [FilterOption("Name", false, "Search")] public FOptName Name;
+        [FilterOption("Name", false, "Search")]
+        public FOptName Name;
 
         /// <summary>
         ///     Конструктор класса
@@ -62,17 +67,11 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         /// <summary>
         ///     Запрос выборки данных
         /// </summary>
-        public override string SQLBatch
-        {
-            get { return SQLQueries.SELECT_МестаХранения; }
-        }
+        public override string SQLBatch => SQLQueries.SELECT_МестаХранения;
 
         /// <summary>
         ///     Задание сортировки выборки
         /// </summary>
-        public override string SQLOrderBy
-        {
-            get { return string.Format("T0.{0}", NameField); }
-        }
+        public override string SQLOrderBy => string.Format("T0.{0}", NameField);
     }
 }

@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using Kesco.Lib.DALC;
 using Kesco.Lib.Entities.Stores;
-using Kesco.Lib.Entities.Transport;
 using Kesco.Lib.Web.Controls.V4;
-using Kesco.Lib.Web.Controls.V4.Common;
 using Kesco.Lib.Web.DBSelect.V4.DSO;
 using Kesco.Lib.Web.Settings;
 using Item = Kesco.Lib.Entities.Item;
@@ -32,8 +28,10 @@ namespace Kesco.Lib.Web.DBSelect.V4
             ValueField = "Name";
             DisplayFields = "Name,StoreTypeName,ResourceName,KeeperName,ManagerName";
             AnvancedHeaderPopupResult =
-                string.Format("<tr class='gridHeaderSelect v4s_noselect'><td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td></tr>",
-                    Resx.GetString("STORE_Name"), Resx.GetString("TTN_lblType"), Resx.GetString("STORE_Resource"), Resx.GetString("STORE_Keeper"), Resx.GetString("TTN_lblSteward"));
+                string.Format(
+                    "<tr class='gridHeaderSelect v4s_noselect'><td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td></tr>",
+                    Resx.GetString("STORE_Name"), Resx.GetString("TTN_lblType"), Resx.GetString("STORE_Resource"),
+                    Resx.GetString("STORE_Keeper"), Resx.GetString("TTN_lblSteward"));
             IsNotUseSelectTop = false;
 
             URLAdvancedSearch = Config.store_search;
@@ -46,10 +44,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         /// <summary>
         ///     Фильтр
         /// </summary>
-        public new DSOStore Filter
-        {
-            get { return (DSOStore) base.Filter; }
-        }
+        public new DSOStore Filter => (DSOStore) base.Filter;
 
         /// <summary>
         ///     Фильтр Подзапрос
@@ -68,25 +63,27 @@ namespace Kesco.Lib.Web.DBSelect.V4
         {
             base.FillSelect(search);
             var displayFields = "Name";
-            var anvancedHeaderPopupResult = string.Format("<tr class='gridHeaderSelect v4s_noselect'><td>{0}</td>", Resx.GetString("STORE_Name"));
-            if (Filter.StoreTypeId.Value == "")
-            {
-                displayFields += ",StoreTypeName";
-                anvancedHeaderPopupResult += string.Format("<td>{0}</td>",Resx.GetString("TTN_lblType"));
-            }
+            var anvancedHeaderPopupResult = string.Format("<tr class='gridHeaderSelect v4s_noselect'><td>{0}</td>",
+                Resx.GetString("STORE_Name"));
+
+            //if (Filter.StoreTypeId.Value == "")
+            //{
+            displayFields += ",StoreTypeName";
+            anvancedHeaderPopupResult += string.Format("<td>{0}</td>", Resx.GetString("TTN_lblType"));
+            //}
             if (Filter.StoreResourceId.Value == "")
             {
                 displayFields += ",ResourceName";
-                anvancedHeaderPopupResult += string.Format("<td>{0}</td>",Resx.GetString("STORE_Resource"));
+                anvancedHeaderPopupResult += string.Format("<td>{0}</td>", Resx.GetString("STORE_Resource"));
             }
 
             displayFields += ",KeeperName";
-            anvancedHeaderPopupResult += string.Format("<td>{0}</td>",Resx.GetString("STORE_Keeper"));
+            anvancedHeaderPopupResult += string.Format("<td>{0}</td>", Resx.GetString("STORE_Keeper"));
 
             if (Filter.ManagerId.Value == "")
             {
                 displayFields += ",ManagerName";
-                anvancedHeaderPopupResult += string.Format("<td>{0}</td>",Resx.GetString("TTN_lblSteward"));
+                anvancedHeaderPopupResult += string.Format("<td>{0}</td>", Resx.GetString("TTN_lblSteward"));
             }
 
             DisplayFields = displayFields;
@@ -96,7 +93,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         }
 
         /// <summary>
-        /// Метод заполоняет список элементов из БД
+        ///     Метод заполоняет список элементов из БД
         /// </summary>
         /// <param name="search"></param>
         /// <param name="maxItemsInQuery"></param>
@@ -110,15 +107,12 @@ namespace Kesco.Lib.Web.DBSelect.V4
             var dtItems = DBManager.GetData(SQLGetText(false), Config.DS_person, CommandType.Text, SQLGetInnerParams());
 
             foreach (DataRow row in dtItems.Rows)
-            {
-                _listOfItems.Add(new Store { Id = row[Filter.KeyField].ToString()
-                    ,Name = row["СкладFull"].ToString()
-                    ,StoreTypeName = row["Псевдоним"].ToString()
-                    ,ResourceName = row["Ресурс"].ToString()
-                    ,KeeperName = row["Хранитель"].ToString()
-                    ,ManagerName = row["Распорядитель"].ToString()
+                _listOfItems.Add(new Store
+                {
+                    Id = row[Filter.KeyField].ToString(), Name = row["СкладFull"].ToString(),
+                    StoreTypeName = row["Псевдоним"].ToString(), ResourceName = row["Ресурс"].ToString(),
+                    KeeperName = row["Хранитель"].ToString(), ManagerName = row["Распорядитель"].ToString()
                 });
-            }
 
             return _listOfItems;
         }
@@ -133,12 +127,11 @@ namespace Kesco.Lib.Web.DBSelect.V4
         {
             if (!string.IsNullOrEmpty(name))
                 return new Item {Id = id, Value = name};
-            
+
             var p = V4Page.ParentPage ?? V4Page;
-            var  obj = p.GetObjectById(typeof (Store), id) as Store;
-          
+            var obj = p.GetObjectById(typeof(Store), id) as Store;
+
             return new Item {Id = obj.Id, Value = obj.FullName};
-            
         }
     }
 }

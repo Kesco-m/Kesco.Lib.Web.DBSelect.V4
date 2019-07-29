@@ -10,7 +10,8 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         /// <summary>
         ///     Опция фильтра по наименованию лица
         /// </summary>
-        [FilterOption("Search", true, "Search")] public FOptName Name;
+        [FilterOption("Search", true, "Search")]
+        public FOptName Name;
 
         /// <summary>
         ///     Конструктор класса
@@ -28,9 +29,6 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         /// <summary>
         ///     Задание сортировки выборки
         /// </summary>
-        public override string SQLOrderBy
-        {
-            get { return string.Empty; }
-        }
+        public override string SQLOrderBy => string.Empty;
     }
 }

@@ -28,10 +28,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         /// <summary>
         ///     Фильтр
         /// </summary>
-        public new DSOTMDogovor Filter
-        {
-            get { return (DSOTMDogovor) base.Filter; }
-        }
+        public new DSOTMDogovor Filter => (DSOTMDogovor) base.Filter;
 
         /// <summary>
         ///     Заполнение списка

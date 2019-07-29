@@ -1,5 +1,7 @@
 ﻿<div id="[CID]" style="overflow: auto"></div>
 <div id="divDocumentChoice" style="display: none;">
+    [C_TYPESELECT]
+    <div class="spacer">&nbsp;</div>
     [C_RADIO]
     <div class="spacer">&nbsp;</div>
     [C_DBSELECT]
@@ -8,6 +10,7 @@
 
 <script type="text/javascript">
     dialogShow.form = null;
+
     function dialogShow(title, linkedDocCmdListnerIndex) {
         var idContainer = "divDocumentChoice";
         if (null == dialogShow.form) {
@@ -22,7 +25,13 @@
                     icons: {
                         primary: v4_buttonIcons.Ok
                     },
-                    click: function () { cmd('cmd', 'Listener', 'ctrlId', linkedDocCmdListnerIndex, 'cmdName', 'OK'); }
+                    click: function() {
+                        if ($("#type_[CID]_0 :selected").val() == '') {
+                            alert('Выберите тип документа');
+                        } else {
+                            cmd('cmd', 'Listener', 'ctrlId', linkedDocCmdListnerIndex, 'cmdName', 'OK');
+                        }
+                    }
                 },
                 {
                     id: "btn_Cancel_" + linkedDocCmdListnerIndex,
@@ -36,10 +45,13 @@
             ];
 
             var dialogPostion = { my: "left top+12", at: "left", of: $("#divDocumentChoice") };
-            dialogShow.form = v4_dialog(idContainer, $("#" + idContainer), title, width, height, onOpen, onClose, buttons);
+            dialogShow.form =
+                v4_dialog(idContainer, $("#" + idContainer), title, width, height, onOpen, onClose, buttons);
         }
         $("#divDocumentChoice").dialog("option", "title", title);
+
         dialogShow.form.dialog("open");
+        $("#btn_Apply_" + linkedDocCmdListnerIndex).focus();
     }
 
     function v4_closeDialogForm() {

@@ -4,7 +4,7 @@ using System.Data;
 using System.Globalization;
 using System.Linq;
 using Kesco.Lib.DALC;
-using Kesco.Lib.Entities.Resources;
+using Kesco.Lib.Entities.CashFlow;
 using Kesco.Lib.Web.DBSelect.V4.DSO;
 using Kesco.Lib.Web.Settings;
 
@@ -36,10 +36,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         /// <summary>
         ///     Фильтр
         /// </summary>
-        public new DSOCashFlowType Filter
-        {
-            get { return (DSOCashFlowType)base.Filter; }
-        }
+        public new DSOCashFlowType Filter => (DSOCashFlowType) base.Filter;
 
         /// <summary>
         ///     Заполнение списка
@@ -79,7 +76,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         public override object GetObjectById(string id, string name = "")
         {
             if (!string.IsNullOrEmpty(name))
-                return new CashFlowType { Id = id, Name = name };
+                return new CashFlowType {Id = id, Name = name};
 
             var obj = V4Page.GetObjectById(typeof(CashFlowType), id) as CashFlowType;
 

@@ -30,10 +30,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         /// <summary>
         ///     Дополнительный фильтр по условиям поиска
         /// </summary>
-        public new DSOLocation Filter
-        {
-            get { return (DSOLocation) base.Filter; }
-        }
+        public new DSOLocation Filter => (DSOLocation) base.Filter;
 
         /// <summary>
         ///     Заполнение списка

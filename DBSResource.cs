@@ -35,10 +35,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         /// <summary>
         ///     Дополнительный фильтр по условиям поиска
         /// </summary>
-        public new DSOResource Filter
-        {
-            get { return (DSOResource) base.Filter; }
-        }
+        public new DSOResource Filter => (DSOResource) base.Filter;
 
         /// <summary>
         ///     Заполнение списка

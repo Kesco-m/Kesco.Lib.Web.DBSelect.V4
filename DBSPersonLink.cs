@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
@@ -42,42 +41,39 @@ namespace Kesco.Lib.Web.DBSelect.V4
         public List<JSONLink> InnerLinks { get; set; }
 
         /// <summary>
-        /// Тип связи
+        ///     Тип связи
         /// </summary>
         public string LinkTypeID { get; set; }
-        
+
         /// <summary>
-        /// Ролитель
+        ///     Ролитель
         /// </summary>
         public string ParentID { get; set; }
 
         /// <summary>
-        /// Параметр
+        ///     Параметр
         /// </summary>
         public int Parameter { get; set; }
 
         /// <summary>
-        /// Потомок
+        ///     Потомок
         /// </summary>
         public string ChildID { get; set; }
 
         /// <summary>
-        /// Автоматическая установка значения, если оно является единственным
+        ///     Автоматическая установка значения, если оно является единственным
         /// </summary>
         public bool AutoSetFirstValue { get; set; }
 
         /// <summary>
-        /// Связи лиц
+        ///     Связи лиц
         /// </summary>
         public List<Link> PersonLinks { get; set; }
 
         /// <summary>
         ///     Фильтр
         /// </summary>
-        public new DSOPersonLink Filter
-        {
-            get { return (DSOPersonLink) base.Filter; }
-        }
+        public new DSOPersonLink Filter => (DSOPersonLink) base.Filter;
 
         /// <summary>
         ///     Заполнение списка
@@ -88,15 +84,15 @@ namespace Kesco.Lib.Web.DBSelect.V4
         {
             if (AutonomySelect)
             {
-                if (!String.IsNullOrEmpty(search))
-                    return InnerLinks.Where(t => t.LinkName.Contains(String.Format("{0}", search)));
+                if (!string.IsNullOrEmpty(search))
+                    return InnerLinks.Where(t => t.LinkName.Contains(string.Format("{0}", search)));
 
                 var tempLinkList = new List<Link>();
 
-                if (!String.IsNullOrEmpty(search))
+                if (!string.IsNullOrEmpty(search))
                 {
                     tempLinkList.AddRange(
-                        InnerLinks.Where(t => t.LinkName.Contains(String.Format("{0}", search)))
+                        InnerLinks.Where(t => t.LinkName.Contains(string.Format("{0}", search)))
                             .Select(links => new Link(links.LinkID, links.LinkName)));
                     return tempLinkList;
                 }
@@ -119,34 +115,28 @@ namespace Kesco.Lib.Web.DBSelect.V4
             var query = SQLQueries.SELECT_СвязиЛиц;
             var sqlParams = new Dictionary<string, object>();
 
-            if (!String.IsNullOrEmpty(LinkTypeID))
-            {
+            if (!string.IsNullOrEmpty(LinkTypeID))
                 sqlParams.Add("@LinkTypeID", new object[] {LinkTypeID, DBManager.ParameterTypes.Int32});
-            }
 
-            if (!String.IsNullOrEmpty(ParentID))
-            {
+            if (!string.IsNullOrEmpty(ParentID))
                 sqlParams.Add("@ParentID", new object[] {ParentID, DBManager.ParameterTypes.Int32});
-            }
 
-            if (!String.IsNullOrEmpty(ChildID))
-            {
+            if (!string.IsNullOrEmpty(ChildID))
                 sqlParams.Add("@ChildID", new object[] {ChildID, DBManager.ParameterTypes.Int32});
-            }
 
-            if (!String.IsNullOrEmpty(LinkTypeID) && !String.IsNullOrEmpty(ParentID) && !String.IsNullOrEmpty(ChildID))
+            if (!string.IsNullOrEmpty(LinkTypeID) && !string.IsNullOrEmpty(ParentID) && !string.IsNullOrEmpty(ChildID))
                 query = SQLQueries.SELECT_СвязиЛиц_ПоРодителю_ПоПотомку_ПоТипуСвязи;
-            else if (!String.IsNullOrEmpty(ParentID) && !String.IsNullOrEmpty(ChildID))
+            else if (!string.IsNullOrEmpty(ParentID) && !string.IsNullOrEmpty(ChildID))
                 query = SQLQueries.SELECT_СвязиЛиц_ПоРодителю_ПоПотомку;
-            else if (!String.IsNullOrEmpty(ParentID) && !String.IsNullOrEmpty(LinkTypeID))
+            else if (!string.IsNullOrEmpty(ParentID) && !string.IsNullOrEmpty(LinkTypeID))
                 query = SQLQueries.SELECT_СвязиЛиц_ПоРодителю_ПоТипуСвязи;
-            else if (!String.IsNullOrEmpty(ChildID) && !String.IsNullOrEmpty(LinkTypeID))
+            else if (!string.IsNullOrEmpty(ChildID) && !string.IsNullOrEmpty(LinkTypeID))
                 query = SQLQueries.SELECT_СвязиЛиц_ПоПотомку_ПоТипуСвязи;
-            else if (!String.IsNullOrEmpty(LinkTypeID))
+            else if (!string.IsNullOrEmpty(LinkTypeID))
                 query = SQLQueries.SELECT_СвязиЛиц_ПоТипуСвязи;
-            else if (!String.IsNullOrEmpty(ParentID))
+            else if (!string.IsNullOrEmpty(ParentID))
                 query = SQLQueries.SELECT_СвязиЛиц_ПоРодителю;
-            else if (!String.IsNullOrEmpty(ChildID))
+            else if (!string.IsNullOrEmpty(ChildID))
                 query = SQLQueries.SELECT_СвязьЛиц_ПоПотомку;
 
             var dt = DBManager.GetData(query, Config.DS_person, CommandType.Text, sqlParams);
@@ -154,7 +144,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
             {
                 Id = dr.Field<int>(Filter.KeyField).ToString(CultureInfo.InvariantCulture),
                 Name =
-                    !String.IsNullOrEmpty(dr.Field<string>(Filter.NameField))
+                    !string.IsNullOrEmpty(dr.Field<string>(Filter.NameField))
                         ? dr.Field<string>(Filter.NameField)
                         : "<Нет описания>"
             }).ToList();

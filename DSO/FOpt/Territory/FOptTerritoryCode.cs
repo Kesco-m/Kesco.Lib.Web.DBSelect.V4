@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.Territory
+﻿namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.Territory
 {
     /// <summary>
     ///     Класс опции поиска по коду территории
@@ -13,9 +11,8 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.Territory
         /// <returns>Строка с условием WHERE для ограничения по коду территории</returns>
         public string SQLGetClause()
         {
-            string[] fields = { "Территория", "КодТТерритории" };
+            string[] fields = {"Территория", "КодТТерритории"};
             return !string.IsNullOrEmpty(Value) ? GetWhereStrBySearchWords(fields, WordsGroup) : "";
         }
-
     }
 }

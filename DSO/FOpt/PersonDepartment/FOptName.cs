@@ -1,8 +1,7 @@
-﻿
-namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.PersonDepartment
+﻿namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.PersonDepartment
 {
     /// <summary>
-    /// Класс опции поиска
+    ///     Класс опции поиска
     /// </summary>
     public class FOptName : FOptBase, IFilterOption
     {

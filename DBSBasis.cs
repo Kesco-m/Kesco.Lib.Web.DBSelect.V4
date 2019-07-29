@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -59,11 +58,12 @@ namespace Kesco.Lib.Web.DBSelect.V4
         public List<Basis> GetBasises(string search, int maxItemsInQuery)
         {
             var sql =
-                String.Format(@"SELECT TOP {0} T0.*, T1.ВидТранспорта FROM [Справочники].[dbo].БазисыПоставок T0 (nolock) 
+                string.Format(
+                    @"SELECT TOP {0} T0.*, T1.ВидТранспорта FROM [Справочники].[dbo].БазисыПоставок T0 (nolock) 
             INNER JOIN [Справочники].[dbo].ВидыТранспорта T1 ON T0.КодВидаТранспорта=T1.КодВидаТранспорта
             {1}
             ORDER BY T1.ВидТранспорта, T0.Инкотермс, T0.Название", maxItemsInQuery,
-                    !String.IsNullOrEmpty(search)
+                    !string.IsNullOrEmpty(search)
                         ? @"WHERE (((T0.Инкотермс + ' ' + T0.Инкотермс2010 + ' ' + T0.Название + ' ' + T0.НазваниеЛат) LIKE +'%" +
                           search + "%'))"
                         : "");

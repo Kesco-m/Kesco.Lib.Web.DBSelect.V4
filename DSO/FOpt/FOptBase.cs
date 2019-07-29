@@ -24,10 +24,7 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt
         /// <summary>
         ///     Возвращает количество значений опции фильтрации
         /// </summary>
-        public int Count
-        {
-            get { return _value.Count; }
-        }
+        public int Count => _value.Count;
 
         /// <summary>
         ///     Свойство, возвращающее значения опции через ',' и устанавливающее единиственное значение опции(аналогично методу
@@ -52,9 +49,13 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt
         {
             get
             {
-                var namePattern = new Regex("((?<=\")[^\"]+(?=\"))|[-'0-9A-ZА-ЯŠŽÕÄÖÜÉÀÈÙÂÊÎÔÛÇËÏŸÆæŒœßŇñ_]+",
+                var namePattern = new Regex("((?<=\")[^\"]+(?=\"))|[-\\*'0-9A-ZА-ЯŠŽÕÄÖÜÉÀÈÙÂÊÎÔÛÇËÏŸÆæŒœßŇñ_]+",
                     RegexOptions.IgnoreCase);
                 var m = namePattern.Matches(Value);
+                if (m.Count != 0) return m;
+
+                namePattern = new Regex("(.+)", RegexOptions.IgnoreCase);
+                m = namePattern.Matches(Value);
                 return m;
             }
         }
@@ -117,13 +118,28 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt
         {
             var result = "";
             foreach (var nameField in nameFields)
-            {
                 if (!string.IsNullOrEmpty(nameField))
                     result = string.Concat(result, GetWhereStrBySearchWords(nameField, wordsGroup, searchByRL), " OR ");
-            }
             result = result.Substring(0, result.Length - 4);
-            return result;
+            return !string.IsNullOrEmpty(result) ? $"({result})" : "";
         }
+
+        //TODO: Если понадобиться без разбития по-словам
+        //private static string GetWhereStrBySearchWords(string[] nameFields, string searchtext, bool searchByRL = false)
+        //{
+        //    var result = "";
+        //    foreach (var nameField in nameFields)
+        //    {
+        //        if (!string.IsNullOrEmpty(nameField))
+        //        {
+        //            var sqlClause = GetWhereStrBySearchWords(nameField, searchtext);
+        //            if (!string.IsNullOrEmpty(sqlClause))
+        //                result = string.Concat(result, GetWhereStrBySearchWords(nameField, searchtext), " OR ");
+        //        }
+        //    }
+        //    return !string.IsNullOrEmpty(result) ? $"({result})" : "";
+        //}
+
 
         /// <summary>
         ///     Формирование и возврат строки запроса по введенным словам
@@ -149,14 +165,23 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt
                         ? i.ToString(CultureInfo.InvariantCulture).Replace("'", "''")
                         : wordsGroup[i].ToString().Replace("'", "''")));
 
-                if (i < wordsGroup.Count - 1)
-                {
-                    sb.Append("\n AND");
-                }
+                if (i < wordsGroup.Count - 1) sb.Append("\n AND");
             }
+
             if (sb.Length == 0) return "";
             return string.Concat("(", sb.ToString(), ")");
         }
+
+        //TODO: Если понадобиться без разбития по-словам
+        //private static string GetWhereStrBySearchWords(string nameField, string searchText)
+        //{
+        //    const string patternDefault = "'{0}%'";
+        //    var patternStr = string.Concat(string.Format(" {0} ", nameField), "LIKE ", patternDefault);
+        //    var sb = new StringBuilder();
+        //    sb.Append(string.Format(patternStr, searchText.Replace("'", "''")));
+
+        //    return sb.Length == 0 ? "" : string.Concat("(", sb.ToString(), ")");
+        //}
 
         /// <summary>
         ///     Экранирование спец. символов при sql-поиске текста
@@ -170,15 +195,8 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt
             var chr13 = new string((char) 13, 1);
             var chr160 = new string((char) 160, 1);
 
-            return s.Replace(chr9, " ").
-                Replace(chr10, " ").
-                Replace(chr13, " ").
-                Replace(chr10, " ").
-                Replace(chr160, " ").
-                Replace("[", "[[]").
-                Replace("_", "[_]").
-                Replace("%", "[%]").
-                Replace("'", "''");
+            return s.Replace(chr9, " ").Replace(chr10, " ").Replace(chr13, " ").Replace(chr10, " ").Replace(chr160, " ")
+                .Replace("[", "[[]").Replace("_", "[_]").Replace("%", "[%]").Replace("'", "''");
         }
 
         /// <summary>

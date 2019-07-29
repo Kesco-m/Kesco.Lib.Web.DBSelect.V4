@@ -1,5 +1,4 @@
 ﻿using Kesco.Lib.Entities;
-using Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.UnitAdv;
 
 namespace Kesco.Lib.Web.DBSelect.V4.DSO
 {
@@ -8,12 +7,6 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
     /// </summary>
     public class DSOUnitAdv : DSOCommon
     {
-        /// <summary>
-        ///     Опция фильтра по ресурсу
-        /// </summary>
-        [FilterOption("КодРесурса", true)] 
-        public int Resource { get; set; } 
-
         /// <summary>
         ///     Конструктор класса
         /// </summary>
@@ -24,19 +17,19 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         }
 
         /// <summary>
+        ///     Опция фильтра по ресурсу
+        /// </summary>
+        [FilterOption("КодРесурса", true)]
+        public int Resource { get; set; }
+
+        /// <summary>
         ///     Запрос выборки данных
         /// </summary>
-        public override string SQLBatch
-        {
-            get { return SQLQueries.SELECT_ЕдиницыИзмеренияДополнительные; }
-        }
+        public override string SQLBatch => SQLQueries.SELECT_ЕдиницыИзмеренияДополнительные;
 
         /// <summary>
         ///     Задание сортировки выборки
         /// </summary>
-        public override string SQLOrderBy
-        {
-            get { return string.Format("T0.{0}", NameField); }
-        }
+        public override string SQLOrderBy => string.Format("T0.{0}", NameField);
     }
 }

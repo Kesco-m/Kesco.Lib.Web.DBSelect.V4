@@ -11,13 +11,13 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         /// <summary>
         ///     Опция фильтра по роли
         /// </summary>
-        [FilterOption("ВидОтпуска", false, "Search")] public FOptVacationType Name;
+        [FilterOption("ВидОтпуска", false, "Search")]
+        public FOptVacationType Name;
 
         /// <summary>
         ///     Опция фильтра по роли
         /// </summary>
-        [FilterOption("КодВидаОтпуска")]
-        public FOptIDs VacationTypeId;
+        [FilterOption("КодВидаОтпуска")] public FOptIDs VacationTypeId;
 
         /// <summary>
         ///     Конструктор класса
@@ -33,18 +33,12 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         /// <summary>
         ///     Запрос выборки данных
         /// </summary>
-        public override string SQLBatch
-        {
-            get { return SQLQueries.SELECT_ВидыОтпуска; }
-        }
+        public override string SQLBatch => SQLQueries.SELECT_ВидыОтпуска;
 
         /// <summary>
         ///     Задание сортировки выборки
-        /// Доделать управляемую сортировку
+        ///     Доделать управляемую сортировку
         /// </summary>
-        public override string SQLOrderBy
-        {
-            get { return string.Format("{0}", KeyField); }
-        }
+        public override string SQLOrderBy => string.Format("{0}", KeyField);
     }
 }

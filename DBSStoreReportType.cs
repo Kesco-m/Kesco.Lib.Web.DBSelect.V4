@@ -1,23 +1,23 @@
-﻿using System.Collections.Generic;
-using System.Collections;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Data;
-using Kesco.Lib.Web.Settings;
 using Kesco.Lib.DALC;
 using Kesco.Lib.Entities;
 using Kesco.Lib.Web.DBSelect.V4.DSO;
+using Kesco.Lib.Web.Settings;
 
 namespace Kesco.Lib.Web.DBSelect.V4
 {
     /// <summary>
-    /// Класс объекта для выбора типа отчета по складам из списка всех отчетов выписок
+    ///     Класс объекта для выбора типа отчета по складам из списка всех отчетов выписок
     /// </summary>
     public class DBSStoreReportType : DBSelect
     {
         //Список элементов
-        private List<Item> _listOfItems = null;
+        private List<Item> _listOfItems;
 
         /// <summary>
-        /// Конструктор класса
+        ///     Конструктор класса
         /// </summary>
         public DBSStoreReportType()
         {
@@ -30,7 +30,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         }
 
         /// <summary>
-        /// Фильтр Типы отчетов
+        ///     Фильтр Типы отчетов
         /// </summary>
         public DSOStoreReportType GetFilter()
         {
@@ -38,7 +38,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         }
 
         /// <summary>
-        /// Заполнение списка Типы отчетов
+        ///     Заполнение списка Типы отчетов
         /// </summary>
         /// <param name="search">Строка поиска</param>
         /// <returns>Интерфейс доступа к списку</returns>
@@ -55,21 +55,19 @@ namespace Kesco.Lib.Web.DBSelect.V4
         }
 
         /// <summary>
-        /// Метод заполоняет список элементов из БД
+        ///     Метод заполоняет список элементов из БД
         /// </summary>
         private void FillItemsList()
         {
             _listOfItems = new List<Item>();
 
-            DataTable dtItems = DBManager.GetData(SQLGetText(true), Config.DS_person, CommandType.Text, SQLGetInnerParams());
+            var dtItems = DBManager.GetData(SQLGetText(true), Config.DS_person, CommandType.Text, SQLGetInnerParams());
             foreach (DataRow row in dtItems.Rows)
-            {
-                _listOfItems.Add(new Item { Id = row[Filter.KeyField].ToString(), Value = row[Filter.NameField] });
-            }
+                _listOfItems.Add(new Item {Id = row[Filter.KeyField].ToString(), Value = row[Filter.NameField]});
         }
 
         /// <summary>
-        /// Поиск объекта по идентификатору
+        ///     Поиск объекта по идентификатору
         /// </summary>
         /// <param name="id">Идентификатор объекта</param>
         /// <param name="name">название объекта</param>
@@ -80,13 +78,14 @@ namespace Kesco.Lib.Web.DBSelect.V4
 
             if (!string.IsNullOrWhiteSpace(name))
             {
-                Item i_name = _listOfItems.Find(x => 0 == string.Compare(x.Id, id, true) && 0 == string.Compare(x.Value.ToString(), name, true));
-                if (object.Equals(i_name, default(Kesco.Lib.Entities.Item))) return null;//значение Item по умолчанию все поля null
+                var i_name = _listOfItems.Find(x =>
+                    0 == string.Compare(x.Id, id, true) && 0 == string.Compare(x.Value.ToString(), name, true));
+                if (Equals(i_name, default(Item))) return null; //значение Item по умолчанию все поля null
                 return i_name;
             }
 
-            Item i = _listOfItems.Find(x => 0==string.Compare(x.Id, id, true));
-            if (object.Equals(i, default(Kesco.Lib.Entities.Item))) return null;//значение Item по умолчанию все поля null
+            var i = _listOfItems.Find(x => 0 == string.Compare(x.Id, id, true));
+            if (Equals(i, default(Item))) return null; //значение Item по умолчанию все поля null
             return i;
         }
     }

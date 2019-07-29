@@ -36,10 +36,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         /// <summary>
         ///     Фильтр
         /// </summary>
-        public new DSOTerritory Filter
-        {
-            get { return (DSOTerritory) base.Filter; }
-        }
+        public new DSOTerritory Filter => (DSOTerritory) base.Filter;
 
         /// <summary>
         ///     Заполнение списка

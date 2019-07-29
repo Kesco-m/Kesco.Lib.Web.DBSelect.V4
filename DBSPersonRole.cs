@@ -28,15 +28,11 @@ namespace Kesco.Lib.Web.DBSelect.V4
             URLAdvancedSearch = "";
         }
 
-        
 
         /// <summary>
         ///     Фильтр
         /// </summary>
-        public new DSOPersonRole Filter
-        {
-            get { return (DSOPersonRole)base.Filter; }
-        }
+        public new DSOPersonRole Filter => (DSOPersonRole) base.Filter;
 
         /// <summary>
         ///     Заполнение списка
@@ -55,12 +51,12 @@ namespace Kesco.Lib.Web.DBSelect.V4
         /// <returns>Список</returns>
         public List<PersonCustomer> GetCompanies()
         {
-            var dt = DBManager.GetData(SQLGetText(false), Config.DS_person, CommandType.Text, SQLGetInnerParams());
+            var dt = DBManager.GetData(SQLGetText(false), Config.DS_user, CommandType.Text, SQLGetInnerParams());
 
             var persons = dt.AsEnumerable().Select(dr => new PersonCustomer
             {
                 Id = dr.Field<int>(Filter.KeyField).ToString(CultureInfo.InvariantCulture),
-                Name = dr.Field<string>(Filter.NameField),
+                Name = dr.Field<string>(Filter.NameField)
             }).ToList();
 
             return persons;

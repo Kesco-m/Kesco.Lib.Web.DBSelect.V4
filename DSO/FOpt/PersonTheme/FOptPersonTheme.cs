@@ -1,7 +1,7 @@
 ﻿namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.PersonTheme
 {
     /// <summary>
-    /// Класс опции поиска темы по названию
+    ///     Класс опции поиска темы по названию
     /// </summary>
     public class FOptPersonTheme : FOptBase, IFilterOption
     {

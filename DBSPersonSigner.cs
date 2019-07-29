@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
 using System.Linq;
 using Kesco.Lib.DALC;
-using Kesco.Lib.Entities;
 using Kesco.Lib.Entities.Link;
 using Kesco.Lib.Web.DBSelect.V4.DSO;
 using Kesco.Lib.Web.Settings;
@@ -28,32 +26,29 @@ namespace Kesco.Lib.Web.DBSelect.V4
         }
 
         /// <summary>
-        /// Тип связи
+        ///     Тип связи
         /// </summary>
         public string LinkTypeID { get; set; }
-        
+
         /// <summary>
-        /// Ролитель
+        ///     Ролитель
         /// </summary>
         public string ParentID { get; set; }
 
         /// <summary>
-        /// Потомок
+        ///     Потомок
         /// </summary>
         public string ChildID { get; set; }
 
         /// <summary>
-        /// Автоматическая установка значения, если оно является единственным
+        ///     Автоматическая установка значения, если оно является единственным
         /// </summary>
         public bool AutoSetFirstValue { get; set; }
 
         /// <summary>
         ///     Фильтр
         /// </summary>
-        public new DSOPersonSigner Filter
-        {
-            get { return (DSOPersonSigner)base.Filter; }
-        }
+        public new DSOPersonSigner Filter => (DSOPersonSigner) base.Filter;
 
         /// <summary>
         ///     Заполнение списка
@@ -78,7 +73,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
             {
                 Id = dr.Field<int>(Filter.KeyField).ToString(CultureInfo.InvariantCulture),
                 Name =
-                    !String.IsNullOrEmpty(dr.Field<string>(Filter.NameField))
+                    !string.IsNullOrEmpty(dr.Field<string>(Filter.NameField))
                         ? dr.Field<string>(Filter.NameField)
                         : "<Нет описания>"
             }).ToList();

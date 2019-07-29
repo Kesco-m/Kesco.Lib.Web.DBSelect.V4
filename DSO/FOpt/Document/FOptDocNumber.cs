@@ -46,9 +46,7 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.Document
             const string endOrPattern = @"OR[\s]{0,}$";
 
             if (whereStr.Length > 2 && Regex.IsMatch(whereStr, endOrPattern, RegexOptions.IgnoreCase))
-            {
                 whereStr = Regex.Replace(whereStr, endOrPattern, string.Empty);
-            }
 
             return whereStr;
         }

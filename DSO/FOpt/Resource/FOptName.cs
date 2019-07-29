@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using Kesco.Lib.BaseExtention;
 
 namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.Resource
 {
@@ -16,6 +17,9 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.Resource
             var whereStr = Value != null && !string.IsNullOrEmpty(Value.ToString(CultureInfo.InvariantCulture))
                 ? GetWhereStrBySearchWords("T0.РесурсRL", WordsGroup, true)
                 : string.Empty;
+
+            if (Value != null && !string.IsNullOrEmpty(Value.ToString(CultureInfo.InvariantCulture)) && Value.IsDigit())
+                whereStr = $"({whereStr} OR T0.КодРесурса={Value})";
 
             return whereStr;
         }

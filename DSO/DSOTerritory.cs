@@ -11,14 +11,9 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         /// <summary>
         ///     Опция фильтра по имени территории
         /// </summary>
-        [FilterOption("ТипАтрибута", false, "Search")] 
+        [FilterOption("ТипАтрибута", false, "Search")]
         public FOptName Name;
 
-        /// <summary>
-        ///     Опция фильтра: КодТТерритории
-        /// </summary>
-        [FilterOption("TerritoryCode",false,"AreaType")]
-        public FOptTerritoryCode TerritoryCode;
 
         /// <summary>
         ///     Конструктор класса
@@ -31,7 +26,6 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
             AbbreviationField = "Аббревиатура";
             TelephoneCodeField = "ТелКодСтраны";
             Name = new FOptName();
-            TerritoryCode = new FOptTerritoryCode();
         }
 
         /// <summary>
@@ -62,17 +56,11 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         /// <summary>
         ///     Запрос выборки данных
         /// </summary>
-        public override string SQLBatch
-        {
-            get { return SQLQueries.SELECT_Территории_Страны; }
-        }
+        public override string SQLBatch => SQLQueries.SELECT_Территории_Страны;
 
         /// <summary>
         ///     Задание сортировки выборки
         /// </summary>
-        public override string SQLOrderBy
-        {
-            get { return string.Format("{0}", NameField); }
-        }
+        public override string SQLOrderBy => string.Format("{0}", NameField);
     }
 }

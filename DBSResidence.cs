@@ -4,7 +4,7 @@ using System.Data;
 using System.Globalization;
 using System.Linq;
 using Kesco.Lib.DALC;
-using Kesco.Lib.Entities;
+using Kesco.Lib.Entities.Stores;
 using Kesco.Lib.Web.DBSelect.V4.DSO;
 using Kesco.Lib.Web.Settings;
 
@@ -29,10 +29,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         /// <summary>
         ///     Дополнительный фильтр по условиям поиска
         /// </summary>
-        public new DSOResidence Filter
-        {
-            get { return (DSOResidence) base.Filter; }
-        }
+        public new DSOResidence Filter => (DSOResidence) base.Filter;
 
         /// <summary>
         ///     Заполнение списка
