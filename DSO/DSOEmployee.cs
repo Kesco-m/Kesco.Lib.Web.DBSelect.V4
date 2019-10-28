@@ -208,7 +208,7 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
                     result.Append(", CASE WHEN T2.КодСотрудника IS NULL THEN 0 ELSE 1 END Коллега");
                 result.Append("  FROM Сотрудники T0");
                 if (!string.IsNullOrEmpty(SubdivisionIDs.Value) || SubdivisionIDs.SubdivisionHowSearch == "3" ||
-                    !string.IsNullOrEmpty(PositionIDs.Value) || PositionIDs.PositionHowSearch == "3")
+                    !string.IsNullOrEmpty(PositionIDs.Value) || PositionIDs.PositionHowSearch == "3" || PositionIDs.PositionHowSearch == "2")
                     result.Append(
                         " LEFT JOIN [Инвентаризация].[dbo].[vwДолжности] T1 ON T0.КодСотрудника = T1.КодСотрудника ");
 

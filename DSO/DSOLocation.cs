@@ -31,6 +31,18 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         public FOptWorkPlace WorkPlace;
 
         /// <summary>
+        ///     Опция фильтра: все подчиненные места хранения включая родителя
+        /// </summary>
+        [FilterOption("OnHand", false, "OnHand")]
+        public FOptOnHand OnHand;
+
+        /// <summary>
+        ///     Опция фильтра: все подчиненные места хранения включая родителя
+        /// </summary>
+        [FilterOption("OnRepair", false, "OnRepair")]
+        public FOptOnRepair OnRepair;
+
+        /// <summary>
         ///     Конструктор класса
         /// </summary>
         public DSOLocation()
@@ -42,6 +54,8 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
             Name = new FOptName();
             WorkPlace = new FOptWorkPlace();
             Employee = new FOptEmployee();
+            OnHand = new FOptOnHand();
+            OnRepair = new FOptOnRepair();
         }
 
         /// <summary>

@@ -1,4 +1,5 @@
-﻿using Kesco.Lib.BaseExtention.Enums.Controls;
+﻿using System.Linq;
+using Kesco.Lib.BaseExtention.Enums.Controls;
 
 namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.Document
 {
@@ -24,6 +25,8 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.Document
             {
                 var dates = Value.Split(',');
 
+                dates = dates.Where(d => d != "00010101").ToArray();
+                if (dates.Length > 0)
                 switch (DateSearchType)
                 {
                     case DateSearchType.Equals:
@@ -33,10 +36,8 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.Document
                                     @"(T0.ДатаДокумента >= '{0}' AND T0.ДатаДокумента < DATEADD(day, 1, '{0}') ) {1}",
                                     dates[i], i < dates.Length - 1 ? " OR " : string.Empty));
                         return string.Format("({0})", whereStr);
-
                     case DateSearchType.MoreThan:
                         return string.Format(@"(T0.ДатаДокумента >= '{0}')", dates[0]);
-
                     case DateSearchType.LessThan:
                         return string.Format(@"(T0.ДатаДокумента <= '{0}')", dates[0]);
                 }

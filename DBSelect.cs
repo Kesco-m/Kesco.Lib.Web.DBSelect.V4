@@ -447,7 +447,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
                 sb.AppendFormat("{0}={1}", key,
                     isKescoRun
                         ? HttpUtility.UrlEncodeUnicode(urlParams[key])
-                        : HttpUtility.UrlEncode(urlParams[key]).Replace("+", "%20"));
+                        : HttpUtility.UrlEncode(urlParams[key])?.Replace("+", "%20"));
             }
 
             return sb.ToString();

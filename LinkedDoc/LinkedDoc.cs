@@ -625,7 +625,7 @@ namespace Kesco.Lib.Web.DBSelect.V4.LinkedDoc
                     if (_field != null) field = _field;
                     else return;
 
-                    if (Document.CheckLoadSequelDoc(_docValue, field))
+                    if (Document.CheckExistsBasisDocs(_docValue, field))
                         ntf.Add(new Notification
                         {
                             Message = Resx.GetString("alertAlreadyLinked"),

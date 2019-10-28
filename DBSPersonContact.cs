@@ -1,8 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using Kesco.Lib.DALC;
 using Kesco.Lib.Entities;
+using Kesco.Lib.Entities.Corporate;
+using Kesco.Lib.Entities.Persons.Contacts;
+using Kesco.Lib.Entities.Transport;
 using Kesco.Lib.Web.Controls.V4;
 using Kesco.Lib.Web.DBSelect.V4.DSO;
 using Kesco.Lib.Web.Settings;
@@ -16,7 +20,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
     public class DBSPersonContact : DBSelect
     {
         //Список элементов
-        private List<Item> _listOfItems;
+        private List<Contact> _listOfItems;
 
         /// <summary>
         ///     Конструктор контрола
@@ -26,17 +30,29 @@ namespace Kesco.Lib.Web.DBSelect.V4
             Filter = new DSOPersonContact();
             KeyField = "Id";
             ValueField = "Name";
-
+            DisplayFields = "Name, ContactTypeName";
             IsNotUseSelectTop = false;
+            AnvancedHeaderPopupResult =
+                string.Format(
+                    "<tr class='gridHeaderSelect v4s_noselect'><td><b>{0}</b></td><td><b>{1}</b></td></tr>",
+                    Resx.GetString("lblContact"), Resx.GetString("TTN_lblType"));
 
             //URLAdvancedSearch = Config.person_search;
             //URLShowEntity = Config.person_contact_form_v4;
             //URLShowEntity = string.Concat(Config.person_contact_form_v4, "?id=", 0);
-
             //id=0&idclient={3}&personcontacttext={2}&personcontactcategor=1&personcontacttype={4}&docview=yes');\">",ID,Env.PersonsRoot,txt,dso.Person.GetItemValue(0),dso.Type.GetItemValue(0));
-            URIsCreateEntity = new List<URICreateEntity>();
-            URIsCreateEntity.Add(new URICreateEntity("/styles/User.gif", Config.person_contact_form_v4,
-                Resx.GetString("TTN_lblCreateContact")));
+
+            var employee = new Employee(true);
+
+            // добавление разрешено для роли "Администратор лиц"
+            if (employee.HasRole(11))
+            {
+                URIsCreateEntity = new List<URICreateEntity>
+                {
+                    new URICreateEntity("/styles/User.gif", Config.person_contact_form_v4,
+                        Resx.GetString("TTN_lblCreateContact"))
+                };
+            }
         }
 
 
@@ -51,28 +67,36 @@ namespace Kesco.Lib.Web.DBSelect.V4
         /// <summary>
         ///     Метод заполоняет список элементов из БД
         /// </summary>
-        /// <param name="search"></param>
-        /// <returns></returns>
         public override IEnumerable FillSelect(string search)
         {
             base.FillSelect(search);
-
-            FillItemsList();
-
-            return _listOfItems;
+            return GetContacts(search, MaxItemsInQuery);
         }
 
         /// <summary>
-        ///     Возвращает список элементов из БД
+        ///     Список для выбора транспортных узлов
         /// </summary>
-        private void FillItemsList()
+        /// <param name="search">Строка поиска</param>
+        /// <param name="maxItemsInQuery">Количество возвращаемых записей в запросе (top n)</param>
+        /// <returns>Список транспортных узлов</returns>
+        public List<Contact> GetContacts(string search, int maxItemsInQuery)
         {
-            _listOfItems = new List<Item>();
-
+            _listOfItems = new List<Contact>();
             var dtItems = DBManager.GetData(SQLGetText(true), Config.DS_person, CommandType.Text, SQLGetInnerParams());
 
             foreach (DataRow row in dtItems.Rows)
-                _listOfItems.Add(new Item {Id = row[Filter.KeyField].ToString(), Value = row[Filter.NameField]});
+            {
+                _listOfItems.Add(new Contact
+                {
+                    Id = row["КодКонтакта"].ToString(),
+                    Name = row["Контакт"].ToString(),
+                    ContactName = row["Контакт"].ToString(),
+                    ContactTypeName = row["ТипКонтакта"].ToString(),
+                });
+            }
+
+            return _listOfItems;
+
         }
 
         /// <summary>
@@ -83,24 +107,35 @@ namespace Kesco.Lib.Web.DBSelect.V4
         /// <returns>Результат поиска, null - не найден</returns>
         public override object GetObjectById(string id, string name = "")
         {
-            if (null == _listOfItems) FillItemsList();
+            //if (!string.IsNullOrEmpty(name))
+            //    return new Item { Id = id, Value = name };
 
-            Item store_item;
+            //var p = V4Page.ParentPage ?? V4Page;
+            //var obj = p.GetObjectById(typeof(Contact), id) as Contact;
+
+            //return new Item { Id = obj.Id, Value = obj.Name };
+
+            if (null == _listOfItems)
+            {
+                FillSelect("");
+            }
+
+            Contact store_item;
             if (!string.IsNullOrWhiteSpace(name))
                 store_item = _listOfItems.Find(x =>
-                    0 == string.Compare(x.Id, id, true) && 0 == string.Compare(x.Value.ToString(), name, true));
+                    0 == string.Compare(x.Id, id, true) && 0 == string.Compare(x.Name.ToString(), name, true));
             else
                 store_item = _listOfItems.Find(x => 0 == string.Compare(x.Id, id, true));
 
             if (Equals(store_item, default(Item))) //значение Item по умолчанию все поля null
             {
-                var sqlParams = new Dictionary<string, object> {{"@КодКонтакта", id}};
+                var sqlParams = new Dictionary<string, object> { { "@КодКонтакта", id } };
                 var dtItems = DBManager.GetData(SQLQueries.SELECT_ID_КонтактыЛица, Config.DS_person, CommandType.Text,
                     sqlParams);
                 if (null != dtItems && dtItems.Rows.Count > 0)
                 {
                     var row = dtItems.Rows[0];
-                    return new Item {Id = row[Filter.KeyField].ToString(), Value = row[Filter.NameField]};
+                    return new Contact{ Id = row[Filter.KeyField].ToString(), Name = row[Filter.NameField].ToString() };
                 }
 
                 return null;

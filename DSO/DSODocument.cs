@@ -64,6 +64,11 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         [FilterOption("Type")] public FOptDocType Type;
 
         /// <summary>
+        ///     Опция фильтра: с эл.формой
+        /// </summary>
+        [FilterOption("HasForm")] public FOptHasForm HasForm;
+
+        /// <summary>
         ///     Конструктор класса
         /// </summary>
         public DSODocument()
@@ -82,6 +87,7 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
             AtWork = new FOptAtWork();
             ChangeBy = new FOptChangeBy();
             NextType = new FOptNextDocType();
+            HasForm = new FOptHasForm();
         }
 
         /// <summary>
