@@ -1,4 +1,4 @@
-﻿namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.Subdivision
+﻿namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.PersonCabinetType
 {
     /// <summary>
     ///     Класс опции поиска по указанным кодам компаний
@@ -12,7 +12,7 @@
         ///     2 - Любое значение (не фильтруем по полю),
         ///     3 - Значение не указано (значение поля NULL)
         /// </summary>
-        public string CompanyHowSearch { get; set; }
+        public string HowSearch { get; set; }
 
         /// <summary>
         ///     Построение запроса
@@ -20,9 +20,9 @@
         /// <returns>Построенный запрос</returns>
         public string SQLGetClause()
         {
-            if (string.IsNullOrEmpty(Value) && CompanyHowSearch != "3") return "";
+            if (string.IsNullOrEmpty(Value) && HowSearch != "3") return "";
             var clause = "";
-            switch (CompanyHowSearch)
+            switch (HowSearch)
             {
                 case "0":
                     clause = "IN";
@@ -30,13 +30,11 @@
                 case "1":
                     clause = "NOT IN";
                     break;
-                case "2":
-                    return "";
-                case "3":
-                    return " T0.КодЛица IS NULL";
+                case "2": return "";
+                case "3": return " КодТипаЛичногоКабинета IS NULL";
             }
 
-            return !string.IsNullOrEmpty(Value) ? string.Format(" T0.КодЛица {1} ({0})", Value, clause) : "";
+            return !string.IsNullOrEmpty(Value) ? string.Format(" КодТипаЛичногоКабинета {1} ({0})", Value, clause) : "";
         }
     }
 }

@@ -26,6 +26,7 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
             AbbreviationField = "Аббревиатура";
             TelephoneCodeField = "ТелКодСтраны";
             Name = new FOptName();
+            CodTTerritory = new FOptTerritoryCode {Value = "2"};
         }
 
         /// <summary>
@@ -37,6 +38,12 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         /// </summary>
         [FilterOption("TerritoryHowSearch", false)]
         public int? TerritoryHowSearch { get; set; }
+
+        /// <summary>
+        ///     Опция поиска по состоянию сотрудника
+        /// </summary>
+        [FilterOption("codTTerritory")]
+        public FOptTerritoryCode CodTTerritory;
 
         /// <summary>
         ///     Наименование территории на английском

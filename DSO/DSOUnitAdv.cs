@@ -23,6 +23,12 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         public int Resource { get; set; }
 
         /// <summary>
+        ///     Опция фильтра по коэффициенту
+        /// </summary>
+        [FilterOption("Коэффициент", true)]
+        public double? Coef { get; set; }
+
+        /// <summary>
         ///     Запрос выборки данных
         /// </summary>
         public override string SQLBatch => SQLQueries.SELECT_ЕдиницыИзмеренияДополнительные;

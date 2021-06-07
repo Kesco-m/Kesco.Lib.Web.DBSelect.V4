@@ -25,6 +25,8 @@ namespace Kesco.Lib.Web.DBSelect.V4
             ValueField = "Name";
             URLShowEntity = Config.location_search;
             URLAdvancedSearch = Config.location_search;
+            EntityWindowWidth = AdvSearchWindowWidth = 1280;
+            EntityWindowHeight = AdvSearchWindowHeight = 768;
         }
 
         /// <summary>
@@ -68,8 +70,6 @@ namespace Kesco.Lib.Web.DBSelect.V4
         /// <returns>Сотрудник</returns>
         public override object GetObjectById(string id, string name = "")
         {
-            if (!string.IsNullOrEmpty(name))
-                return new Location {Id = id, Name = name};
             return new Location(id);
         }
     }

@@ -71,7 +71,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
 
             var personLinks = dt.AsEnumerable().Select(dr => new Link
             {
-                Id = dr.Field<int>(Filter.KeyField).ToString(CultureInfo.InvariantCulture),
+                Id = dr.Field<int>(Filter.KeyField).ToString(CultureInfo.InvariantCulture), 
                 Name =
                     !string.IsNullOrEmpty(dr.Field<string>(Filter.NameField))
                         ? dr.Field<string>(Filter.NameField)
@@ -100,7 +100,10 @@ namespace Kesco.Lib.Web.DBSelect.V4
         /// <returns>Компания</returns>
         public override object GetObjectById(string id, string name = "")
         {
+            if (!string.IsNullOrEmpty(name))
+                return new Link { Id = id, Name = name };
             return new Link(id);
+
         }
     }
 }

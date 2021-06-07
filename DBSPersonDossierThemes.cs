@@ -194,12 +194,10 @@ namespace Kesco.Lib.Web.DBSelect.V4
             );
 
             JS.Write("v4_isStopBlur = false;");
-            JS.Write("$.v4_windowManager.selectEntity('{0}', '{1}', '{2}', {3}, {4}, v4s_setSelectedValue, '{5}');",
+            JS.Write("$.v4_windowManager.selectEntity('{0}', '{1}', '{2}', v4s_setSelectedValue, '{3}');",
                 HttpUtility.JavaScriptStringEncode(url),
                 HttpUtility.JavaScriptStringEncode(HtmlID),
-                HttpUtility.JavaScriptStringEncode(((Page) Page).IDPage),
-                AdvSearchWindowWidth,
-                AdvSearchWindowHeight,
+                HttpUtility.JavaScriptStringEncode(((Page) Page).IDPage),                
                 IsMultiReturn);
         }
 

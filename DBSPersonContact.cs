@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Text.RegularExpressions;
+using System.Web;
 using Kesco.Lib.DALC;
 using Kesco.Lib.Entities;
 using Kesco.Lib.Entities.Corporate;
@@ -89,14 +91,14 @@ namespace Kesco.Lib.Web.DBSelect.V4
                 _listOfItems.Add(new Contact
                 {
                     Id = row["КодКонтакта"].ToString(),
-                    Name = row["Контакт"].ToString(),
+                    Name = Regex.Replace(row["Контакт"].ToString(), @"[\n]", ""),
                     ContactName = row["Контакт"].ToString(),
                     ContactTypeName = row["ТипКонтакта"].ToString(),
                 });
             }
+            
 
             return _listOfItems;
-
         }
 
         /// <summary>
@@ -115,13 +117,13 @@ namespace Kesco.Lib.Web.DBSelect.V4
 
             //return new Item { Id = obj.Id, Value = obj.Name };
 
-            if (null == _listOfItems)
-            {
+            //if (null == _listOfItems)
+            //{
                 FillSelect("");
-            }
+            //}
 
             Contact store_item;
-            if (!string.IsNullOrWhiteSpace(name))
+            if (!string.IsNullOrWhiteSpace(name) && name!="undefined")
                 store_item = _listOfItems.Find(x =>
                     0 == string.Compare(x.Id, id, true) && 0 == string.Compare(x.Name.ToString(), name, true));
             else

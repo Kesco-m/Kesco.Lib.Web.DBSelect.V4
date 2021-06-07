@@ -104,7 +104,7 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         /// <returns>латинская транскрипция</returns>
         public static string ReplaceRusLat(string s)
         {
-            return string.Format("Инвентаризация.dbo.fn_ReplaceRusLat(N'{0}')", s);
+            return string.Format("Инвентаризация.dbo.fn_ReplaceRusLat(N'{0}')", s.Replace("'","''"));
         }
     }
 }

@@ -80,7 +80,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         /// <returns>Единица измерения</returns>
         public override object GetObjectById(string id, string name = "")
         {
-            return new UnitAdv {Id = id, Name = name};
+            return new UnitAdv(id, Filter.Resource.ToString());
         }
     }
 }

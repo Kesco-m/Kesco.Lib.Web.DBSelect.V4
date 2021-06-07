@@ -37,6 +37,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
                 new URICreateEntity("/styles/DataJP.gif", Config.person_jp_add,
                     Resx.GetString("sCreateLegal"))
             };
+            IsCaller = true;
             CallerType = CallerTypeEnum.Person;
         }
 

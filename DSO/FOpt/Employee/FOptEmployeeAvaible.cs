@@ -26,7 +26,7 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.Employee
             return ValueEmployeeAvaible
                 ? @" T0.КодСотрудника IN (SELECT КодСотрудника FROM(SELECT КодСотрудника FROM vwДолжности WHERE КодСотрудника IS NOT NULL 
 		UNION SELECT КодСотрудника FROM КарточкиСотрудников) X
-WHERE КодСотрудника IN (SELECT КодСотрудника FROM vwПодчинённые) 
+WHERE КодСотрудника IN (SELECT КодСотрудника FROM dbo.fn_Подчинённые()) 
 	OR EXISTS (SELECT * FROM dbo.fn_ТекущиеРоли() Y 
 			WHERE КодРоли IN(31,32,33) AND (КодЛица = 0 OR КодЛица IN(SELECT КодЛица FROM vwДолжности UNION SELECT КодЛицаЗаказчика FROM Сотрудники))))"
                 : "";

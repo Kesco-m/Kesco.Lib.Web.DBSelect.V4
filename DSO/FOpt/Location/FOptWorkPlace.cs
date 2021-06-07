@@ -40,6 +40,7 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.Location
         /// <returns>Построенный запрос</returns>
         public string SQLGetClause()
         {
+            if (Value == "-1") return "";
             return string.Format(" T0.РабочееМесто IN ({0})", Value);
         }
     }

@@ -325,7 +325,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         public void OpenEntityForm()
         {
             if (URLShowEntity.Length == 0) return;
-            JS.Write("v4_windowOpen('{0}?id={1}');", URLShowEntity, HttpUtility.JavaScriptStringEncode(Value));
+            JS.Write("Kesco.windowOpen('{0}?id={1}', null, null, '{2}');", URLShowEntity, HttpUtility.JavaScriptStringEncode(Value), HtmlID);
         }
 
         /// <summary>
@@ -446,7 +446,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
                 if (sb.Length > 0) sb.Append("&");
                 sb.AppendFormat("{0}={1}", key,
                     isKescoRun
-                        ? HttpUtility.UrlEncodeUnicode(urlParams[key])
+                        ? HttpUtility.UrlEncode(urlParams[key], Encoding.UTF8)
                         : HttpUtility.UrlEncode(urlParams[key])?.Replace("+", "%20"));
             }
 
@@ -559,6 +559,28 @@ namespace Kesco.Lib.Web.DBSelect.V4
                     HtmlID, HttpUtility.JavaScriptStringEncode(advIcons[0]));
             else
                 V4Page.JS.Write("$('#v3il_{0}').html('{1}'); $('#{0}_0').width({2});", HtmlID, "", Width.Value);
+        }
+
+        /// <summary>
+        ///     Добавить пару параметр-значение к URL сущности
+        /// </summary>
+        /// <param name="name">Имя параметра</param>
+        /// <param name="value">Значение параметра</param>
+        public void URLShowEntityAddParameter(string name, string value)
+        {
+            URLShowEntity += URLShowEntity.Contains("?") ? "&" : "?";
+            URLShowEntity += name + "=" + (value ?? "");
+        }
+
+        /// <summary>
+        ///     Добавить пару параметр-значение к URL расширенного поиска
+        /// </summary>
+        /// <param name="name">Имя параметра</param>
+        /// <param name="value">Значение параметра</param>
+        public void URLAdvancedSearchAddParameter(string name, string value)
+        {
+            URLAdvancedSearch += URLAdvancedSearch.Contains("?") ? "&" : "?";
+            URLAdvancedSearch += name + "=" + (value ?? "");
         }
     }
 }

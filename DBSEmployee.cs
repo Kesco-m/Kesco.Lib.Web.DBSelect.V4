@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
@@ -28,6 +29,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
 
             URLShowEntity = Config.user_form;
             URLAdvancedSearch = Config.user_search;
+            IsCaller = true;
             CallerType = CallerTypeEnum.Employee;
         }
 

@@ -109,13 +109,13 @@ namespace Kesco.Lib.Web.DBSelect.V4.LinkedDoc
                     if (url != "")
                     {
                         JS.Write("dialogShow.form.dialog('close');");
-                        JS.Write(
-                            "win=window.open('{0}','_blank','status=no,toolbar=no,menubar=no,location=no,resizable=yes,scrollbars=yes');",
-                            url);
+                        JS.Write($"win=Kesco.windowOpen('{HttpUtility.JavaScriptStringEncode(url)}', null, null, 'docId' );");
                     }
 
                     _currentTypeSelectCtrl.Value = "";
-                    _type = "";
+
+                    SetDefaultLinkedDocType();
+
                     break;
             }
         }
@@ -149,14 +149,7 @@ namespace Kesco.Lib.Web.DBSelect.V4.LinkedDoc
             V4Page.V4Controls.Add(_currentTypeSelectCtrl);
             _dtSequelTypes = DocType.GetSettingsLinkedDocsInfo(CurrentDocType);
             LoadDropDownListData();
-            if (DefaultLinkedDocType > 0 &&
-                _currentTypeSelectCtrl.DataItems.ContainsKey(DefaultLinkedDocType.ToString()))
-            {
-                _currentTypeSelectCtrl.Value = _type = DefaultLinkedDocType.ToString();
-                var documType = _documTypeList.Find(l => l.Type == _type);
-                _field = documType.FieldId;
-                _linkType = documType.LinkType;
-            }
+            SetDefaultLinkedDocType();
 
             _currentRadioCtrl = new Radio
             {
@@ -184,7 +177,6 @@ namespace Kesco.Lib.Web.DBSelect.V4.LinkedDoc
             _currentDbSelectCtrl.ValueChanged += LinkedDocumentOnValueChanged;
             _currentDbSelectCtrl.BeforeSearch += DBSelect_BeforeSearch;
             _currentDbSelectCtrl.IsDisabled = true;
-
 
             V4Page.V4Controls.Add(_currentDbSelectCtrl);
         }
@@ -239,6 +231,24 @@ namespace Kesco.Lib.Web.DBSelect.V4.LinkedDoc
                 _currentRadioCtrl.Flush();
                 _currentDbSelectCtrl.Value = null;
                 _currentDbSelectCtrl.IsDisabled = true;
+                _docValue = null;
+                _currentDbSelectCtrl.RenderNtf();
+            }
+        }
+
+        /// <summary>
+        /// Установка типа по умолчанию
+        /// </summary>
+        private void SetDefaultLinkedDocType()
+        {
+            _type = "";
+            if (DefaultLinkedDocType > 0 &&
+                _currentTypeSelectCtrl.DataItems.ContainsKey(DefaultLinkedDocType.ToString()))
+            {
+                _currentTypeSelectCtrl.Value = _type = DefaultLinkedDocType.ToString();
+                var documType = _documTypeList.Find(l => l.Type == _type);
+                _field = documType.FieldId;
+                _linkType = documType.LinkType;
             }
         }
 
@@ -280,6 +290,9 @@ namespace Kesco.Lib.Web.DBSelect.V4.LinkedDoc
             _currentDbSelectCtrl.IsDisabled = e.NewValue == "0";
             if (_currentDbSelectCtrl.IsDisabled)
                 _currentDbSelectCtrl.Value = _docValue = null;
+
+            _currentDbSelectCtrl.RenderNtf();
+
         }
 
 
@@ -371,11 +384,8 @@ namespace Kesco.Lib.Web.DBSelect.V4.LinkedDoc
         public void RefreshData()
         {
             var w = new StringWriter();
-            RenderLinkedDocsInfo(w);
-            V4Page.JS.Write("v4_fixedHeaderDestroy();");
-            V4Page.JS.Write("$('#{0}').html('{1}');", ID, HttpUtility.JavaScriptStringEncode(w.ToString()));
-            V4Page.JS.Write("setTimeout(v4_fixedHeader,50);");
-
+            RenderLinkedDocsInfo(w);            
+            V4Page.JS.Write("$('#{0}').html('{1}');v4_setSizeFormContainer();", ID, HttpUtility.JavaScriptStringEncode(w.ToString()));
             V4Page.JS.Write(@"lb_clientLocalization = {{
                 ok_button:""{0}"",
                 cancel_button:""{1}"" 

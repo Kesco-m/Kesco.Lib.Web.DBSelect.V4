@@ -141,9 +141,8 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.Document
 
                 sql =
                     string.Concat(sql, sql.Length == 0 ? "" : " AND ",
-                        string.Format("({0}{1})",
-                            string.Format("T0.НазваниеДокумента LIKE N'{0}%'", tp.Replace(" ", "%")),
-                            string.Format(" OR T0.НомерДокументаRL LIKE N'{0}%'", ws.Replace(" ", "%")) +
+                        string.Format("({0})",
+                            string.Format(" T0.НомерДокументаRL LIKE N'{0}%'", ws.Replace(" ", "%")) +
                             string.Format(" OR T0.НомерДокументаRLReverse LIKE N'{0}%'",
                                 new string(ws.Reverse().ToArray()).Replace(" ", "%"))
                         ));

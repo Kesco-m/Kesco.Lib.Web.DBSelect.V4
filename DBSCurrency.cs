@@ -34,7 +34,6 @@ namespace Kesco.Lib.Web.DBSelect.V4
         /// </summary>
         public new DSOCurrency Filter => (DSOCurrency) base.Filter;
 
-
         /// <summary>
         ///     Строка с перечислением через "," ID выбранных элементов
         /// </summary>

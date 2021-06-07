@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
 using System.Linq;
+using Kesco.Lib.BaseExtention.Enums.Controls;
 using Kesco.Lib.DALC;
 using Kesco.Lib.Entities.Persons;
 using Kesco.Lib.Web.DBSelect.V4.DSO;
@@ -25,7 +26,9 @@ namespace Kesco.Lib.Web.DBSelect.V4
             KeyField = "Id";
             ValueField = "Name";
             URLShowEntity = Config.person_form;
-            URLAdvancedSearch = "";
+            URLAdvancedSearch = Config.person_search;
+            IsCaller = true;
+            CallerType = CallerTypeEnum.Person;
         }
 
 

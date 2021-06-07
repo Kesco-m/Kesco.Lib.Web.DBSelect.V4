@@ -11,7 +11,7 @@ using Kesco.Lib.Web.Settings;
 namespace Kesco.Lib.Web.DBSelect.V4
 {
     /// <summary>
-    ///     Класс select сущности Тип контакта
+    ///     Класс select сущности Роль
     /// </summary>
     public class DBSRole : DBSelect
     {

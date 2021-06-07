@@ -4,18 +4,18 @@ using Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.VacationType;
 namespace Kesco.Lib.Web.DBSelect.V4.DSO
 {
     /// <summary>
-    ///     Источник данных для котроа выбора роли
+    ///     Источник данных для котрола выбора вида отпуска
     /// </summary>
     public class DSOVacationType : DSOCommon
     {
         /// <summary>
-        ///     Опция фильтра по роли
+        ///     Опция фильтра по видам отпусков
         /// </summary>
         [FilterOption("ВидОтпуска", false, "Search")]
         public FOptVacationType Name;
 
         /// <summary>
-        ///     Опция фильтра по роли
+        ///     Опция фильтра по видам отпусков
         /// </summary>
         [FilterOption("КодВидаОтпуска")] public FOptIDs VacationTypeId;
 

@@ -8,6 +8,7 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.Employee
     /// </summary>
     public class FOptHasLogin : FOptBase, IFilterOption
     {
+
         private НаличиеЛогина _value = НаличиеЛогина.Неважно;
 
         /// <summary>
@@ -40,7 +41,7 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO.FOpt.Employee
         {
             var sql = "";
             if (_value.Equals(НаличиеЛогина.ЕстьЛогин))
-                sql = " T0.Login <> ''";
+                sql = " (T0.Login <> '' OR EXISTS(SELECT * FROM Сотрудники X1 WHERE X1.КодОбщегоСотрудника = T0.КодСотрудника AND X1.Login <> ''))";
             else if (_value.Equals(НаличиеЛогина.НетЛогина))
                 sql = " T0.Login = ''";
             return sql;

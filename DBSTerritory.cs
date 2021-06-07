@@ -56,7 +56,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         public List<Territory> GetTerritories()
         {
             LangName = V4Page.CurrentUser.Language;
-            var dt = DBManager.GetData(SQLGetText(true), Config.DS_user, CommandType.Text, SQLGetInnerParams());
+            var dt = DBManager.GetData(SQLGetText(false), Config.DS_user, CommandType.Text, SQLGetInnerParams());
 
             var territory = dt.AsEnumerable().Select(dr => new Territory
             {

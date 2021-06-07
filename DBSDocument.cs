@@ -82,7 +82,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         /// <returns>Список</returns>
         public List<Document> GetDocuments()
         {
-            var query = SQLGetText();
+            var query = SQLGetText();            
             return Document.GetDocumentsList(query);
         }
 

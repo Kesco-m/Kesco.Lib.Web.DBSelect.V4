@@ -93,7 +93,7 @@ namespace Kesco.Lib.Web.DBSelect.V4
         }
 
         /// <summary>
-        ///     Метод заполоняет список элементов из БД
+        ///     Метод заполняет список элементов из БД
         /// </summary>
         /// <param name="search"></param>
         /// <param name="maxItemsInQuery"></param>

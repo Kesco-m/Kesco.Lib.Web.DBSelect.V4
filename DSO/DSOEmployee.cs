@@ -28,6 +28,12 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
         public FOptHasLogin HasLogin;
 
         /// <summary>
+        ///     Опция поиска по сотрудникам, имеющим бухгатерские роли
+        /// </summary>
+        [FilterOption("HasBuhRoles", optionNameURL: "HasBuhRoles")]
+        public FOptHasBuhRoles HasBuhRoles;
+
+        /// <summary>
         ///     Опция поиска по сотрудникам, включая виртуальных
         /// </summary>
         [FilterOption("HasVirtual", optionNameURL: "HasVirtual")]
@@ -107,6 +113,7 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
             SelectedId = new FOpt.Common.FOptName();
             Status = new FOptStatus();
             HasLogin = new FOptHasLogin();
+            HasBuhRoles = new FOptHasBuhRoles();
             HasEmail = new FOptHasEmail();
             HasVirtual = new FOptHasVirtual();
             SortColleagues = new FOptSortColleagues();
@@ -181,9 +188,9 @@ namespace Kesco.Lib.Web.DBSelect.V4.DSO
                     Name.CheckId = int.Parse(m[0].Value);
                     sb.Append("\n");
                     sb.Append(
-                        @" DECLARE @TblTel TABLE(КодТелефонногоНомера int, КодТипаТелефонныхНомеров int, Абонент nvarchar(100), ПолныйНомер nvarchar(50), КодСотрудника int, Login varchar(50), Email varchar(50))");
+                        @" DECLARE @TblTel TABLE(id int, ПолныйНомер varchar(10), Абонент nvarchar(100), icon nvarchar(50), КодСотрудника int, Фамилия nvarchar(50), Имя nvarchar(50), Отчество nvarchar(50), Дополнение nvarchar(50))");
                     sb.Append("\n");
-                    sb.Append(@" INSERT @TblTel EXEC sp_ПоискТелефонногоНомера @НомерВнутренний = " + Name.CheckId);
+                    sb.Append(@" INSERT @TblTel EXEC sp_Абоненты_Поиск @Search = " + Name.CheckId);
                 }
                 else
                 {
